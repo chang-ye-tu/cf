@@ -8,14 +8,20 @@ Mastering the analysis of single complex variable is essential for understanding
 
 ## 講義 
 
-<a href="https://github.com/chang-ye-tu/cv/blob/master/note/note00.pdf">第零章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cv/blob/master/note/note01.pdf">第一章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cv/blob/master/note/note02.pdf">第二章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cv/blob/master/note/note03.pdf">第三章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cv/blob/master/note/note04.pdf">第四章</a>
+<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note01.pdf">第一章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note02.pdf">第二章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note03.pdf">第三章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note04.pdf">第四章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note05.pdf">第五章</a>
 
 ## 參考書
 
 - [Howie, J. M., 2003. Complex Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4471-0027-0) 
 - [Howie, J. M., 2001. Real Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4471-0341-7)
+- [Bak, J., Newman, D. J., 2010. Complex Analysis. 3rd ed., Springer, NY.](https://link.springer.com/book/10.1007/978-1-4419-7288-0)
 - [Lang, S., 1998. Complex Analysis. 4th ed., Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4757-3083-8)
 - [Shakarchi, R. 1998. Problems and Solutions for Complex Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-1534-9)
+
+## 其他資源
+
+- [Complex Analysis: A Visual and Interactive Introduction](https://complex-analysis.com/) &nbsp; 幾何視覺觀點的複變函數論介紹。
+
 
 <!--
 - [Burckel, R. B., 2021. Classical Analysis in the Complex Plane. Springer, Cham.](https://link.springer.com/book/10.1007/978-1-0716-1965-0)
@@ -33,35 +39,29 @@ Mastering the analysis of single complex variable is essential for understanding
 
 ## 評分標準
 
-- 期中考（30%）04/16 1310 ～ 1510。考試範圍： 02/20 ～ 04/09 授課例題、隨堂考題、指定習題。 
-  - 滿分 150 分；考試得分乘以 0.3 計入總成績。
-- 學期考（30%）06/11 1310 ～ 1510。考試範圍： 04/18 ～ 06/04 授課例題、隨堂考題、指定習題。
-  - 滿分 150 分；考試得分乘以 0.3 計入總成績。	
-- 隨堂考（30%）6 次，考試週次公佈於以下課程進度表。 
-  - 滿分 100 分；每次考試得分乘以 0.05 計入總成績。	
-- 基本分（10%）
-  - 總成績起點為 10 分，每次隨堂考、期中考、學期考得分依以上規則累加計入總成績；超過 99 分以 99 分計。
+- 期中考（30%）04/18 1310 ～ 1510。考試範圍： 02/20 ～ 04/09 講義例題、指定習題。 
+- 學期考（30%）06/13 1310 ～ 1510。考試範圍： 04/18 ～ 06/06 講義例題、指定習題。
 
 ## 授課時程
 
 | 上課時間            | 進度               |
 |---------------------|--------------------|
 | 02/20, 02/22        |                    |
-| 02/27, 02/29 o      |                    |
+| 02/27, 02/29        |                    |
 | 03/05, 03/07        |                    | 
-| 03/12, 03/14 o      |                    |
+| 03/12, 03/14        |                    |
 | 03/19, 03/21        |                    |
-| 03/26, 03/28 o      |                    |
+| 03/26, 03/28        |                    |
 | 04/09, 04/11        |                    |
 | 04/16 期中考, 04/18 |                    |
 | 04/23, 04/25        |                    |
-| 04/30, 05/02 o      |                    |
+| 04/30, 05/02        |                    |
 | 05/07, 05/09        |                    |
-| 05/14, 05/16 o      |                    |
+| 05/14, 05/16        |                    |
 | 05/21, 05/23        |                    |
-| 05/28, 05/30 o      |                    |
+| 05/28, 05/30        |                    |
 | 06/04, 06/06        |                    |
-| 06/11 學期考        |                    |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;06/13 學期考    |                    |
 
 - 上課時間之 o 表該週隨堂考。
 

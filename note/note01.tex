@@ -1,11 +1,11 @@
 \documentclass[12pt]{extarticle} 
+%\usepackage{unicode-math}
 \usepackage{amsmath,amsfonts,amssymb,amsthm,graphicx,xcolor,natbib,booktabs,tabularx}
 %\usepackage[paperwidth=126mm, paperheight=96mm, top=5mm, bottom=5mm, right=5mm, left=5mm]{geometry}
 \usepackage[margin=1cm,footskip=5mm]{geometry}
 \pagenumbering{gobble}
 
 \usepackage[inline]{enumitem}
-%\usepackage{unicode-math}
 \usepackage[BoldFont,SlantFont]{xeCJK}  
 \xeCJKsetemboldenfactor{2}
 \setCJKmainfont{cwTeX Q Yuan Medium}
@@ -15,7 +15,6 @@
 %\setCJKfamilyfont{kaiv}[Vertical=RotatedGlyphs]{cwTeX Q Medium}
 %\setmainfont{texgyrepagella-regular.otf}
 %\setmathfont{texgyrepagella-math.otf}
-\usepackage{lmodern}
 \newcommand{\ds}{\displaystyle}
 \newcommand{\ie}{\;\Longrightarrow\;}
 \newcommand{\ifff}{\;\Longleftrightarrow\;}
@@ -23,6 +22,8 @@
 \DeclareMathOperator*{\dom}{dom}
 \DeclareMathOperator*{\codom}{codom}
 \DeclareMathOperator*{\ran}{ran}
+\DeclareMathOperator*{\sgn}{sgn}
+\DeclareMathOperator*{\degr}{deg}
 \newcommand{\floor}[1]{\lfloor #1 \rfloor}
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
 
@@ -56,6 +57,7 @@
 \newtheorem*{sol}{解}
 \newtheorem*{prf}{證}
 \newtheorem*{rmk}{註}
+\newtheorem*{exe}{習題}
 
 %\setenumerate{label=(\roman*),itemsep=1pt,topsep=3pt}
 \newcommand{\myline}{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
@@ -125,746 +127,1143 @@
 \usepackage{datetime2}
 
 \begin{document}
-\title{\texorpdfstring{\vspace{-16mm} 第三章\ \ 微分應用}{第三章\ \ 微分應用}} 
+\title{\texorpdfstring{\vspace{-16mm} 第四章\ \ 積分}{第四章\ \ 積分}} 
 \author{\vspace{-5em}}
 \date{\vspace{-5em}}
 \maketitle
 \thispagestyle{firststyle}
 
-%\newpage
+\section*{4.1 不定積分}
 
-\section*{3.1 均值定理}
+\begin{dfn}[反導函數]
+  給定 $\ds F(x)$，若 $\ds\frac{\text{d}}{\text{d}x} F(x) = f(x)$，則稱 $F(x)$ 為 $f(x)$ 的反導函數（antiderivative）。 
+\end{dfn}
 
-\begin{thm}[Rolle]
-  若 $f(x)$ 在 $[a, b]$ 連續，在 $(a, b)$ 可微，且 $f(a) = f(b)$，則存在 $\ds c\in (a, b)$ 使 $\ds f'(c)=0$。
-\end{thm}
-\vspace{-7mm}
-\begin{figure}[!htbp]
-  \centering
-  \includegraphics[scale=1,page=1]{fig/rolle.pdf}
-\end{figure}
+\begin{prp}若 $\ds F(x)$，$\ds G(x)$ 分別為 $f(x)$，$g(x)$ 的反導函數，$c\in\mathbb{R}$。則
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item $\ds F(x) + c$ 為 $f(x)$ 的反導函數。
+    \item $\ds c\,F(x)$ 為 $c\,f(x)$ 的反導函數。
+    \item $\ds F(x) + G(x)$ 為 $f(x) + g(x)$ 的反導函數。
+  \end{itemize}
+\end{prp}
 
-\begin{thm}[均值定理（mean-value theorem，MVT）]
-  若 $f(x)$ 在 $[a, b]$ 連續，在 $(a, b)$ 可微，則存在 $\ds c\in (a, b)$ 使 $\ds f'(c) = \frac{f(b) - f(a)}{b - a}$。
-\end{thm}
-\vspace{-1cm}
-\begin{figure}[!htbp]
-  \centering
-  \includegraphics[scale=1,page=1]{fig/rolle_to_mvt.pdf}
-\end{figure}
+\begin{fact}
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item[]
+    \item $\ds\frac{\text{d}}{\text{d}x} F(x) = f(x)\ie \text{d} F(x) = f(x)\cdot\text{d}x \ie F(x) = \int f(x)\cdot\text{d}x = \int f(x)\,\text{d}x$
+    \item $F(x)$ 為 $f(x)$ 的反導函數 $\ifff$ $f(x)$ 的反導函數為 $F(x)$ $\ifff$ $F(x)$ 的導函數為 $f(x)$ $\ifff$ $F(x)$（對 $x$）的微分為 $f(x)$ $\ifff$ $f(x)$（對 $x$）的（不定）積分為 $F(x)$ 
+    \item $f(x)$ 的反導函數 $\equiv$ $f(x)$（對 $x$）的（不定）積分
+    \item 基礎積分集：以下 $\ds\alpha\ne -1$，$a\ne 0$。
+      \begin{table}[!htbp]
+        \centering
+        \begin{tabular}{c|cccccccc}
+          \toprule
+          \addlinespace[2mm]
+          $\ds f(x)$ & & $\ds x^\alpha$ & $\ds\frac{1}{x}$ & $\ds e^{a x}$ & $\ds\sin ax$ & $\ds\cos ax$ & $\ds\frac{1}{\sqrt{a^2 - x^2}}$ & $\ds\frac{1}{a^2 + x^2}$ \\
+          \addlinespace[2mm]
+          \midrule
+          \addlinespace[2mm]
+          $\ds \int f(x)\,\text{d}x$ & & $\ds\frac{1}{\alpha + 1}\,x^{\alpha + 1}$ & $\ds\ln |x|$ & $\ds\frac{1}{a}\,e^{a x}$ & $\ds-\frac{1}{a}\cos ax$ & $\ds\frac{1}{a}\sin ax$ & $\ds\sin^{-1}\frac{x}{|a|}$ & $\ds\frac{1}{a}\tan^{-1}\frac{x}{a}$ \\
+          \addlinespace[2mm]
+          \bottomrule
+        \end{tabular}
+      \end{table}
+    \item（Liouville）{\color{M4} $\ds e^{-x^2}$，$\ds\frac{e^x}{x}$，$\ds\frac{1}{\ln x}$，$\ds\sin(x^2)$，$\ds\cos(x^2)$，$\ds\frac{\sin x}{x}$，$\ds\frac{\cos x}{x}$，$\ds x^x$ 無（初等函數形式之）反導函數！}
+  \end{itemize}
+\end{fact}
 
-\begin{rmk} 不滿足『$f(x)$ 在 $[a, b]$ 連續，在 $(a, b)$ 可微』時的反例。 
-  \begin{itemize}\setlength\itemsep{0em}
-    \item 令 $a=0$，$b=2$，且 
-    \smallskip
+\begin{ex}
+  \setlength{\columnsep}{-7mm}
+  \begin{multicols}{3}
+    \begin{enumerate}\setlength{\itemsep}{0pt}
+      \item $\ds\int\!\sqrt{x}\,\text{d}x = \frac{2}{3}\,x^{\frac{3}{2}} + c$
+      \item $\ds\int x^\pi\,\text{d}x = \frac{1}{\pi + 1}\,x^{\pi + 1} + c$
+      \item $\ds\int\!\sin\pi x\,\text{d}x = -\frac{1}{\pi}\cos\pi x + c$
+      \item $\ds\int\!\cos xy\,\text{d}x = \frac{1}{y}\sin xy + c$
+      \item $\ds\int e^{-2x}\,\text{d}x = -\frac{1}{2}\,e^{-2 x} + c$
+      \item $\ds\int\!\frac{1}{\sqrt{\pi - x^2}}\,\text{d}x = \sin^{-1}\frac{x}{\sqrt{\pi}} + c$
+      \item $\ds\int\!\frac{1}{e + u^2}\,\text{d}u = \frac{1}{\sqrt{e}}\,\tan^{-1}\frac{u}{\sqrt{e}} + c$
+      \item $\ds\int\!\big(\frac{\pi}{x} - e^{\pi x}\big)\,\text{d}u = \pi\ln x - \frac{e^{\pi x}}{\pi} + c$
+      \item $\ds\int\!\frac{2 + x^2}{1 + x^2}\,\text{d}u = x + 2\,\tan^{-1}x + c$
+      %\item[\vspace{\fill}]
+    \end{enumerate} 
+  \end{multicols}
+\end{ex}
+
+\subsection*{變數變換法}
+
+\begin{fact}
+  $\ds\frac{\text{d}}{\text{d}x}f(g(x)) = f'(g(x))\cdot g'(x) \ie \text{d}f(g(x)) = f'(g(x))\cdot g'(x)\,\text{d}x \ie f(g(x)) = \int f'(g(x))\cdot g'(x)\,\text{d}x$。令 $\ds u = g(x)$，則 $\ds\frac{\text{d}}{\text{d}x} u = g'(x)\ie \text{d} u = g'(x)\,\text{d}x$；故 $\ds\int f'(g(x))\cdot g'(x)\,\text{d}x = \int f'(u)\,\text{d}u = f(u) + c = f(g(x)) + c$。 
+\end{fact}
+
+\begin{ex}
+  求 $\ds\int\!\frac{x}{x^2+1}\,\mathrm{d}x$。
+\end{ex}
+\begin{sol}
+  令 $\ds u = x^2 + 1$，則 $\ds\mathrm{d}u = 2\,x\,\mathrm{d}x$ $\ie$ $\ds x\,\mathrm{d}x=\frac{1}{2}\,\mathrm{d}u$。故 $\ds\int\!\frac{x}{x^2+1}\,\mathrm{d}x = \int\!\frac{1}{x^2+1}\cdot x\,\mathrm{d}x = \int\!\frac{1}{u}\cdot\frac{1}{2}\,\mathrm{d}u = \frac{1}{2}\ln|u| + c = \frac{1}{2}\ln(x^2 + 1) + c$。
+\end{sol}
+    
+\begin{ex}
+  求 $\ds\int\!\frac{\sin(3\ln x)}{x}\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  令 $\ds u = \ln x$，則 $\ds\mathrm{d}u = \frac{1}{x}\,\mathrm{d}x$。故 $\ds\int\!\frac{\sin(3\ln x)}{x}\,\mathrm{d}x = \int\!\sin(3\ln x)\cdot\frac{1}{x}\,\mathrm{d}x = \int\!\sin3u\cdot\mathrm{d}u = -\frac{1}{3}\cos 3u + c = -\frac{1}{3}\cos(3\ln x) + c$。 
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int e^x\sqrt{1 + e^x}\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  令 $u = 1 + e^x$，則 $\ds\mathrm{d}u = e^x\,\mathrm{d}x$。故 $\ds\int e^x\sqrt{1 + e^x}\,\mathrm{d}x = \int \sqrt{1 + e^x}\cdot e^x\,\mathrm{d}x = \int\!\sqrt{u}\cdot\mathrm{d}u = \frac{u^{\frac{3}{2}}}{\frac{3}{2}} + c = \frac{2}{3}(1 + e^x)^{\frac{3}{2}} + c$
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\frac{e^x}{\sqrt{2 - e^{2x}}}\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  令 $u = e^x$，則 $\ds\mathrm{d}u = e^x\,\mathrm{d}x$。故 $\ds\int\!\frac{e^x}{\sqrt{2 - e^{2x}}}\,\mathrm{d}x = \int\!\frac{1}{\sqrt{2-u^2}}\,\mathrm{d}u = \sin^{-1}\frac{u}{\sqrt{2}} + c = \sin^{-1}\frac{e^x}{\sqrt{2}} + c$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\frac{1}{\sqrt{e^{2x}-1}}\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  $\ds\int\!\frac{1}{\sqrt{e^{2x}-1}}\,\mathrm{d}x = \int\!\frac{1}{e^x\sqrt{1 - e^{-2x}}}\,\mathrm{d}x = \int\!\frac{e^{-x}}{\sqrt{1 - e^{-2x}}}\,\mathrm{d}x$。令 $\ds u = e^{-x}$，則 $\ds\mathrm{d}u = -e^{-x}\,\mathrm{d}x \ie e^{-x}\,\mathrm{d}x = -\text{d}u$；故 $\ds\int\!\frac{e^{-x}}{\sqrt{1 - e^{-2x}}}\,\mathrm{d}x = \int\!\frac{1}{\sqrt{1 - e^{-2x}}}\cdot e^{-x}\,\mathrm{d}x = -\int\!\frac{1}{\sqrt{1 - u^2}}\,\mathrm{d}u = -\sin^{-1} u + c = -\sin^{-1} e^{-x} + c$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\frac{1}{x^2 + 4x + 5}\,\mathrm{d}x$。
+\end{ex}
+\begin{sol}
+  $\ds\int\!\frac{1}{x^2 + 4x + 5}\,\mathrm{d}x = \int\!\frac{1}{(x + 2)^2 + 1}\,\mathrm{d}x$。令 $\ds u = x + 2$，則 $\ds\mathrm{d}u = \mathrm{d}x$；故 $\ds\int\!\frac{1}{(x + 2)^2 + 1}\,\mathrm{d}x = \int\!\frac{1}{u^2 + 1}\,\mathrm{d}u = \tan^{-1} u + c = \tan^{-1} (x+2) + c$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\frac{1}{\sqrt{4 + 2x - x^2}}\,\mathrm{d}x$
+\end{ex}
+    
+\begin{sol}
+  $\ds\int\!\frac{1}{\sqrt{4 + 2x - x^2}}\,\mathrm{d}x = \int\!\frac{1}{\sqrt{5 - (x - 1)^2}}\,\mathrm{d}x$。令 $u = x - 1$，則 $\ds\mathrm{d}u = \mathrm{d}x$；故 $\ds\int\!\frac{1}{\sqrt{5 - (x - 1)^2}}\,\mathrm{d}x = \int\!\frac{1}{\sqrt{5 - u^2}}\,\mathrm{d}u = \sin^{-1}\frac{u}{\sqrt{5}} + c = \sin^{-1}\frac{x - 1}{\sqrt{5}} + c$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\tan x\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  $\ds\int\!\tan x\,\mathrm{d}x = \int\!\frac{\sin x}{\cos x}\,\mathrm{d}x$。令 $u = \cos x$，則 $\mathrm{d}u = -\sin x\,\mathrm{d}x$；故 $\ds\int\!\frac{\sin x}{\cos x}\,\mathrm{d}x = \int\!\frac{-1}{u}\,\mathrm{d}u = -\ln|u| + c = -\ln|\cos x| + c = \ln|\sec x| + c$
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\sec x\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  $\ds\int\!\sec x\,\mathrm{d}x = \int\!\frac{\sec x\cdot(\sec x + \tan x)}{\sec x + \tan x}\,\mathrm{d}x$。令 $u = \sec x + \tan x$，則 $\ds\mathrm{d}u = (\sec^2 x + \sec x\tan x)\,\mathrm{d}x$；故 $\ds\int\!\frac{\sec x\cdot(\sec x + \tan x)}{\sec x + \tan x}\,\mathrm{d}x = \int\!\frac{1}{u}\,\mathrm{d}u = \ln|u| + c = \ln|\sec x + \tan x| + c$
+\end{sol}
+
+\begin{ex}
+  令 $\ds T_1 = \int\!\frac{\sin x}{a\cos x + b\sin x}\,\text{d}x$，$\ds T_2 = \int\!\frac{\cos x}{a\cos x + b\sin x}\,\text{d}x$，$a$、$b\ne 0$，求 $T_1$、$T_2$。
+\end{ex}
+
+\begin{sol}
+  \begin{enumerate}[label=(\alph*)]\setlength{\itemsep}{0pt}
+    \item[]
+    \item $\ds b T_1 + a T_2 = \int\!\frac{b\sin x}{a\cos x + b\sin x}\,\text{d}x + \int\!\frac{a\cos x}{a\cos x + b\sin x}\,\text{d}x = \int\!\frac{b\sin x + a\cos x}{a\cos x + b\sin x}\,\text{d}x = \int 1\,\text{d}x = x$。
+    \item $\ds -a T_1 + b T_2 = \int\!\frac{-a\sin x}{a\cos x + b\sin x}\,\text{d}x + \int\!\frac{b\cos x}{a\cos x + b\sin x}\,\text{d}x = \int\!\frac{-a\sin x + b\cos x}{a\cos x + b\sin x}\,\text{d}x = \int\!\frac{\text{d}u}{u} = \ln u = \ln|a\cos x + b\sin x|$（令 $\ds u = a\cos x + b\sin x$，則 $\ds\text{d}u = (-a\sin x + b\cos x)\,\text{d}x$）。
+  \end{enumerate}
+  解 $T_1$、$T_2$ 方程式 (a)、(b) 得 $\ds T_1 = \frac{bx - a\ln|a\cos x + b\sin x|}{a^2 + b^2}$，$\ds T_2 = \frac{ax + b\ln|a\cos x + b\sin x|}{a^2 + b^2}$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\cos^5 ax\,\mathrm{d}x$，$a\ne 0$。 
+\end{ex}
+
+\begin{sol}
+  $\ds\int\!\cos^5 ax\,\mathrm{d}x = \int(1-\sin^2 ax)^2\cos ax\,\mathrm{d}x$。令 $\ds u = \sin ax$，則 $\ds\mathrm{d}u = a\cos ax\,\mathrm{d}x$；故 $\ds\int(1-\sin^2 ax)^2\cos ax\,\mathrm{d}x = \frac{1}{a}\int(1-u^2)^2\,\mathrm{d}u = \frac{1}{a}\int(1 - 2u^2 + u^4)\,\mathrm{d}u = \frac{1}{a}\,\Big(u - \frac{2}{3}u^3 + \frac{1}{5}u^5\Big) + c = \frac{1}{a}\,\Big(\sin ax - \frac{2}{3}\sin^3 ax + \frac{1}{5}\sin^5 ax\Big) + c$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\cos^4 ax\,\mathrm{d}x$，$a\ne 0$。
+\end{ex}
+   
+\begin{sol}
+  $\ds\int\!\cos^4 ax\,\mathrm{d}x = \int\Big(\frac{1+\cos 2ax}{2}\Big)^2\,\mathrm{d}x = \frac{1}{4}\int\!\big(1+2\cos 2ax+\cos^2 2ax\big)\,\mathrm{d}x = \frac{1}{4}\int\!\big(1+2\cos 2ax+\frac{1 + \cos 4ax}{2}\big)\,\mathrm{d}x \\= \int\!\big(\frac{3}{8}+\frac{1}{2}\cos 2ax+\frac{1}{8}\cos 4ax\big)\,\mathrm{d}x = \frac{3}{8}x +\frac{1}{4a}\sin 2ax+\frac{1}{32a}\sin 4ax + c$
+\end{sol}
+ 
+\begin{exe} 以變數變換法求下列不定積分，其中 $a\ne b\ne 0$。注意：可能會因為常數項而跟此處答案不同。
+  \setlength{\columnsep}{-2cm}
+  \begin{multicols}{2}
+    \begin{enumerate}\setlength{\itemsep}{0pt}
+      \item $\ds\int e^{2x}\sin{e^{2x}}\,\mathrm{d}x {\color{C2}\;= -\frac{1}{2}\,\cos{e^{2x}} + c}$
+      \item $\ds\int x e^{-\frac{x^2}{2}}\,\mathrm{d}x {\color{C2}\;= -e^{-\frac{x^2}{2}} + c}$
+      \item $\ds\int\!\frac{\sin{\sqrt{x}}}{\sqrt{x}}\,\mathrm{d}x {\color{C2}\;= -2\cos{\sqrt{x}} + c}$
+      \item $\ds\int x^2 2^{x^3 + 1}\,\mathrm{d}x {\color{C2}\;= \frac{2^{x^3 + 1}}{3\ln 2} + c}$
+      \item $\ds\int\!\frac{\ln x}{x}\,\mathrm{d}x {\color{C2}\;= \frac{1}{2}\,(\ln x)^2 + c}$
+      \item $\ds\int\!\frac{x + 1}{\sqrt{x^2 + 2x + 3}}\,\mathrm{d}x {\color{C2}\;= \sqrt{x^2 + 2x + 3} + c}$
+      \item $\ds\int\!\frac{x^2}{2 + x^6}\,\mathrm{d}x {\color{C2}\;= \frac{1}{3\sqrt{2}}\tan^{-1}{\frac{x^3}{\sqrt{2}}} + c}$
+      \item $\ds\int\!\frac{1}{e^x + e^{-x}}\,\mathrm{d}x {\color{C2}\;= \tan^{-1}{e^{x}} + c}$
+      \item $\ds\int\!\frac{x + 1}{\sqrt{1 - x^2}}\,\mathrm{d}x {\color{C2}\;= -\sqrt{1 - x^2} + \sin^{-1} x + c}$
+      \item $\ds\int\!\frac{\sec^2 x}{\sqrt{1 - \tan^2 x}}\,\mathrm{d}x {\color{C2}\;= \sin^{-1}(\tan{x}) + c}$
+      \item $\ds\int\!\sin^4 x\cos^5 x\,\mathrm{d}x {\color{C2}\;= \frac{\sin^5 x}{5} - \frac{2\sin^7 x}{7} + \frac{\sin^9 x}{9} + c}$
+      \item $\ds\int\!\sin^2 x\cos^2 x\,\mathrm{d}x {\color{C2}\;= \frac{x}{8} - \frac{\sin 4x}{32} + c}$
+      \item $\ds\int\!\sin^{-\frac{2}{3}} x\cos^3 x\,\mathrm{d}x {\color{C2}\;= 3\sin^{\frac{1}{3}}x - \frac{3}{7}\sin^{\frac{7}{3}}x + c}$
+      \item $\ds\int\!\frac{\sin^3(\ln x)\cos^3(\ln x)}{x}\,\mathrm{d}x {\color{C2}\;= \frac{\sin^4(\ln x)}{4} - \frac{\sin^6(\ln x)}{6} + c}$
+      \item $\ds\int\!\frac{\sin^3 x}{\cos^4 x}\,\mathrm{d}x {\color{C2}\;= -\frac{1}{\cos x} + \frac{1}{3\cos^3 x} + c}$
+      \item $\ds\int\!\cos ax\cos bx\,\mathrm{d}x {\color{C2}\;= \frac{\sin{(a-b)x}}{2(a-b)} + \frac{\sin{(a+b)x}}{2(a+b)} + c}$
+      \item $\ds\int\!\sin ax\sin bx\,\mathrm{d}x {\color{C2}\;= \frac{\sin{(a-b)x}}{2(a-b)} - \frac{\sin{(a+b)x}}{2(a+b)} + c}$
+      \item $\ds\int\!\sin ax\cos bx\,\mathrm{d}x {\color{C2}\;= -\frac{\cos{(a-b)x}}{2(a-b)} - \frac{\cos{(a+b)x}}{2(a+b)} + c}$
+    \end{enumerate} 
+  \end{multicols}
+\end{exe}
+
+\begin{sol}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 令 $u = e^{2x}$，則 $\ds\text{d}u = 2e^{2x}\,\text{d}x\ie e^{2x}\,\text{d}x = \frac{1}{2}\,\text{d}u$。故 $\ds\int e^{2x}\sin{e^{2x}}\,\mathrm{d}x = \int\!\sin{e^{2x}}\cdot e^{2x}\,\text{d}x = \int\!\sin u\cdot\frac{1}{2}\,\text{d}u = -\frac{1}{2}\cos u + c = -\frac{1}{2}\,\cos{e^{2x}} + c$。
+    \item 令 $\ds u = \frac{x^2}{2}$，則 $\ds\text{d}u = x\,\text{d}x$，故 $\ds\int x e^{-\frac{x^2}{2}}\,\mathrm{d}x = \int e^{-\frac{x^2}{2}}\cdot x\,\mathrm{d}x = \int e^{-u}\,\text{d}u = -e^{-u} + c = -e^{-\frac{x^2}{2}} + c$
+    \item 令 $\ds u = \sqrt{x}$，則 $\ds\text{d}u = \frac{1}{2\sqrt{x}}\,\text{d}x\ie \frac{1}{\sqrt{x}}\,\text{d}x = 2\,\text{d}u$，故 $\ds\int\!\frac{\sin{\sqrt{x}}}{\sqrt{x}}\,\mathrm{d}x = \int\!\sin{\sqrt{x}}\cdot\frac{1}{\sqrt{x}}\,\text{d}x = \int\!\sin u\cdot 2\,\text{d}u = -2\cos u + c = -2\cos{\sqrt{x}} + c$
+    \item 令 $\ds u = x^3 + 1$，則 $\ds\text{d} u = 3 x^2\,\text{d}x\ie x^2\,\text{d}x = \frac{1}{3}\,\text{d}u$，故 $\ds\int x^2 2^{x^3 + 1}\,\mathrm{d}x = \int 2^{x^3 + 1}\cdot x^2\,\text{d}x = \int 2^u\cdot\frac{1}{3}\,\text{d}u = \frac{1}{3}\int e^{u\ln 2}\,\text{d}u = \frac{1}{3\ln 2}e^{u\ln 2} + c = \frac{2^{x^3 + 1}}{3\ln 2} + c$
+    \item 令 $\ds u = \ln x$，則 $\ds\text{d} u = \frac{1}{x}\,\text{d}x$，故 $\ds\int\!\frac{\ln x}{x}\,\mathrm{d}x = \int\!\ln x\cdot\frac{1}{x}\,\text{d}x = \int u\,\text{d}u = \frac{1}{2} u^2 + c = \frac{1}{2}\,(\ln x)^2 + c$
+    \item 令 $\ds u = x^2 + 2x + 3$，則 $\ds\text{d} u = (2 x + 2)\,\text{d}x\ie (x + 1)\,\text{d}x = \frac{1}{2}\,\text{d}u$，故 $\ds\int\!\frac{x + 1}{\sqrt{x^2 + 2x + 3}}\,\mathrm{d}x = \int\!\frac{1}{\sqrt{x^2 + 2x + 3}}\cdot(x + 1)\,\text{d}x = \int\!\frac{1}{\sqrt{u}}\cdot\frac{1}{2}\,\text{d}u = \sqrt{u} + c = \sqrt{x^2 + 2x + 3} + c$
+    \item 令 $\ds u = x^3$，則 $\ds\text{d} u = 3x^2\,\text{d}x\ie x^2\,\text{d}x = \frac{1}{3}\,\text{d}u$，故 $\ds\int\!\frac{x^2}{2 + x^6}\,\mathrm{d}x = \int\!\frac{1}{2 + x^6}\cdot x^2\,\text{d}x = \int\!\frac{1}{2 + u^2}\cdot\frac{1}{3}\,\text{d}u = \frac{1}{3\sqrt{2}}\tan^{-1}\frac{u}{\sqrt{2}} + c = \frac{1}{3\sqrt{2}}\tan^{-1}{\frac{x^3}{\sqrt{2}}} + c$
+    \item $\ds\int\!\frac{1}{e^x + e^{-x}}\,\mathrm{d}x = \int\!\frac{e^x}{e^{2x} + 1}\,\text{d}x$。令 $\ds u = e^x$，則 $\ds\text{d}u = e^x\,\text{d}x$，故 $\ds\int\!\frac{e^x}{e^{2x} + 1}\,\text{d}x = \int\!\frac{1}{e^{2x} + 1}\cdot e^x\,\text{d}x = \int\!\frac{1}{u^2 + 1}\,\text{d}u = \tan^{-1}u + c = \tan^{-1}{e^{x}} + c$。
+    \item $\ds\int\!\frac{x + 1}{\sqrt{1 - x^2}}\,\text{d}x = \int\!\frac{x}{\sqrt{1 - x^2}}\,\text{d}x + \int\!\frac{1}{\sqrt{1 - x^2}}\,\text{d}x$。令 $\ds u = \sqrt{1 - x^2}$，則 $\ds\text{d}u = \frac{-x}{\sqrt{1 - x^2}}\,\text{d}x\ie \frac{x}{\sqrt{1 - x^2}}\,\text{d}x = -\text{d}u$，故 $\ds\int\!\frac{x}{\sqrt{1 - x^2}}\,\text{d}x = \int-\text{d}u = -u + c = -\sqrt{1 - x^2}$，$\ds\int\!\frac{x + 1}{\sqrt{1 - x^2}}\,\text{d}x = \int\!\frac{x}{\sqrt{1 - x^2}}\,\text{d}x + \int\!\frac{1}{\sqrt{1 - x^2}}\,\text{d}x = -\sqrt{1 - x^2} + \sin^{-1}x + c$。
+    \item 令 $\ds u = \tan x$，則 $\ds\text{d}u = \sec^2 x\,\text{d}x$，故 $\ds\int\!\frac{\sec^2 x}{\sqrt{1 - \tan^2 x}}\,\mathrm{d}x = \int\!\frac{1}{\sqrt{1 - \tan^2 x}}\cdot \sec^2 x\,\text{d}x = \int\!\frac{1}{\sqrt{1 - u^2}}\,\text{d}u = \sin^{-1} u + c = \sin^{-1}(\tan{x}) + c $
+    \item $\ds\int\!\sin^4 x\cos^5 x\,\mathrm{d}x = \int\!\sin^4 x\cdot\cos^4 x\cdot\cos x\,\text{d}x = \int\!\sin^4x\cdot(1 - \sin^2 x)^2\cdot\cos x\,\text{d}x = \int\!\big(\sin^4x  - 2\sin^6x + \sin^8x\big)\cdot\cos x\,\text{d}x$。 令 $\ds u = \sin x$，則 $\ds\text{d}u = \cos x\,\text{d}x$，故 $\ds\int\!\big(\sin^4x  - 2\sin^6x + \sin^8x\big)\cdot\cos x\,\text{d}x = \int\!\big(u^4 - 2u^6 + u^8\big)\,\text{d}u = \frac{u^5}{5} - \frac{2u^7}{7} + \frac{u^9}{9} + c = \frac{\sin^5 x}{5} - \frac{2\sin^7 x}{7} + \frac{\sin^9 x}{9} + c$
+    \item $\ds\int\!\sin^2 x\cos^2 x\,\mathrm{d}x = \int\!\frac{1 - \cos 2x}{2}\cdot\frac{1 + \cos 2x}{2}\,\text{d}x = \frac{1}{4}\int\!\big(1 - \cos^2{2x}\big)\,\text{d}x = \frac{1}{4}\int\!\big(1 - \frac{1 + \cos 4x}{2}\big)\,\text{d}x = \frac{1}{4}\int\!\big(\frac{1}{2} + \frac{\cos 4x}{2}\big)\,\text{d}x = \frac{x}{8} - \frac{\sin 4x}{32} + c$
+    \item $\ds\int\!\sin^{-\frac{2}{3}} x\cos^3 x\,\mathrm{d}x = \int\!\sin^{-\frac{2}{3}} x\cdot\cos^2 x\cdot\cos x\,\mathrm{d}x = \int\!\sin^{-\frac{2}{3}} x\cdot(1 - \sin^2 x)\cdot\cos x\,\mathrm{d}x = \int\!\big(\sin^{-\frac{2}{3}} x - \sin^{\frac{4}{3}} x\big)\cdot\cos x\,\mathrm{d}x$。令 $u = \sin x$，則 $\ds\text{d}u = \cos x\,\text{d}x$，故 $\ds\int\!\big(\sin^{-\frac{2}{3}} x - \sin^{\frac{4}{3}} x\big)\cdot\cos x\,\mathrm{d}x = \int\!\big(u^{-\frac{2}{3}} - u^{\frac{4}{3}}\big)\,\text{d}u = 3u^{\frac{1}{3}} - \frac{3}{7}u^{\frac{7}{3}} + c = 3\sin^{\frac{1}{3}}x - \frac{3}{7}\sin^{\frac{7}{3}}x + c$
+    \item 令 $\ds u = \ln x$，則 $\ds\text{d}u = \frac{1}{x}\,\text{d}x$，故 $\ds\int\!\frac{\sin^3(\ln x)\cos^3(\ln x)}{x}\,\mathrm{d}x = \int\!\sin^3(\ln x)\cos^3(\ln x)\cdot\frac{1}{x}\,\mathrm{d}x = \int\!\sin^3u\cos^3u\,\text{d}u = \int\!\sin^3u\cdot\cos^2u\cdot\cos u\,\text{d}u = \int\!\sin^3 u\big(1 - \sin^2 u\big)\cdot\cos u\,\text{d}u = \int\!\big(\sin^3u - \sin^5u\big)\cdot\cos u\,\text{d}u$。令 $\ds w = \sin u$，則 $\ds\text{d}w = \cos u\,\text{d}u$，故 $\ds\int\!\big(\sin^3u - \sin^5u\big)\cdot\cos u\,\text{d}u = \int\!\big(w^3 - w^5\big)\,\text{d}w = \frac{w^4}{4} - \frac{w^6}{6} + c = \frac{\sin^4(\ln x)}{4} - \frac{\sin^6(\ln x)}{6} + c$
+    \item $\ds\int\!\frac{\sin^3 x}{\cos^4 x}\,\mathrm{d}x = \int\!\frac{\sin^2x\cdot\sin x}{\cos^4 x}\,\text{d}x = \int\!\frac{\sin^2x}{\cos^4 x}\cdot\sin x\,\text{d}x = \int\!\frac{1 - \cos^2 x}{\cos^4 x}\cdot\sin x\,\text{d}x = \int\!\big(\frac{1}{\cos^4 x} - \frac{1}{\cos^2 x}\big)\cdot\sin x\,\text{d}x$。令 $\ds u = \cos x$，則 $\ds\text{d}u = -\sin x\,\text{d}x\ie\sin x\,\text{d}x = -\text{d}u$，故 $\ds\int\!\big(\frac{1}{\cos^4 x} - \frac{1}{\cos^2 x}\big)\cdot\sin x\,\text{d}x = \int\!\big(\frac{1}{u^4} - \frac{1}{u^2}\big)(-)\,\text{d}u = \int\!\big(\frac{1}{u^2} - \frac{1}{u^4}\big)\,\text{d}u = -\frac{1}{u} + \frac{1}{3u^3} + c = -\frac{1}{\cos x} + \frac{1}{3\cos^3 x} + c$
+    \item 由積化和差公式 $\ds\cos\alpha\cos\beta = \frac{1}{2}\,\big(\cos(\alpha - \beta) + \cos(\alpha + \beta)\big)$，$\ds\int\!\cos ax\cos bx\,\text{d}x = \int\!\frac{1}{2}\,\big(\cos(ax - bx) + \cos(ax + bx)\big)\,\text{d}x = \int\!\frac{1}{2}\,\big(\cos(a - b)x + \cos(a + b)x\big)\,\text{d}x = \frac{\sin{(a-b)x}}{2(a-b)} + \frac{\sin{(a+b)x}}{2(a+b)}+ c$。
+    \item 由積化和差公式 $\ds\sin\alpha\sin\beta = \frac{1}{2}\,\big(\cos(\alpha - \beta) - \cos(\alpha + \beta)\big)$，$\ds\int\!\sin ax\sin bx\,\text{d}x = \int\!\frac{1}{2}\,\big(\cos(ax - bx) - \cos(ax + bx)\big)\,\text{d}x = \int\!\frac{1}{2}\,\big(\cos(a - b)x - \cos(a + b)x\big)\,\text{d}x = \frac{\sin{(a-b)x}}{2(a-b)} - \frac{\sin{(a+b)x}}{2(a+b)}+ c$。
+    \item 由積化和差公式 $\ds\sin\alpha\cos\beta = \frac{1}{2}\,\big(\sin(\alpha - \beta) + \sin(\alpha + \beta)\big)$，$\ds\int\!\sin ax\cos bx\,\text{d}x = \int\!\frac{1}{2}\,\big(\sin(ax - bx) + \sin(ax + bx)\big)\,\text{d}x = \int\!\frac{1}{2}\,\big(\sin(a - b)x + \sin(a + b)x\big)\,\text{d}x = -\frac{\cos{(a-b)x}}{2(a-b)} - \frac{\cos{(a+b)x}}{2(a+b)}+ c$。
+  \end{enumerate}
+\end{sol}
+
+\myline
+
+\subsection*{部份積分法}
+
+\begin{fact}
+  $\ds\frac{\mathrm{d}}{\mathrm{d}x}\,(u(x)\,v(x)) = u(x)\,\frac{\mathrm{d}v(x)}{\mathrm{d}x} + v(x)\,\frac{\mathrm{d}u(x)}{\mathrm{d}x}\ie u(x)\,v(x) = \int u(x)\,\mathrm{d}v(x) + \int v(x)\,\mathrm{d}u(x) \\ \ie \int u\,\text{d}v = u\,v - \int v\,\text{d}u$。
+\end{fact}
+
+\begin{ex}
+  求 $\ds\int x\, e^{x}\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  令 $u = x$，則 $\ds\mathrm{d}u = \mathrm{d}x$。令 $\ds\mathrm{d}v = e^x\,\mathrm{d}x$，則 $\ds v = e^x$。故 $\ds\int x\, e^{x}\,\mathrm{d}x = x\cdot e^x - \int e^x\,\mathrm{d}x = xe^x - e^x + c$。
+\end{sol}
+    
+\begin{ex}
+  求 $\ds\int\!\ln x\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  令 $\ds u = \ln x$，則 $\ds\mathrm{d}u = \frac{1}{x}\mathrm{d}x$。令 $\ds\mathrm{d}v = \mathrm{d}x$，則 $v = x$。故 $\ds\int\!\ln x\,\mathrm{d}x = \ln x \cdot x - \int x\cdot\frac{1}{x}\,\mathrm{d}x = x\ln x - x + c$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int x\tan^{-1} x\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  令 $\ds u = \tan^{-1} x$，則 $\ds\mathrm{d}u = \frac{1}{1 + x^2}\mathrm{d}x$。令 $\ds\mathrm{d}v = x\,\mathrm{d}x$，則 $\ds v = \frac{x^2}{2}$。故 $\ds\int x\tan^{-1} x\,\mathrm{d}x = \tan^{-1} x\cdot\frac{x^2}{2} - \frac{1}{2}\int\!\frac{x^2}{1 + x^2}\,\mathrm{d}x = \tan^{-1} x\cdot\frac{x^2}{2} - \frac{1}{2}\int\!\big(1 - \frac{1}{1 + x^2}\big)\,\mathrm{d}x = \tan^{-1}x \cdot\frac{x^2}{2} - \frac{1}{2}\big(x - \tan^{-1} x\big) + c$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!x^2\sin x\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  令 $\ds u = x^2$，則 $\ds\mathrm{d}u = 2x\,\mathrm{d}x$；令 $\ds\mathrm{d}v = \sin x\,\mathrm{d}x$，則 $\ds v = -\cos x$。故 $\ds\int\!x^2\,\sin x\,\mathrm{d}x = x^2\cdot(-\cos x) + 2 \int\!x \cos x\,\mathrm{d}x$。令 $\ds u = x$，則 $\ds\mathrm{d}u = \mathrm{d}x$；令 $\ds\mathrm{d}v = \cos x\,\mathrm{d}x$，則 $\ds v = \sin x$。故 $\ds\int\!x \cos x\,\mathrm{d}x = x\cdot\sin x - \int\!\sin x\,\mathrm{d}x = x\cdot\sin x + \cos x$。由上，$\ds\int\!x^2\sin x\,\mathrm{d}x = -x^2\cos x + 2 (x\sin x + \cos x) + c$。
+\end{sol}
+    
+\begin{ex}
+  求 $\ds\int\!\sin^{-1}\sqrt{1 - x^2}\,\mathrm{d}x$，$x > 0$。
+\end{ex}
+
+\begin{sol}
+  令 $\ds u = \sin^{-1}\sqrt{1 - x^2}$，則 $\ds\mathrm{d}u = \frac{1}{\sqrt{1 - \big(\sqrt{1 - x^2}\big)^2}}\cdot\frac{-x}{\sqrt{1 - x^2}}\,\mathrm{d}x = \frac{1}{\sqrt{x^2}}\cdot\frac{-x}{\sqrt{1 - x^2}}\,\mathrm{d}x = \frac{-1}{\sqrt{1 - x^2}}\,\mathrm{d}x$；令 $\ds\mathrm{d}v = \mathrm{d}x$，則 $\ds v = x$。故 $\ds\int\!\sin^{-1}\sqrt{1 - x^2}\,\mathrm{d}x = x\,\sin^{-1}\sqrt{1 - x^2} + \int\!\frac{x}{\sqrt{1 - x^2}}\,\mathrm{d}x = x\,\sin^{-1}\sqrt{1 - x^2} - \sqrt{1 - x^2}$。
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!e^{ax}\cos bx\,\mathrm{d}x$ 與 $\ds\int\!e^{ax}\sin bx\,\mathrm{d}x$，$a$、$b\ne 0$。
+\end{ex}
+
+\begin{sol}
+  \begin{enumerate}[label=(\alph*)]\setlength{\itemsep}{0pt}
+    \item[]
+    \item 考慮 $\ds\int\!e^{ax}\cos bx\,\mathrm{d}x$：令 $\ds u = \cos bx$，則 $\ds\mathrm{d}u = -b\sin bx\,\mathrm{d}x$；令 $\ds\mathrm{d}v = e^{ax}\,\mathrm{d}x$，則 $\ds v = \frac{1}{a}\,e^{ax}$，故 $\ds\int\!e^{ax}\cos bx\,\mathrm{d}x = \cos bx\cdot \frac{1}{a}e^{ax} + \frac{b}{a}\int\!e^{ax}\cdot\sin bx\,\mathrm{d}x$。
+    \item 考慮 $\ds\int\!e^{ax}\sin bx\,\mathrm{d}x$：令 $\ds u = \sin bx$，則 $\ds\mathrm{d}u = b\cos bx\,\mathrm{d}x$；令 $\ds\mathrm{d}v = e^{ax}\,\mathrm{d}x$，則 $\ds v = \frac{1}{a}\,e^{ax}$，故 $\ds\int\!e^{ax}\sin bx\,\mathrm{d}x = \sin bx\cdot \frac{1}{a}\,e^{ax} - \frac{b}{a}\int\!e^{ax}\cdot\cos bx\,\mathrm{d}x$。
+  \end{enumerate}
+  \noindent 令 $\ds X = \int\!e^{ax}\cos bx\,\mathrm{d}x$，$\ds Y = \int\!e^{ax}\sin bx\,\mathrm{d}x$，由 (a)(b) $\ds X = \cos bx\cdot\frac{1}{a}e^{ax} + \frac{b}{a}\,Y$，$\ds Y = \sin bx\cdot\frac{1}{a}e^{ax} - \frac{b}{a}\,X$。解 $X$、$Y$ 得 $\ds X = \frac{e^{ax}(a\cos bx + b\sin bx)}{a^2 + b^2}$，$\ds Y = \frac{e^{ax}(a\sin bx - b\cos bx)}{a^2 + b^2}$。
+\end{sol}
+
+\subsection*{列表法}
+
+\begin{fact}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 將要微分函數寫左邊、積分函數寫右邊；左邊連續微分、右邊連續積分
+    \item 依序左上連右下斜線函數相乘，最底部水平兩邊函數相乘並積分，符號正負相間
+    \item 將上式所得項全部加總即為所求積分
+  \end{enumerate}
+\end{fact}
+
+\begin{ex}
+  求 $\ds\int (x + 3)\,e^{2x}\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol} 
+  \begin{minipage}{0.45\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$x+3$};
+      \draw (1,  -0) node[right]{$e^{2x}$};
+      \draw (-1, -1) node[left]{$1$};
+      \draw (-1, -2) node[left]{$0$};
+      \draw (1,  -1) node[right]{$\frac{1}{2}e^{2x}$};
+      \draw (1,  -2) node[right]{$\frac{1}{4}e^{2x}$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.5\textwidth}
+     $\ds\int (x + 3)\,e^{2x}\,\mathrm{d}x = (x + 3)\,\frac{1}{2}e^{2x} - \frac{1}{4}e^{2x}$
+  \end{minipage}
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int (x^2 - 2x)\,e^{kx}\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol} 
+  \begin{minipage}{0.35\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$x^2 - 2x$};
+      \draw (1,  -0) node[right]{$e^{kx}$};
+      \draw (-1, -1) node[left]{$2(x - 1)$};
+      \draw (-1, -2) node[left]{$2$};
+      \draw (-1, -3) node[left]{$0$};
+      \draw (1,  -1) node[right]{$\frac{1}{k}e^{kx}$};
+      \draw (1,  -2) node[right]{$\frac{1}{k^2}e^{kx}$};
+      \draw (1,  -3) node[right]{$\frac{1}{k^3}e^{kx}$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -2)--(1, -3); \draw[M4] (0, -2.5) node[above]{$+$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.6\textwidth}
+    $\ds\int (x^2 - 2x)\,e^{kx}\,\mathrm{d}x = (x^2 - 2x)\,\frac{1}{k}e^{kx} - 2(x-1)\frac{1}{k^2}e^{kx} + 2\frac{1}{k^3}e^{kx}$
+  \end{minipage}
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int x^4\,\sin 2x\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol} 
+  \begin{minipage}{0.25\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$x^4$};
+      \draw (1,  -0) node[right]{$\sin 2x$};
+      \draw (-1, -1) node[left]{$4x^3$};
+      \draw (-1, -2) node[left]{$12x^2$};
+      \draw (-1, -3) node[left]{$24x$};
+      \draw (-1, -4) node[left]{$24$};
+      \draw (-1, -5) node[left]{$0$};
+      \draw (1,  -1) node[right]{$-\frac{1}{2}\cos 2x$};
+      \draw (1,  -2) node[right]{$-\frac{1}{4}\sin 2x$};
+      \draw (1,  -3) node[right]{$\frac{1}{8}\cos 2x$};
+      \draw (1,  -4) node[right]{$\frac{1}{16}\sin 2x$};
+      \draw (1,  -5) node[right]{$-\frac{1}{32}\cos 2x$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -2)--(1, -3); \draw[M4] (0, -2.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -3)--(1, -4); \draw[C4] (0, -3.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -4)--(1, -5); \draw[M4] (0, -4.5) node[above]{$+$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.7\textwidth}
+    $\ds\int x^4\,\sin 2x\,\mathrm{d}x \\= -x^4\,\frac{1}{2}\cos 2x + 4x^3\,\frac{1}{4}\sin 2x + 12x^2\,\frac{1}{8}\cos 2x - 24x\,\frac{1}{16}\sin 2x - 24\,\frac{1}{32}\cos 2x \\= \bigg(-\frac{x^4}{2} + \frac{3x^2}{2} - \frac{3}{4}\bigg)\cos 2x\,+\,\bigg(x^3-\frac{3x}{2}\bigg)\sin 2x$
+  \end{minipage}
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int x^5\,e^{ax}\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol} 
+  \begin{minipage}{0.3\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$x^5$};
+      \draw (1,  -0) node[right]{$e^{ax}$};
+      \draw (-1, -1) node[left]{$5x^4$};
+      \draw (-1, -2) node[left]{$20x^3$};
+      \draw (-1, -3) node[left]{$60x^2$};
+      \draw (-1, -4) node[left]{$120x$};
+      \draw (-1, -5) node[left]{$120$};
+      \draw (-1, -6) node[left]{$0$};
+      \draw (1,  -1) node[right]{$\frac{1}{a}e^{ax}$};
+      \draw (1,  -2) node[right]{$\frac{1}{a^2}e^{ax}$};
+      \draw (1,  -3) node[right]{$\frac{1}{a^3}e^{ax}$};
+      \draw (1,  -4) node[right]{$\frac{1}{a^4}e^{ax}$};
+      \draw (1,  -5) node[right]{$\frac{1}{a^5}e^{ax}$};
+      \draw (1,  -6) node[right]{$\frac{1}{a^6}e^{ax}$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -2)--(1, -3); \draw[M4] (0, -2.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -3)--(1, -4); \draw[C4] (0, -3.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -4)--(1, -5); \draw[M4] (0, -4.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -5)--(1, -6); \draw[C4] (0, -5.5) node[above]{$-$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.65\textwidth}
+    $\ds\int x^5\,e^{ax}\,\mathrm{d}x \\ = x^5\,\frac{1}{a}e^{ax} - 5x^4\,\frac{1}{a^2}e^{ax} + 20x^3\,\frac{1}{a^3}e^{ax} - 60x^2\,\frac{1}{a^4}e^{ax} + 120x\,\frac{1}{a^5}e^{ax} - 120\,\frac{1}{a^6}e^{ax} \\ = \bigg(\frac{x^5}{a}-\frac{5x^4}{a^2} + \frac{20x^3}{a^3} - \frac{60x^2}{a^4} + \frac{120x}{a^5} - \frac{120}{a^6}\bigg)\,e^{ax}$
+  \end{minipage}
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int(\sin^{-1} x)^2\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol} 
+  \begin{minipage}{0.35\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$(\sin^{-1} x)^2$};
+      \draw (1,  -0) node[right]{$1$};
+      \draw (-1, -1) node[left]{$\frac{2\sin^{-1} x}{\sqrt{1-x^2}}$};
+      \draw (1,  -1) node[right]{$x$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -1); \draw[C4] (0, -1) node[below]{$-$};
+    \end{tikzpicture}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$2\sin^{-1} x$};
+      \draw (1,  -0) node[right]{$\frac{x}{\sqrt{1-x^2}}$};
+      \draw (-1, -1) node[left]{$\frac{2}{\sqrt{1-x^2}}$};
+      \draw (1,  -1) node[right]{$-\sqrt{1 - x^2}$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -1); \draw[C4] (0, -1) node[below]{$-$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.6\textwidth}
+    $\ds\int(\sin^{-1} x)^2\,\mathrm{d}x = (\sin^{-1} x)^2\cdot x - \int\!\frac{2\sin^{-1} x}{\sqrt{1-x^2}}\cdot x\,\mathrm{d}x \\= (\sin^{-1} x)^2\cdot x - \int\!2\sin^{-1} x\cdot\frac{x}{\sqrt{1-x^2}}\,\mathrm{d}x \\= (\sin^{-1} x)^2\cdot x - \bigg(-2\sin^{-1} x\cdot\sqrt{1-x^2} + \int\!\frac{2}{\sqrt{1-x^2}}\cdot\sqrt{1-x^2}\,\mathrm{d}x\bigg)\\ = (\sin^{-1} x)^2\cdot x + 2\sin^{-1} x\cdot\sqrt{1-x^2} - 2x$
+  \end{minipage}
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!e^{ax}\cos bx\,\mathrm{d}x$，$a$、$b\ne 0$。
+\end{ex}
+
+\begin{sol} 
+  \begin{minipage}{0.35\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$\cos bx$};
+      \draw (1,  -0) node[right]{$e^{ax}$};
+      \draw (-1, -1) node[left]{$-b\sin bx$};
+      \draw (-1, -2) node[left]{$-b^2\cos bx$};
+      \draw (1,  -1) node[right]{$\frac{1}{a}e^{ax}$};
+      \draw (1,  -2) node[right]{$\frac{1}{a^2}e^{ax}$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -2)--(1, -2); \draw[M4] (0, -2.5) node[above]{$+$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.6\textwidth}
+    $\ds\int\!e^{ax}\cos bx\,\mathrm{d}x = \frac{1}{a}e^{ax}\cos bx + \frac{b}{a^2}e^{ax}\sin bx - \frac{b^2}{a^2}\int\!e^{ax}\cos bx\,\mathrm{d}x\\ \ie\int\!e^{ax}\cos bx\,\mathrm{d}x = \frac{e^{ax}(a\cos bx + b\sin bx)}{a^2 + b^2}$
+  \end{minipage}
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!e^{ax}\sin bx\,\mathrm{d}x$，$a$、$b\ne 0$。
+\end{ex}
+
+\begin{sol} 
+  \begin{minipage}{0.35\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$\sin bx$};
+      \draw (1,  -0) node[right]{$e^{ax}$};
+      \draw (-1, -1) node[left]{$b\cos bx$};
+      \draw (-1, -2) node[left]{$-b^2\sin bx$};
+      \draw (1,  -1) node[right]{$\frac{1}{a}e^{ax}$};
+      \draw (1,  -2) node[right]{$\frac{1}{a^2}e^{ax}$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -2)--(1, -2); \draw[M4] (0, -2.5) node[above]{$+$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.6\textwidth}
+    $\ds\int\!e^{ax}\sin bx\,\mathrm{d}x = \frac{1}{a}e^{ax}\sin bx - \frac{b}{a^2}e^{ax}\cos bx - \frac{b^2}{a^2}\int\!e^{ax}\sin bx\,\mathrm{d}x\\ \ie\int\!e^{ax}\sin bx\,\mathrm{d}x = \frac{e^{ax}(a\sin bx - b\cos bx)}{a^2 + b^2}$
+  \end{minipage}
+\end{sol}
+
+\subsubsection*{遞迴式}
+\begin{ex} 
+  求 $\ds I_n = \int\!\frac{1}{(x^2 + a^2)^n}\,\mathrm{d}x$，$n\in\mathbb{N}$ 之遞迴式：令 $\ds u = \frac{1}{(x^2 + a^2)^n}$，則 $\ds\text{d}u = -2n\,\frac{x}{(x^2 + a^2)^{n + 1}}\,\text{d}x$；$\ds\text{d}v = \text{d}x$，則 $\ds v = x$。故 $\ds I_n = \int\!\frac{1}{(x^2 + a^2)^n}\,\mathrm{d}x = \frac{x}{(x^2 + a^2)^n} + 2n\int\!\frac{x^2}{(x^2 + a^2)^{n + 1}}\,\text{d}x = \frac{x}{(x^2 + a^2)^n} + 2n\int\frac{(x^2 + a^2 - a^2)}{(x^2 + a^2)^{n + 1}}\,\text{d}x = \frac{x}{(x^2 + a^2)^n} + 2n I_n - 2na^2 I_{n + 1}\ie 2na^2 I_{n + 1} = \frac{x}{(x^2 + a^2)^n} + (2n - 1)I_n\ie I_{n + 1} = \frac{x}{2na^2(x^2 + a^2)^n} + \frac{2n - 1}{2na^2}I_n$。使用例：$\ds I_1 = \frac{1}{a}\tan^{-1}\frac{x}{a}$，$\ds I_2 = \frac{1}{2a^2}\,I_1 + \frac{x}{2a^2(x^2+a^2)} = \frac{1}{2a^3}\tan^{-1}\frac{x}{a} + \frac{x}{2a^2(x^2+a^2)}$，$\ds I_3 = \frac{3}{4a^2}\,I_2 + \frac{x}{4a^2(x^2+a^2)^2} \\ = \frac{3}{4a^2}\bigg(\frac{1}{2a^3}\tan^{-1}\frac{x}{a} + \frac{x}{2a^2(x^2+a^2)}\bigg) + \frac{x}{4a^2(x^2+a^2)^2} = \frac{3}{8a^5}\tan^{-1}\frac{x}{a} + \frac{3x}{8a^4(x^2+a^2)} + \frac{x}{4a^2(x^2+a^2)^2}$。
+\end{ex}
+
+\begin{ex} 
+  求 $\ds J_n = \int\!\sin^n x\,\mathrm{d}x$，$n\in\mathbb{N}$，$n\geqslant 2$ 之遞迴式：令 $\ds u = \sin^{n-1}x$，則 $\ds\text{d}u = (n - 1)\,\sin^{n - 2}x\,\cos x\,\text{d}x$；$\ds\text{d}v = \sin x\,\text{d}x$，則 $\ds v = -\cos x$。故 $\ds J_n = \int\!\sin^n x\,\mathrm{d}x = -\sin^{n - 1}x\cdot\cos x + (n - 1)\,\int\!\cos x\cdot\sin^{n - 2}x\cos x\,\text{d}x = -\sin^{n - 1}x\cos x + (n - 1)\,\int\!\sin^{n - 2}x\cos^2 x\,\text{d}x = -\sin^{n - 1}x\cos x + (n - 1)\,\int\!\sin^{n - 2}x\cdot(1 - \sin^2 x)\,\text{d}x = -\sin^{n - 1}x\cos x + (n - 1)\,\int\!\sin^{n - 2}x\,\text{d}x - (n - 1)\,\int\!\sin^n x\,\text{d}x = -\sin^{n - 1}x\cos x + (n - 1) J_{n - 2} + (1 - n)J_n\ie n J_n = -\sin^{n - 1}x\cos x + (n - 1) J_{n - 2} \ie J_n = \frac{-\sin^{n - 1}x\cos x}{n} + \frac{n - 1}{n}\,J_{n - 2}$。\\使用例：$\ds J_2 = \frac{-\sin x\cos x}{2} + \frac{1}{2}\,J_0 = \frac{-\sin x\cos x}{2} + \frac{x}{2}$，$\ds J_3 = \frac{-\sin^2 x\cos x}{3} + \frac{2}{3}\,J_1 = \frac{-\sin^2 x\cos x}{3} - \frac{2\cos x}{3}$，$\ds J_4 = \frac{-\sin^3 x\cos x}{4} + \frac{3}{4}\,J_2 = \frac{-\sin^3 x\cos x}{4} + \frac{3\sin x\cos x}{8} - \frac{3x}{8}$。
+\end{ex}
+
+\begin{exe} 以部份積分法求下列不定積分。注意：可能會因為常數項而跟此處答案不同。
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    %\item $\ds\int(x+3)e^{2x}\,\mathrm{d}x {\color{C2}\;= \frac{(x+3)e^{2x}}{2}-\frac{e^{2x}}{4} + c}$
+    %\item $\ds\int(x^2 - 2x)e^{kx}\,\mathrm{d}x {\color{C2}\;= \frac{(x^2-2x)e^{kx}}{k} + \frac{2(x-1)e^{kx}}{k^2} + \frac{2e^{kx}}{k^3} + c}$
+    \item $\ds\int x^3\ln x\,\mathrm{d}x {\color{C2}\;= \frac{x^4}{4}\ln x -\frac{x^4}{16} + c}$
+    \item $\ds\int x(\ln x)^3\,\mathrm{d}x {\color{C2}\;= \frac{x^2}{2}\Big((\ln x)^3 -\frac{3(\ln x)^2}{2} + \frac{3\ln x}{2} - \frac{3}{4} \Big) + c}$
+    \item $\ds\int x^2\tan^{-1} x\,\mathrm{d}x {\color{C2}\;= \frac{x^3}{3}\tan^{-1} x - \frac{x^2}{6} + \frac{\ln(1 + x^2)}{6} + c}$
+    \item $\ds\int x^5 e^{-x^2}\,\mathrm{d}x {\color{C2}\;= -\frac{1}{2}e^{-x^2}(x^4 + 2x^2 + 2) + c}$
+    \item $\ds\int x e^{\sqrt{x}}\,\mathrm{d}x {\color{C2}\;= 2\,e^{\sqrt{x}}\,\big(x\sqrt{x} - 3x + 6\sqrt{x} - 6\big) + c}$
+    %\item $\ds\int(\sin^{-1} x)^2\,\mathrm{d}x {\color{C2}\;= x\,(\sin^{-1} x)^2 + 2\sqrt{1 - x^2}\,\sin^{-1} x - 2x + c}$
+    \item $\ds\int\!\frac{x e^x}{(x + 1)^2}\,\mathrm{d}x {\color{C2}\;= \frac{e^x}{x + 1} + c}  $
+    \item $\ds\int\!\sin(\ln x)\,\mathrm{d}x {\color{C2}\;= \frac{x\,(\sin(\ln x) - \cos(\ln x))}{2} + c}$
+    \item $\ds\int\!\frac{\ln x}{\sqrt{1 + x}}\,\mathrm{d}x {\color{C2}\;= \ln x\cdot 2\sqrt{1 + x} - 4\sqrt{1+x} - 2\ln(\sqrt{1 + x}-1) + 2\ln(\sqrt{1+x} + 1) + c}$
+  \end{enumerate}
+\end{exe}
+
+\begin{sol}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 令 $\ds u = \ln x$，則 $\ds\text{d}u = \frac{1}{x}\,\text{d}x$；$\ds\text{d}v = x^3\,\text{d}x$，則 $\ds v = \frac{x^4}{4}$。 故 $\ds\int x^3\ln x\,\mathrm{d}x = \ln x\cdot\frac{x^4}{4} - \int\!\frac{x^4}{4}\cdot\frac{1}{x}\,\text{d}x = \ln x\cdot\frac{x^4}{4} - \int\!\frac{x^3}{4}\,\text{d}x = \ln x\cdot\frac{x^4}{4} - \frac{x^4}{16} + c$。  
+    \item 令 $\ds u = (\ln x)^3$，則 $\ds\text{d}u = 3(\ln x)^2\cdot\frac{1}{x}\,\text{d}x$；$\ds\text{d}v = x\,\text{d}x$，則 $\ds v = \frac{x^2}{2}$。 故 $\ds\int x(\ln x)^3\,\mathrm{d}x = (\ln x)^3\cdot\frac{x^2}{2} - \int\!\frac{x^2}{2}\cdot 3(\ln x)^2\cdot\frac{1}{x}\,\text{d}x = (\ln x)^3\cdot\frac{x^2}{2} - \frac{3}{2}\int x(\ln x)^2\,\text{d}x$。令 $\ds u = (\ln x)^2$，則 $\ds\text{d}u = 2\,\ln x\cdot\frac{1}{x}\,\text{d}x$；$\ds\text{d}v = x\,\text{d}x$，則 $\ds v = \frac{x^2}{2}$。 故 $\ds\int x(\ln x)^2\,\text{d}x = (\ln x)^2\cdot\frac{x^2}{2} - \int\!\frac{x^2}{2}\cdot 2\ln x\cdot\frac{1}{x}\,\text{d}x = (\ln x)^2\cdot\frac{x^2}{2} - \int x\ln x\,\text{d}x$。令 $\ds u = \ln x$，則 $\ds\text{d}u = \frac{1}{x}\,\text{d}x$；$\ds\text{d}v = x\,\text{d}x$，則 $\ds v = \frac{x^2}{2}$。故 $\ds\int x\ln x\,\text{d}x = \ln x\cdot\frac{x^2}{2} - \int\!\frac{x^2}{2}\cdot\frac{1}{x}\,\text{d}x = \ln x\cdot\frac{x^2}{2} - \frac{1}{2}\int x\,\text{d}x = \ln x\cdot\frac{x^2}{2} - \frac{x^2}{4}$。以上，$\ds\int x(\ln x)^3\,\mathrm{d}x = (\ln x)^3\cdot\frac{x^2}{2} - \frac{3}{2}\Big((\ln x)^2\cdot\frac{x^2}{2} - \big(\ln x\cdot\frac{x^2}{2} - \frac{x^2}{4}\big)\Big) = \frac{x^2}{2}\big((\ln x)^3 - \frac{3(\ln x)^2}{2} + \frac{3\ln x}{2} - \frac{3}{4}\big) + c$
+    \item 令 $\ds u = \tan^{-1} x$，則 $\ds\text{d}u = \frac{1}{1 + x^2}\,\text{d}x$；$\ds\text{d}v = x^2\,\text{d}x$，則 $\ds v = \frac{x^3}{3}$。 故 $\ds\int x^2\tan^{-1} x\,\mathrm{d}x = \tan^{-1}x\cdot\frac{x^3}{3} - \int\!\frac{x^3}{3}\cdot\frac{1}{x^2 + 1}\,\text{d}x$。又 $\ds\int\!\frac{x^3}{3}\cdot\frac{1}{x^2 + 1}\,\text{d}x = \frac{1}{3}\int\!\frac{(x^3 + x) - x}{x^2 + 1}\,\text{d}x = \frac{1}{3}\int\!\frac{x(x^2 + 1) - x}{x^2 + 1}\,\text{d}x = \frac{1}{3}\int\!\big(x - \frac{x}{x^2 + 1}\big)\,\text{d}x$。令 $\ds w = x^2 + 1$，則 $\ds\text{d}w = 2x\,\text{d}x\ie x\,\text{d}x = \frac{1}{2}\,\text{d}w$，故 $\ds\int\!\frac{x}{x^2 + 1}\,\text{d}x = \int\!\frac{1}{x^2 + 1}\cdot x\,\text{d}x = \int\!\frac{1}{w}\cdot\frac{1}{2}\,\text{d}w = \frac{1}{2}\ln w + c = \frac{1}{2}\ln(x^2 + 1) + c$。以上，$\ds\int x^2\tan^{-1} x\,\mathrm{d}x = \tan^{-1}x\cdot\frac{x^3}{3} - \int\!\frac{x^3}{3}\cdot\frac{1}{x^2 + 1}\,\text{d}x = \tan^{-1}x\cdot\frac{x^3}{3} - \frac{x^2}{6} + \frac{\ln(x^2 + 1)}{6} + c$。
+    \item 令 $\ds w = x^2$，則 $\ds\text{d}w = 2x\,\text{d}x\ie x\,\text{d}x = \frac{1}{2}\,\text{d}w$，故 $\ds\int x^5 e^{-x^2}\,\text{d}x = \int e^{-x^2}\cdot(x^2)^2\cdot x\,\text{d}x = \int e^{-w}\cdot w^2\cdot\frac{1}{2}\,\text{d}w = \frac{1}{2}\int w^2\,e^{-w}\,\text{d}w = -\frac{1}{2}\,e^{-w}(w^2 + 2w + 2) = -\frac{1}{2}\,e^{-x^2}(x^4 + 2x^2 + 2) + c$。\\
+  \begin{minipage}{0.15\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$w^2$};
+      \draw (1,  -0) node[right]{$e^{-w}$};
+      \draw (-1, -1) node[left]{$2w$};
+      \draw (-1, -2) node[left]{$2$};
+      \draw (-1, -3) node[left]{$0$};
+      \draw (1,  -1) node[right]{$-e^{-w}$};
+      \draw (1,  -2) node[right]{$e^{-w}$};
+      \draw (1,  -3) node[right]{$-e^{-w}$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -2)--(1, -3); \draw[M4] (0, -2.5) node[above]{$+$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.8\textwidth}
     \begin{align*}
-      f(x) = \begin{cases} 0 & \text{若 }\; x \leqslant 1 \\ 1 & \text{若 }\; x > 1\end{cases}
-      \hskip0.8in  \smash{\raisebox{-0.5\height}{\includegraphics{fig/mvtd.pdf}}}
+      \int w^2 e^{-w}\,\mathrm{d}w = -w^2\,e^{-w} - 2w\,e^{-w} - 2\,e^{-w} = -e^{-w}(w^2 + 2w + 2)
     \end{align*}
-    \medskip
-    \noindent
-    當 $x\ne 1$ 時 $f'(x) = 0$，但連接 $\ds(a,\,f(a))=(0,\,0)$ 與 $\ds(b,\,f(b))=(2,\,1)$ 之割線斜率為 $\ds\frac{1}{2}$。
-   \item 令 $a=-1$，$b=1$, $f(x)=|x|$。
-    \smallskip
+  \end{minipage}
+\item 令 $\ds w = \sqrt{x}$，則 $\ds w^2 = x$，$\ds\text{d}x = 2w\,\text{d}w$，故 $\ds\int x e^{\sqrt{x}}\,\mathrm{d}x = \int w^2 e^w\cdot 2w\,\text{d}w = 2\int w^3 e^w\,\text{d}w = 2\,e^w(w^3 - 3w^2 + 6w - 6) = 2\,e^{\sqrt{x}}\,(x\sqrt{x} - 3 x + 6\sqrt{x} - 6) + c$ \\ 
+  \begin{minipage}{0.15\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$w^3$};
+      \draw (1,  -0) node[right]{$e^w$};
+      \draw (-1, -1) node[left]{$3w^2$};
+      \draw (-1, -2) node[left]{$6w$};
+      \draw (-1, -3) node[left]{$6$};
+      \draw (-1, -4) node[left]{$0$};
+      \draw (1,  -1) node[right]{$e^w$};
+      \draw (1,  -2) node[right]{$e^w$};
+      \draw (1,  -3) node[right]{$e^w$};
+      \draw (1,  -4) node[right]{$e^w$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -2)--(1, -3); \draw[M4] (0, -2.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -3)--(1, -4); \draw[C4] (0, -3.5) node[above]{$-$};
+    \end{tikzpicture}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.8\textwidth}
     \begin{align*}
-      f'(x) = \begin{cases} -1  & \text{若 }\;x < 0 \\ \text{DNE} & \text{若 }\; x = 0\\ 1 & \text{若 }\; x > 0\end{cases}
-      \hskip0.8in  \smash{\raisebox{-0.5\height}{\includegraphics{fig/mvte.pdf}}}
+      \int w^3\,e^w\,\mathrm{d}w = w^3\,e^w - 3w^2\,e^w + 6w\,e^w - 6\,e^w = e^w(w^3 - 3w^2 + 6w - 6)
     \end{align*}
-    \smallskip
-    \noindent
-    當 $x\ne 0$ 時 $f'(x)=\pm 1$，但連接 $(a,\,f(a))=(-1,\,1)$ 與 $(b,\,f(b))=(1,\,1)$ 之割線斜率為 $0$。
+  \end{minipage}
+    %\item 令 $\ds u = (\sin^{-1} x)^2$，則 $\ds\text{d}u = 2\sin^{-1}x\frac{1}{\sqrt{1 - x^2}}\,\text{d}x$；$\ds\text{d}v = \text{d}x$，則 $\ds v = x$。 故 $\ds\int(\sin^{-1} x)^2\,\text{d}x = (\sin^{-1} x)^2\cdot x - \int x\cdot 2\sin^{-1}x\frac{1}{\sqrt{1 - x^2}}\,\text{d}x = (\sin^{-1} x)^2\cdot x + 2\int\!\sin^{-1}x\cdot\frac{-x}{\sqrt{1 - x^2}}\,\text{d}x$。令 $\ds u = \sin^{-1} x$，則 $\ds\text{d}u = \frac{1}{\sqrt{1 - x^2}}\,\text{d}x$；$\ds\text{d}v = \frac{-x}{\sqrt{1 - x^2}}\,\text{d}x$，則 $\ds v = \sqrt{1 - x^2}$。 故 $\ds\int\!\sin^{-1}x\cdot\frac{-x}{\sqrt{1 - x^2}}\,\text{d}x = \sin^{-1}x\cdot\sqrt{1 - x^2} - \int\!\sqrt{1 - x^2}\cdot\frac{1}{\sqrt{1 - x^2}}\,\text{d}x = \sin^{-1}x\cdot\sqrt{1 - x^2} - \int 1\,\text{d}x = \sin^{-1}x\cdot\sqrt{1 - x^2} - x$。以上，$\ds\int(\sin^{-1} x)^2\,\text{d}x = (\sin^{-1} x)^2\cdot x + 2\,(\sin^{-1}x\cdot\sqrt{1 - x^2} - x) = x\,(\sin^{-1} x)^2 + 2\sqrt{1 - x^2}\,\sin^{-1}x - 2x + c$
+
+    \item $\ds\int\!\frac{x e^x}{(x + 1)^2}\,\text{d}x = \int\!\frac{(x + 1 - 1)e^x}{(x + 1)^2}\,\text{d}x = \int\!\frac{e^x}{x + 1}\,\text{d}x - \int\!\frac{e^x}{(x + 1)^2}\,\text{d}x$。令 $\ds u = e^x$，則 $\ds\text{d}u = e^x\,\text{d}x$；$\ds\text{d}v = \frac{1}{(x + 1)^2}\,\text{d}x$，則 $\ds v = \frac{-1}{x + 1}$。故 $\ds\int\!\frac{e^x}{(x + 1)^2}\,\mathrm{d}x = e^x\cdot\frac{-1}{x + 1} + \int\!\frac{1}{x + 1}\cdot e^x\,\text{d}x = \frac{-e^x}{x + 1} + \int\!\frac{e^x}{x + 1}\,\text{d}x$；原式 $\ds\int\!\frac{x e^x}{(x + 1)^2}\,\text{d}x = \int\!\frac{e^x}{x + 1}\,\text{d}x - \int\!\frac{e^x}{(x + 1)^2}\,\text{d}x = \int\!\frac{e^x}{x + 1}\,\text{d}x - \Big(\frac{-e^x}{x + 1} + \int\!\frac{e^x}{x + 1}\,\text{d}x\Big) = \frac{e^x}{x + 1}$。
+    \item 令 $\ds w = \ln x$，則 $\ds e^w = x$，$\ds\text{d}x = e^w\,\text{d}w$，故 $\ds\int\!\sin(\ln x)\,\text{d}x = \int\!\sin w\cdot e^w\,\text{d}w = \int e^w\,\sin w\,\text{d}w = \frac{e^w(\sin w - \cos w)}{2} = \frac{x\,(\sin(\ln x) - \cos(\ln x))}{2} + c$ \\
+      \begin{minipage}{0.15\textwidth}
+        \begin{tikzpicture}[yscale=0.75]
+          \draw (-1, 1) node[left]{Diff};
+          \draw (1,  1) node[right]{Int};
+          \draw (-1, -0) node[left]{$\sin w$};
+          \draw (1,  -0) node[right]{$e^w$};
+          \draw (-1, -1) node[left]{$\cos w$};
+          \draw (-1, -2) node[left]{$-\sin w$};
+          \draw (1,  -1) node[right]{$e^w$};
+          \draw (1,  -2) node[right]{$e^w$};
+          \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+          \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+          \draw[thick, M4, -] (-1, -2)--(1, -2); \draw[M4] (0, -2.5) node[above]{$+$};
+        \end{tikzpicture}
+      \end{minipage}
+      \hspace{5mm}
+      \begin{minipage}{0.8\textwidth}
+        \begin{align*}
+          &\int e^w\sin w\,\mathrm{d}w = e^{w}\sin w - e^w\cos w - \int e^w\sin w\,\mathrm{d}w\\ 
+          &\ie\int e^w\sin w\,\mathrm{d}w = \frac{e^w(\sin w - \cos w)}{2}
+        \end{align*}
+      \end{minipage}
+  \item 令 $\ds u = \ln x$，則 $\ds\text{d}u = \frac{1}{x}\,\text{d}x$；$\ds\text{d}v = \frac{1}{\sqrt{1 + x}}\,\text{d}x$，則 $\ds v = 2\sqrt{1 + x}$。故 $\ds\int\!\frac{\ln x}{\sqrt{1 + x}}\,\text{d}x = \ln x\cdot 2\sqrt{1 + x} - 2 \int\!\frac{\sqrt{1 + x}}{x}\,\text{d}x$。令 $\ds w = \sqrt{1 + x}$，則 $\ds w^2 = 1 + x \ie x= w^2 - 1$，$\ds 2w\,\text{d}w = \text{d}x$，故 $\ds\int\!\frac{\sqrt{1 + x}}{x}\,\text{d}x = \int\!\frac{w}{w^2 - 1}\cdot 2w\,\text{d}w = 2\int\!\frac{w^2}{w^2 - 1}\,\text{d}w = 2\int\!\frac{(w^2 - 1) + 1}{w^2 - 1}\,\text{d}w = 2 w + 2\int\!\frac{1}{w^2 - 1}\,\text{d}w = 2\sqrt{1 + x} + 2\int\!\frac{1}{w^2 -1}\,\text{d}w$。由 $\ds\frac{1}{w^2 - 1} = \frac{1}{2}\,\bigg(\frac{1}{w - 1} - \frac{1}{w + 1}\bigg)$，$\ds\int\!\frac{1}{w^2 - 1}\,\text{d}w = \frac{1}{2}\int\!\Big(\frac{1}{w - 1} - \frac{1}{w + 1}\Big)\,\text{d}w =\frac{1}{2}\,\big(\ln|w - 1| - \ln|w + 1|\big) = \frac{1}{2}\,\big(\ln|\sqrt{1 + x} - 1| - \ln|\sqrt{1 + x} + 1|\big)$。以上，$\ds\int\!\frac{\ln x}{\sqrt{1 + x}}\,\mathrm{d}x = \ln x\cdot 2\sqrt{1 + x} - 2\,\big(2\sqrt{1+x} + 2\,\big(\frac{1}{2}\,\big(\ln|\sqrt{1 + x} - 1| - \ln|\sqrt{1 + x} + 1|\big)\big)\big) = \ln x\cdot 2\sqrt{1 + x} - 4\sqrt{1 + x} - 2\ln|\sqrt{1 + x} - 1| + 2\ln|\sqrt{1 + x} + 1| + c$。
+  \end{enumerate}
+\end{sol}
+
+\myline
+
+\newpage
+\section*{4.2 定積分}
+
+定積分 $\approx$ （帶符號）面積：$x$ 軸上方為正，下方為負。
+
+\begin{dfn}
+  給定 $f:[a,\,b]\to\mathbb{R}$。
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item $[a,\,b]$ 分割 $\ds\mathbb{P}: a = x_0 < x_1 < x_2 < \cdots < x_n = b$
+    \item $\ds\Delta x_k=x_k - x_{k-1}$，$k=1,\,2,\,\ldots,\,n$；$\ds\|\mathbb{P}\| = \max\{\,|\Delta x_k|\;|\;1\leqslant k\leqslant n\}$
+    \item 樣本點 $\ds\xi_k$：$\ds x_{k-1} \leqslant \xi_k \leqslant x_k$，$k=1,\,2,\,\ldots,\,n$
+    \item $\ds u_k = \sup\left\{\,f(x)\;|\;x_{k-1}\leqslant x\leqslant x_k\right\}$，$l_k = \inf\left\{\,f(x)\;|\;x_{k-1}\leqslant x\leqslant x_k\right\}$，$k=1,\,2,\,\ldots,\,n$
+    \item $\ds R(f,\mathbb{P}) = \sum_{k=1}^n f(\xi_k)\,\Delta x_k$，$\ds U(f,\mathbb{P}) = \sum_{k=1}^n u_k\,\Delta x_k$，$\ds L(f,\mathbb{P}) = \sum_{k=1}^n l_k\,\Delta x_k$；\\顯然 $\ds L(f,\mathbb{P})\leqslant R(f,\mathbb{P})\leqslant U(f, \mathbb{P})$。
+    %\item $\ds\int_a^b f(x)\,\mathrm{d}x\equiv\lim_{\substack{n\to\infty \\ \|\mathbb{P}\|\to 0}} R(f,\mathbb{P})$；若對不同分割此極限存在且相等，稱 $f$ 在 $[a, b]$ 可積（分）。
+    \item 求 $\ds\lim_{\|\mathbb{P}\|\to 0} R(f,\mathbb{P})$。若對不同分割與樣本點選取此極限均存在且相等，稱 $f$ 在 $[a, b]$ 可積（分）；$f(x)$ 在 $[a,\,b]$ 的定積分 $\ds\int_a^b f(x)\,\mathrm{d}x \equiv \lim_{\|\mathbb{P}\|\to 0} R(f,\mathbb{P})$
+  \end{itemize}
+\end{dfn}
+
+\begin{rmk}
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 在 $\ds\int_a^b f(x)\,\text{d}x$ 中，$a$ 為\emph{積分下限}（lower limit of integration），$b$ 為\emph{積分上限}（upper limit of integration），$f(x)$ 為\emph{被積分式}（integrand），$x$ 為\emph{積分變數}（variable of integration）。
+    \item $\ds\int_a^b f(x)\,\text{d}x = \int_a^b f(t)\,\text{d}t = \int_a^b f(u)\,\text{d}u$ （定積分數值與積分變數無關）
   \end{itemize}
 \end{rmk}
 
-\begin{prp}
-  $f(x)$ 在 $[a, b]$ 連續，在 $(a, b)$ 可微。若
-  \begin{enumerate}\setlength\itemsep{0em}
-    \item $\ds\forall\,x\in(a, b)\; f'(x) > 0$，則 $f$ 在 $[a, b]$ 嚴格遞增。
-    \item $\ds\forall\,x\in(a, b)\; f'(x) < 0$，則 $f$ 在 $[a, b]$ 嚴格遞減。
-    \item $\ds\forall\,x\in(a, b)\; f'(x) \geqslant 0$，則 $f$ 在 $[a, b]$ 遞增。
-    \item $\ds\forall\,x\in(a, b)\; f'(x) \leqslant 0$，則 $f$ 在 $[a, b]$ 遞減。
-  \end{enumerate}
-\end{prp}
-
-\begin{prf}
-  令 $\ds x$，$y\in[a, b]$，$x < y$。由 MVT $\ds\exists\,c\in(x, y)\subseteq(a, b)$ 使 $\ds f(y) - f(x) = f'(c)\,(y - x)$。又 $y - x > 0$，$f(y) - f(x)$ 與 $f'(c)$ 同號。 
-\end{prf}
-
 \begin{fact}
-  若 $f(x)$，$g(x)$ 在 $[a, b]$ 連續，在 $(a, b)$ 可微，且 $f'(x) = g'(x)\;\forall\,x\in(a, b)$，則存在 $C\in\mathbb{R}$ 使 $f(x) = g(x) + C,\;\forall\,x\in[a, b]$。
+  若 $f$ 在 $[a,\,b]$ 連續，則 $f$ 在 $[a,\,b]$ 可積。
 \end{fact}
-
-\begin{ex}
-  證明：$\ds 2x - 1 = \sin x$ 僅有唯一解。
-\end{ex}
-
-\begin{sol}
-  令 $\ds f(x) = 2 x - 1 - \sin x$，則 $\ds\forall\,x\;(f'(x) = 2 - \cos x > 0)$，$f(0) = -1 < 0$，$f(1) = 1 - \sin 1 > 0$，故由 Bolzano 定理，存在 $\ds c\in(0, 1)$ 使 $f(c) = 0$。若存在另一 $c_0\ne c$ 使 $f(c_0) = 0$，則由 Rolle 定理，存在 $c_1$ 介於 $c$，$c_0$ 間使 $f'(c_1) = 0$，與 $\ds\forall\,x\;(f'(x) = 2 - \cos x > 0)$ 矛盾；得證。
-\end{sol}
-
-\begin{ex}
-  證明：$\ds\ln\big(1 + \frac{1}{x}\big) > \frac{1}{1 + x}$，$\forall\,x > 0$。
-\end{ex}
-
-\begin{sol}
-  考慮 $\ds\ln x$ 在 $\ds[x, x + 1]$，$\ds x > 0$。由 MVT $\ds\exists\,c\in(x, x + 1)\;\ln(x + 1) - \ln x = \frac{1}{c} > \frac{1}{x + 1}$。
-\end{sol}
-
-\myline
-
-\begin{ex}
-  證明：$\ds\tan x > x$，$\ds\forall\,x\in\big(0, \frac{\pi}{2}\big)$。
-\end{ex}
-
-\begin{sol}
-  $\ds\forall\,x\in\big(0, \frac{\pi}{2}\big)$，$\ds\tan$ 在 $[0, x]$ 連續，在 $(0, x)$ 可微，故由 MVT $\ds\exists\,c\in(0, x)\;\tan x - \tan 0 = \sec^2 c\cdot x > x$。
-\end{sol}
-
-\begin{ex}
-  證明：$\ds\frac{2}{\pi} < \frac{\sin x}{x} < 1$，$\ds\forall\,x\in\big(0, \frac{\pi}{2}\big)$。
-\end{ex}
-
-\begin{sol}
-  令 $\ds g(x) = \begin{cases}\frac{\sin x}{x} & \text{若}\;x\ne 0 \\ 1 & \text{若}\;x = 0 \end{cases}$，則 $g$ 為連續，且 $\ds\forall\,x\in\big(0,\frac{\pi}{2}\big)\quad g'(x) = \frac{x\cos x - \sin x}{x^2} = \frac{\cos x}{x^2}(x - \tan x) < 0$ $\ie$ $g$ 在 $\ds\big(0,\frac{\pi}{2}\big)$ 為嚴格遞減函數 $\ie$ $\ds\frac{2}{\pi} = g\,\big(\frac{\pi}{2}\big) < g(x) = \frac{\sin x}{x} < g(0) = 1$     
-\end{sol}
-
-\begin{ex}
-  證明 $\ds\sin^{-1}x + \cos^{-1}x = \frac{\pi}{2}$，$\ds -1 < x < 1$。
-\end{ex}
-
-\begin{sol}
-  令 $\ds f(x) = \sin^{-1}x + \cos^{-1}x$，則 $\ds f'(x) = \frac{1}{\sqrt{1 - x^2}} + \frac{-1}{\sqrt{1 - x^2}} = 0$，故 $f(x)$ 為常數；$\ds f(x)\equiv f(0) = \frac{\pi}{2}$。   
-\end{sol}
-
-\section*{3.2 L'H\^opital 法則}
-
-%\begin{thm}
-%  \begin{itemize}
-%    \item[]
-%    \item $\big(\frac{0}{0}\text{ 型}\big)$
-%      \begin{itemize}
-%        \item $\exists\,\delta > 0$ s.t. $\forall\,x\in(a, a + \delta)$，$f(x)$，$g(x)$ 可微且 $g(x)\ne 0$。
-%        \item $\ds\lim_{x\to a+}f(x) = \lim_{x\to a+}g(x) = 0$。
-%        \item $\ds\lim_{x\to a+}\frac{f'(x)}{g'(x)} = l\in\overline{\mathbb{R}}$。
-%      \end{itemize}
-%    則 $\ds\lim_{x\to a+}\frac{f(x)}{g(x)} = l$。
-%    \item $\big(\frac{\infty}{\infty}\text{ 型}\big)$ 
-%      \begin{itemize}
-%        \item $\exists\,\delta > 0$ s.t. $\forall\,x\in(a, a + \delta)$，$f(x)$，$g(x)$ 可微。
-%        \item $\ds\lim_{x\to a+}|f(x)| = \lim_{x\to a+}|g(x)| = \infty$。
-%        \item $\ds\lim_{x\to a+}\frac{f'(x)}{g'(x)} = l\in\overline{\mathbb{R}}$。
-%      \end{itemize}
-%    則 $\ds\lim_{x\to a+}\frac{f(x)}{g(x)} = l$。
-%    \item （適當修改後）上述 $a+$ 可以是 $a-$，$a$；$a$ 可以是 $\pm\infty$。
-%  \end{itemize}
-%\end{thm}
-
-\begin{thm}[L'H\^opital 法則（LHR）]
-  若 $f$ 與 $g$ 為實可微函數，且在 $(a, b)$ 上 $g'(x)\ne 0$（$a,\,b\in\overline{\mathbb{R}}$）。假設 
-  \begin{align*}
-    \lim_{x\to a+}f(x) = \lim_{x\to a+}g(x) = 0\quad\Big(\frac{0}{0}\;\text{型}\Big)\qquad\text{或}\qquad\lim_{x\to a+}g(x) = \infty\quad\Big(\frac{\infty}{\infty}\;\text{型}\Big)
-  \end{align*}
-  若 $\ds\lim_{x\to a+}\frac{f'(x)}{g'(x)} = L\in\overline{\mathbb{R}}$，則 $\ds\lim_{x\to a+}\frac{f(x)}{g(x)} = L$。
-\end{thm}
-
-\begin{table}[!htbp]
-  \centering
-  \scalebox{1}{
-  \begin{tabular}{cccccccc} 
-    \toprule
-    \addlinespace[2mm]
-    不定型 & $\ds\frac{0}{0}$ & $\ds\frac{\infty}{\infty}$ & $\ds 0\cdot\infty$ & $\ds \infty - \infty$ & $\ds 0^0$ & $\ds \infty^0$ & $\ds 1^\infty$ \\
-    \addlinespace[2mm]
-    \midrule
-    \addlinespace[2mm]
-    範例 & $\ds\lim_{x\to\frac{\pi}{2}}\frac{1 - \sin x}{1 + \cos 2x}$ & $\ds\lim_{x\to\infty}\frac{x^2}{e^x}$ & $\ds\lim_{x\to 0+}x\ln\frac{1}{x}$ & $\ds\lim_{x\to 1+}\Big(\frac{x}{x - 1} - \frac{1}{\ln x}\Big)$ & $\ds\lim_{x\to 0+} x^x$ & $\ds\lim_{x\to\infty} x^{\frac{1}{x}}$ & $\ds\lim_{x\to\infty} \Big(1 + \frac{a}{x}\Big)^{bx}$ \\ 
-    \addlinespace[2mm]
-    \bottomrule  
-  \end{tabular}}
-\end{table}
-
-\begin{ex}[$\frac{0}{0}$]
-  求 $\ds\lim_{x\to\frac{\pi}{2}}\frac{1 - \sin x}{1 + \cos 2x}$。 
-\end{ex}
-
-\begin{sol}
-  $\ds\lim_{x\to\frac{\pi}{2}}\frac{1 - \sin x}{1 + \cos 2x} = \lim_{x\to\frac{\pi}{2}}\frac{-\cos x}{-2\sin 2x} = \lim_{x\to\frac{\pi}{2}}\frac{-1}{-4\sin x} = \frac{1}{4}$。
-\end{sol}
-
-\begin{ex}[$\frac{\infty}{\infty}$]
-  求 $\ds\lim_{x\to\infty}\frac{x^2}{e^x}$。
-\end{ex}
-
-\begin{sol}
-  $\ds\lim_{x\to 0}\frac{x^2}{e^x} = \lim_{x\to 0}\frac{2 x}{e^x} = \lim_{x\to 0}\frac{2}{e^x} = 0$。
-\end{sol}
-
-\begin{ex}[$0\cdot\infty$]
-  求 $\ds\lim_{x\to 0+}x\ln\frac{1}{x}$。
-\end{ex}
-
-\begin{sol}
-  $\ds\lim_{x\to 0+}x\ln\frac{1}{x} = \lim_{x\to 0+}\frac{\ln\frac{1}{x}}{\frac{1}{x}} = \lim_{x\to 0+}\frac{-\frac{1}{x}}{-\frac{1}{x^2}} = \lim_{x\to 0+} x = 0$。
-\end{sol}
-
-\begin{ex}[$\infty - \infty$]
-  求 $\ds\lim_{x\to 1+}\Big(\frac{x}{x - 1} - \frac{1}{\ln x}\Big)$。
-\end{ex}
-
-\begin{sol}
-  $\ds\lim_{x\to 1+}\Big(\frac{x}{x - 1} - \frac{1}{\ln x}\Big) = \lim_{x\to 1+}\frac{x\ln x - (x - 1)}{(x - 1)\ln x} = \lim_{x\to 1+}\frac{1 + \ln x - 1}{(x - 1)\frac{1}{x} + \ln x} = \lim_{x\to 1+}\frac{\frac{1}{x}}{\frac{1}{x^2} + \frac{1}{x}} = \frac{1}{2}$。
-\end{sol}
-
-\begin{ex}[$0^0$]
-  求 $\ds\lim_{x\to 0+} x^x$。
-\end{ex}
-
-\begin{sol}
-  求 $\ds\lim_{x\to 0+} x^x = \lim_{x\to 0+} \exp\{x\ln x\} = \exp\big\{\lim_{x\to 0+} x\ln x\big\} = \exp\Big\{-\lim_{x\to 0+} x\ln\frac{1}{x}\Big\} = e^0 = 1$。
-\end{sol}
-
-%\begin{ex}[$\infty^0$]
-%  求 $\ds\lim_{x\to \frac{\pi}{2}-} (\tan x)^{\cos x}$。 
-%\end{ex}
-%
-%\begin{sol}
-%  $\ds\lim_{x\to \frac{\pi}{2}-} (\tan x)^{\cos x} = \lim_{x\to \frac{\pi}{2}-} e^{\cos x\ln(\tan x)} = e^{\lim_{x\to \frac{\pi}{2}-}\cos x\ln(\tan x)} = e^{\lim_{x\to \frac{\pi}{2}-}\frac{\ln(\tan x)}{\sec x}} = e^{\lim_{x\to \frac{\pi}{2}-}\frac{\frac{1}{\tan x}\sec^2 x}{\sec x\tan x}} \\ = e^{\lim_{x\to \frac{\pi}{2}-}\frac{\sec x}{\tan^2 x}} = e^{\lim_{x\to \frac{\pi}{2}-}\frac{\sec x\tan x}{2\tan x\sec^2 x}} = e^{\lim_{x\to \frac{\pi}{2}-}\frac{1}{2\sec x}} = e^0 = 1$。 
-%\end{sol}
-
-\begin{ex}[$\infty^0$]
-  求 $\ds\lim_{x\to\infty} x^{\frac{1}{x}}$。 
-\end{ex}
-
-\begin{sol}
-  $\ds\lim_{x\to\infty} x^{\frac{1}{x}} = \lim_{x\to\infty}\exp\big\{\ln x^{\frac{1}{x}}\big\} = \lim_{x\to\infty}\exp\Big\{\frac{1}{x}\ln x\Big\} = \exp\Big\{\lim_{x\to\infty}\frac{\ln x}{x}\Big\} = \exp\Big\{\lim_{x\to\infty}\frac{\frac{1}{x}}{1}\Big\} = e^0 = 1$。 
-\end{sol}
-
-\begin{ex}[$1^\infty$]
-  求 $\ds\lim_{x\to\infty} \Big(1 + \frac{a}{x}\Big)^{bx}$，$a,\;b\in\mathbb{R}$。
-\end{ex}
-
-\begin{sol}
-  $\ds\lim_{x\to\infty} \Big(1 + \frac{a}{x}\Big)^{bx} = \lim_{x\to\infty} \exp\Big\{\ln\big(1 + \frac{a}{x}\big)^{bx}\Big\} = \lim_{x\to\infty} \exp\Big\{bx\,\ln\big(1 + \frac{a}{x}\big)\Big\} = \exp\Big\{\lim_{x\to\infty} bx\,\ln\big(1 + \frac{a}{x}\big)\Big\} = \exp\bigg\{b\lim_{x\to\infty}\frac{\ln(1 + \frac{a}{x})}{\frac{1}{x}}\bigg\} = \exp\bigg\{b\lim_{x\to\infty}\frac{\frac{1}{1 + \frac{a}{x}}\cdot\frac{-a}{x^2}}{\frac{-1}{x^2}}\bigg\} = \exp\bigg\{b\lim_{x\to\infty}\frac{a}{1 + \frac{a}{x}}\bigg\} = e^{ba}$。
-\end{sol}
-
-\myline
-
-\section*{3.3 極值問題}
-
-\begin{dfn}
-  給定 $f:I\to\mathbb{R}$，$\ds B(x_i, h)\equiv\{x\;|\;|x - x_i| < h\}$。
-  \begin{itemize}\setlength\itemsep{0em}
-    \item $f$ 在 $\ds x_\text{M}\in I$ 有最大值（global maximum）$\ds f(x_\text{M})$：$\ds f(x_\text{M})\geqslant f(x),\;\forall\,x\in I$。
-    \item $f$ 在 $\ds x_\text{m}\in I$ 有最小值（global minimum）$\ds f(x_\text{m})$：$\ds f(x_\text{m})\leqslant f(x),\;\forall\,x\in I$。
-    \item $f$ 在 $\ds x_0\in I$ 有極大值（local maximum）$\ds f(x_0)$：$\ds\exists\,h_0 > 0$ 使 $\ds f(x_0)\geqslant f(x),\;\forall\,x\in B(x_0, h_0)\,\cap\,I$。
-    \item $f$ 在 $\ds x_1\in I$ 有極小值（local minimum）$\ds f(x_1)$：$\ds\exists\,h_1 > 0$ 使 $\ds f(x_1)\leqslant f(x),\;\forall\,x\in B(x_1, h_1)\,\cap\,I$。
-  \end{itemize}
-\end{dfn}
 
 \begin{figure}[!htbp]
   \centering
-  \includegraphics[scale=1,page=1]{fig/maxmin3.pdf}
-  \hspace{25mm}
-  \begin{tikzpicture}[scale=1]
-    \begin{axis}%
-      [grid=both,
-       unit vector ratio={8 1},
-       minor tick num=3,
-       ymin=-15,ymax=15,
-       grid style={line width=.1pt, draw=gray!10},
-       major grid style={line width=.2pt,draw=gray!50},
-       axis lines=middle
-      ]
-      \addplot[domain=-3:3,samples=3000,smooth,cyan] {x^3 - 3 * x};
-    \end{axis}
-  \end{tikzpicture}
+  \includegraphics[scale=1,page=1]{fig/lu.pdf}
+  \hspace{2cm}
+  \includegraphics[scale=1,page=2]{fig/lu.pdf}
 \end{figure}
 
+\begin{prp}%[定積分基本性質]
+  令 $f$、$g$ 在包含 $a$、$b$、$c$ 之區間為可積，$\alpha$、$\beta\in\mathbb{R}$。則
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item $\ds\int_a^a f(x)\,\mathrm{d}x = 0$
+    \item $\ds\int_a^b f(x)\,\mathrm{d}x = -\int_b^a f(x)\,\mathrm{d}x$
+    \item $\ds\int_a^b \big(\alpha\,f(x) + \beta\,g(x)\big)\,\mathrm{d}x = \alpha\int_a^b f(x)\,\mathrm{d}x + \beta\int_a^b g(x)\,\mathrm{d}x$
+    \item $\ds\int_a^b f(x)\,\mathrm{d}x + \int_b^c f(x)\,\mathrm{d}x = \int_a^c f(x)\,\mathrm{d}x$
+    \item $\ds\int_a^b f(x)\,\mathrm{d}x\leqslant\int_a^b g(x)\,\mathrm{d}x$，若 $f(x)\leqslant g(x)\;\forall\,x\in[a, b],\;a\leqslant b$
+    \item $\ds\left|\,\int_a^b f(x)\,\mathrm{d}x\,\right|\leqslant \int_a^b \left|\,f(x)\,\right|\,\mathrm{d}x, \quad a\leqslant b$ 
+    \item $f(x)$ 為奇函數：$\ds\int_{-a}^a f(x)\,\mathrm{d}x = 0$
+    \item $f(x)$ 為偶函數：$\ds\int_{-a}^a f(x)\,\mathrm{d}x = 2\int_0^a f(x)\,\mathrm{d}x$
+  \end{enumerate}
+\end{prp}
+
 \begin{ex}
-  \begin{itemize}\setlength\itemsep{0em}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
     \item[]
-    \item $\ds f(x) = \sin x$ 在 $I = \mathbb{R}$ 有最大值 $1$，最小值 $-1$。
-    \item $\ds f(x) = \frac{1}{x}$ 在 $I = \mathbb{R}$ 沒有最大值、最小值。
-    \item $\ds f(x) = x$ 在 $I = (0, 1)$ 沒有最大值、最小值。
-    \item $\ds f(x) = x$ 在 $I = [0, 1]$ 有最大值 $1$、最小值 $0$。
-    \item 若 $I = [-3,\,3]$，$\ds f(x) = x^3 - 3x$ 在 $x = 3$ 有最大值 $18$、在 $x = -3$ 有最小值 $-18$、在 $x = -1$ 有極大值 $2$、在 $x = 1$ 有極小值 $-2$。
-  \end{itemize}
+    \item $\ds\int_{-\sqrt{2}}^{\sqrt{2}} \sqrt{2 - x^2}\,\mathrm{d}x = \pi$（半徑 $\sqrt{2}$ 之半圓面積）
+    \item $\ds\int_{-1}^2 \sgn(x)\,\mathrm{d}x = 2\cdot 1 - 1\cdot 1 = 1$；$\ds\sgn(x)\equiv\begin{cases} 1 & x > 0 \\ -1 & x < 0\end{cases}$ 
+    \item $\ds\int_{-\pi}^{\pi} \sin(x^7-5x^3)\,\mathrm{d}x = 0$（$\sin(x^7-5x^3)$ 為奇函數）
+    \item $\ds\int_{-6}^{6} e^{-x^4}\sin(\sin x)\,\mathrm{d}x = 0$（$e^{-x^4}\sin(\sin x)$ 為奇函數）
+    \item $\ds\int_{-4}^{4} \big(e^{x} - e^{-x}\big)\,\mathrm{d}x = 0$（$e^{x} - e^{-x}$ 為奇函數）
+    \item $\ds\int_{-2024}^{2024} \big(e^{9x^5-2x^7} - e^{-9x^5 + 2x^7}\big)\,\mathrm{d}x = 0$（$e^{9x^5-2x^7} - e^{-9x^5 + 2x^7}$ 為奇函數） 
+    \item $\ds\int_{-a}^a |x|\,\mathrm{d}x = 2\int_0^a |x|\,\mathrm{d}x = a^2$（$|x|$ 為偶函數；兩 $a\times a$ 等腰直角三角形面積）
+    \item 定義 $\ds\int_1^x\frac{1}{\tau}\,\mathrm{d}\tau\equiv\ln x$，則 $\ds\int_{\frac{1}{4}}^3\frac{1}{x}\,\mathrm{d}x = \int_{\frac{1}{4}}^1 \frac{1}{x}\,\mathrm{d}x + \int_1^3 \frac{1}{x}\,\mathrm{d}x = -\int_1^{\frac{1}{4}}\frac{1}{x}\,\mathrm{d}x + \int_1^3\frac{1}{x}\,\mathrm{d}x = \ln 12$
+    \item $\ds\int_0^2 \sqrt{4 - x^2}\cdot\sgn(1 - x)\,\mathrm{d}x = \int_0^1\sqrt{4 - x^2}\,\text{d}x - \int_1^2\sqrt{4 - x^2}\,\text{d}x = \Big(\frac{4\pi}{12} + \frac{\sqrt{3}}{2}\Big) - \Big(\frac{4\pi}{6} - \frac{\sqrt{3}}{2}\Big) = \sqrt{3} - \frac{\pi}{3}$ 
+    \item $\ds\forall\,n\in\mathbb{N},\;\int_n^{n+1}\floor{x}\,\mathrm{d}x = n$ 
+  \end{enumerate}
 \end{ex}
 
-\begin{thm}
-  若函數在定義域為
-  \begin{itemize}\setlength\itemsep{0em}
-    \item 有限閉區間，或
-    \item 有限閉區間的有限聯集
-  \end{itemize}
-  連續，則函數在定義域上有最大值及最小值。
-\end{thm}
+\myline
 
-\begin{thm}
-  若 $f(x)$ 在 $(a, b)$ 連續，且 $\ds\lim_{x\to a+}f(x) = L$，$\ds\lim_{x\to b-}f(x) = M$。
-  \begin{enumerate}\setlength\itemsep{0em}
-    \item 若 $\exists\,u\in(a, b)$ 使 $f(u) > L$ 且 $f(u) > M$，則 $f$ 在 $(a, b)$ 有最大值。
-    \item 若 $\exists\,u\in(a, b)$ 使 $f(u) < L$ 且 $f(u) < M$，則 $f$ 在 $(a, b)$ 有最小值。
-  \end{enumerate}
-  $a$ 可為 $-\infty$，$b$ 可為 $\infty$，$L$、$M$ 可為 $\pm\infty$。
-\end{thm}
-
-%\begin{prf}
-%  \begin{enumerate}
-%    \item[]
-%    \item 
-%    \begin{itemize}
-%      \item By $\ds \lim_{x\to a+}f(x) = L$, given $\varepsilon > 0$, $\exists\,\delta_1 > 0$ s.t. for $a < x < a + \delta_1$, $f(x) < L + \varepsilon$.
-%      \item Take $\varepsilon = f(u) - L$, then
-%        \begin{align}\label{joi}
-%          \exists\,x_1\in (a, u) \text{ s.t. for } a < x < x_1, \,f(x) < L + (f(u) - L) = f(u).
-%        \end{align}
-%      \item By $\ds \lim_{x\to b-}f(x) = M$, given $\varepsilon > 0$, $\exists\,\delta_2 > 0$ s.t. for $b - \delta_2 < x < b$, $f(x) < M + \varepsilon$.
-%      \item Take $\varepsilon = f(u) - M$, then
-%        \begin{align}\label{jio}
-%          \exists\,x_2\in (u, b)\text{ s.t. for } x_2 < x < b, \,f(x) < M + (f(u) - M) = f(u).
-%        \end{align}
-%      \item Apriori $f$ is continuous on $[x_1, x_2]$, so $f$ has global maxinum value on $[x_1, x_2]$, say at $w\in[x_1, x_2]$. But $u\in[x_1, x_2]\ie f(w)\geqslant f(u)$; together with \eqref{joi}, \eqref{jio}, $f$ has a global maximum value on $w\in(a, b)$.
-%    \end{itemize}
-%  \item 
-%    \begin{itemize}
-%      \item By $\ds \lim_{x\to a+}f(x) = L$, given $\varepsilon > 0$, $\exists\,\delta_1 > 0$ s.t. for $a < x < a + \delta_1$, $f(x) > L - \varepsilon$.
-%      \item Take $\varepsilon = L - f(u)$, then
-%        \begin{align}\label{joiw}
-%          \exists\,x_1\in (a, u) \text{ s.t. for } a < x < x_1, \,f(x) > L - (L - f(u)) = f(u).
-%        \end{align}
-%      \item By $\ds \lim_{x\to b-}f(x) = M$, given $\varepsilon > 0$, $\exists\,\delta_2 > 0$ s.t. for $b - \delta_2 < x < b$, $f(x) > M - \varepsilon$.
-%      \item Take $\varepsilon = M - f(u)$, then
-%        \begin{align}\label{jiow}
-%          \exists\,x_2\in (u, b)\text{ s.t. for } x_2 < x < b, \,f(x) > M - (M - f(u)) = f(u).
-%        \end{align}
-%      \item Apriori $f$ is continuous on $[x_1, x_2]$, so $f$ has global mininum value on $[x_1, x_2]$, say at $w\in[x_1, x_2]$. But $u\in[x_1, x_2]\ie f(w)\leqslant f(u)$; together with \eqref{joiw}, \eqref{jiow}, $f$ has a global minimum value on $w\in(a, b)$.
-%    \end{itemize}
-%  \end{enumerate}
-%\end{prf}
-
-\begin{thm}
-  若 $f$ 在 $c\in\dom f$ 有極值，且 $f'(c)$ 存在，則 $f'(c) = 0$。
-\end{thm}
-
-\begin{prf}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item 若 $f$ 在 $c$ 有極大值，則 $\ds\exists\,h_0 > 0$ 使 $\ds f(c)\geqslant f(x),\;\forall\,x\in B(c, h_0)\,\cap\,\dom{f}$。
-      \begin{itemize}\setlength\itemsep{0em}
-      \item 取 $\ds x \in B(c, h_0)\,\cap\,\dom{f}$ 且 $x < c$，$\ds\frac{f(x) - f(c)}{x - c} \geqslant 0 \ie f'(c) = \lim_{x\to c-}\frac{f(x) - f(c)}{x - c}\geqslant 0$
-      \item 取 $\ds x \in B(c, h_0)\,\cap\,\dom{f}$ 且 $x > c$，$\ds\frac{f(x) - f(c)}{x - c} \leqslant 0 \ie f'(c) = \lim_{x\to c+}\frac{f(x) - f(c)}{x - c}\leqslant 0$
-    \end{itemize}
-    故 $f'(c) = 0$。
-  \item 若 $f$ 在 $c$ 有極小值，則 $\ds\exists\,h_1 > 0$ 使 $\ds f(c)\leqslant f(x),\;\forall\,x\in B(c, h_1)\,\cap\,\dom{f}$。
-    \begin{itemize}\setlength\itemsep{0em}
-      \item 取 $\ds x \in B(c, h_1)\,\cap\,\dom{f}$ 且 $x < c$，$\ds\frac{f(x) - f(c)}{x - c} \leqslant 0 \ie f'(c) = \lim_{x\to c-}\frac{f(x) - f(c)}{x - c}\leqslant 0$
-      \item 取 $\ds x \in B(c, h_1)\,\cap\,\dom{f}$ 且 $x > c$，$\ds\frac{f(x) - f(c)}{x - c} \geqslant 0 \ie f'(c) = \lim_{x\to c+}\frac{f(x) - f(c)}{x - c}\geqslant 0$
-    \end{itemize}
-    故 $f'(c) = 0$。
-  \end{itemize}
-\end{prf}
+\subsection*{以極限定義求定積分}
 
 \begin{fact}
-  設 $f:I\to\mathbb{R}$ 在 $x_0\in I$ 有極值，則 $x_0$ 為以下三情形之一：
-  \begin{itemize}\setlength\itemsep{0em}
-    \item 臨界點（critical point）：$\ds f'(x_0) = 0$。
-    \item 奇異點（singular point）：$f$ 在 $x_0$ 不可微。 
-    \item $I$ 的邊界點。
-  \end{itemize}
+  $\ds\sum_{k = 1}^n k^2 = \frac{n(n + 1)(2n + 1)}{6}$。
 \end{fact}
 
+\begin{prf}
+  由 $\ds k(k + 1) = \frac{k(k + 1)(k + 2) - (k - 1)k(k + 1)}{3}$，$\ds\sum_{k = 1}^n k(k + 1) = \frac{n(n+1)(n+2)}{3}$。又 $\ds k^2 = k(k + 1) - k$，$\ds\sum_{k = 1}^n k^2 = \sum_{k = 1}^n \big(k(k + 1) - k\big) = \frac{n(n + 1)(n + 2)}{3} - \frac{n(n + 1)}{2} = \frac{n(n + 1)(2n + 1)}{6}$。 
+\end{prf}
+
 \begin{ex}
-  求 $f(x) = x^3 - 3 x^2 - 9x + 2$ 在 $[-2,\,2]$ 的最大值與最小值。
+  求 $\ds\int_0^1 x^2\,\text{d}x$。
 \end{ex}
 
 \begin{sol}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item $f$ 在有限閉區間 $[-2,\,2]$ 連續，故在 $[-2,\,2]$ 有最大值、最小值。
-    \item 
-      \begin{itemize}\setlength\itemsep{0em}
-        \item $\ds f'(x) = 3 x^2 - 6 x - 9 = 3(x + 1)(x - 3)$，在 $[-2,\,2]$ 之臨界點為 $-1$：$f(-1) = 7$。
-        \item $f$ 在 $[-2,\,2]$ 可微，故無奇異點。
-        \item $[-2,\,2]$ 的邊界點為 $-2$ 與 $2$；$f(-2) = 0$，$f(2) = -20$。
-      \end{itemize}
-      故最大值：$f(-1) = 7$，最小值：$f(2) = -20$。
-  \end{itemize}
+  建立 $\ds [0,\,1]$ 分割 $\ds\mathbb{P}: \Big\{0, \frac{1}{n}, \frac{2}{n}, \ldots, \frac{n}{n}\Big\}$，則 $\ds\Delta x_k = \frac{1}{n}\;\forall\,k=1,2,\ldots,n$ 且 $\ds\|P\|\to 0$ 當 $n\to\infty$。$f(x) = x^2$ 且 $f$ 在 $[0,\,1]$ 嚴格遞增，$\ds U(f,\mathbb{P}) = \sum_{k=1}^n u_k\,\Delta x_k = \sum_{k=1}^n\frac{k^2}{n^2}\cdot\frac{1}{n} = \frac{1}{n^3}\sum_{k = 1}^n k^2$，$\ds L(f,\mathbb{P}) = \sum_{k=1}^n l_k\,\Delta x_k = \sum_{k=1}^n\frac{(k - 1)^2}{n^2}\cdot\frac{1}{n} = \frac{1}{n^3}\sum_{k = 1}^{n-1}k^2$，$\ds L(f,\mathbb{P})\leqslant R(f,\mathbb{P})\leqslant U(f, \mathbb{P})$。由 $\ds\sum_{k = 1}^n k^2 = \frac{n(n + 1)(2n + 1)}{6}$，$\ds\lim_{n\to\infty} U(f,\mathbb{P}) = \lim_{n\to\infty}\frac{1}{n^3}\sum_{k = 1}^n k^2 = \lim_{n\to\infty}\frac{n(n + 1)(2 n + 1)}{6n^3} = \frac{1}{3}$，$\ds\lim_{n\to\infty} L(f,\mathbb{P}) = \lim_{n\to\infty}\frac{1}{n^3}\sum_{k = 1}^{n - 1} k^2 = \lim_{n\to\infty}\frac{(n - 1)n(2 n - 1)}{6n^3} = \frac{1}{3}$，故由夾擊定理 $\ds\lim_{n\to\infty} R(f,\mathbb{P}) = \frac{1}{3}$。
 \end{sol}
 
+\begin{fact}
+  若 $r\in\mathbb{R}$，$\ds\sum_{k = 0}^n r^k = \frac{r^{n+1} - 1}{r - 1}$。
+\end{fact}
+
+\begin{prf}
+  令 $\ds s = \sum_{k = 0}^n r^k$，則 $\ds r\,s = \sum_{k = 1}^{n + 1} r^k$；$\ds r\,s - s = r^{n + 1} - 1\ie s = \frac{r^{n + 1} - 1}{r - 1}$。 
+\end{prf}
+
 \begin{ex}
-  證明 $\ds f(x) = x + \frac{4}{x}$ 在 $\ds (0, \infty)$ 有最小值，並求其值。
+  求 $\ds\int_0^1 e^x\,\text{d}x$。
 \end{ex}
 
 \begin{sol}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item 由 $\ds\lim_{x\to 0+}f(x) = \infty$，$\ds\lim_{x\to\infty}f(x) = \infty$，$f(1) = 5 < \infty$，$f$ 在 $(0, \infty)$ 有最小值。
-    \item 
-      \begin{itemize}\setlength\itemsep{0em}
-        \item $\ds f'(x) = 1 - \frac{4}{x^2} = \frac{(x + 2)(x - 2)}{x^2}$，臨界點為 $2$：$f(2) = 4$。
-        \item $f$ 在 $(0, \infty)$ 可微，無奇異點。
-        \item $(0, \infty)$ 無邊界點。
-      \end{itemize}
-      故 $f$ 在 $(0, \infty)$ 之最小值為 $f(2) = 4$。
-  \end{itemize}
+  建立 $\ds [0,\,1]$ 分割 $\ds\mathbb{P}: \Big\{0, \frac{1}{n}, \frac{2}{n}, \ldots, \frac{n}{n}\Big\}$，則 $\ds\Delta x_k = \frac{1}{n}\;\forall\,k=1,2,\ldots,n$ 且 $\ds\|P\|\to 0$ 當 $n\to\infty$。$f(x) = e^x$ 且 $f$ 在 $[0,\,1]$ 嚴格遞增，$\ds U(f,\mathbb{P}) = \sum_{k=1}^n u_k\,\Delta x_k = \sum_{k=1}^n e^{\frac{k}{n}}\cdot\frac{1}{n} = \frac{1}{n}\frac{e^{\frac{1}{n}}\big(e^{\frac{n}{n}} - 1\big)}{e^{\frac{1}{n}} - 1} = \frac{e - 1}{n}\frac{e^{\frac{1}{n}}}{e^{\frac{1}{n}} - 1}$，$\ds L(f,\mathbb{P}) = \sum_{k=1}^n l_k\,\Delta x_k = \sum_{k=1}^n e^{\frac{k - 1}{n}}\cdot\frac{1}{n} = \frac{1}{n}\frac{e^0\big(e^{\frac{n}{n}} - 1\big)}{e^{\frac{1}{n}} - 1} = \frac{e - 1}{n}\frac{1}{e^{\frac{1}{n}} - 1}$，$\ds L(f,\mathbb{P})\leqslant R(f,\mathbb{P})\leqslant U(f, \mathbb{P})$。$\ds\lim_{n\to\infty} U(f,\mathbb{P}) = \lim_{n\to\infty}\frac{e - 1}{n}\frac{e^{\frac{1}{n}}}{e^{\frac{1}{n}} - 1} = (e - 1)\lim_{x\to 0+}\frac{x e^x}{e^x - 1} = (e - 1)\lim_{x\to 0+}\frac{e^x + x e^x}{e^x} = e - 1$，$\ds\lim_{n\to\infty} L(f,\mathbb{P}) = \lim_{n\to\infty}\frac{e - 1}{n}\frac{1}{e^{\frac{1}{n}} - 1} = (e - 1)\lim_{x\to 0+}\frac{x}{e^x - 1} = (e - 1)\lim_{x\to 0+}\frac{1}{e^x} = e - 1$，故由夾擊定理 $\ds\lim_{n\to\infty} R(f,\mathbb{P}) = e - 1$。
 \end{sol}
 
+\begin{fact}
+  $\ds\sum_{k = 1}^n \cos kx = \frac{1}{2}\bigg(\frac{\sin\big(n+\frac{1}{2}\big)x}{\sin\frac{x}{2}}-1\bigg)$
+\end{fact}
+
+\begin{prf}
+  考慮 $\ds\sum_{k = 1}^{n} e^{ikx} = \frac{e^{ix}(1 - e^{inx})}{1 - e^{ix}}$，則 $\ds\sum_{k = 1}^{n} \cos kx = \Re\Big\{\sum_{k = 1}^n e^{ikx}\Big\} = \Re\Big\{\frac{e^{ix}(1 - e^{inx})}{1 - e^{ix}}\Big\} = \Re\bigg\{\frac{e^{ix}\,e^{\frac{inx}{2}}\big(e^{-\frac{inx}{2}} - e^{\frac{inx}{2}}\big)}{e^{\frac{ix}{2}}\big(e^{-\frac{ix}{2}} - e^{\frac{ix}{2}}\big)}\bigg\} = \frac{\cos\frac{(n+1)x}{2}\,\sin\frac{nx}{2}}{\sin\frac{x}{2}} = \frac{\sin\big(\frac{nx}{2} + \frac{(n + 1)x}{2}\big) + \sin\big(\frac{nx}{2} + \frac{(n + 1)x}{2}\big)}{2\,\sin\frac{x}{2}} = \frac{\sin\big(n+\frac{1}{2}\big)x - \sin\frac{x}{2}}{2\,\sin\frac{x}{2}} = \frac{1}{2}\bigg(\frac{\sin\big(n+\frac{1}{2}\big)x}{\sin\frac{x}{2}}-1\bigg)$。 
+\end{prf}
+
 \begin{ex}
-  求點 $(2,\,0)$ 到 $y^2 = x^2 + 1$ 之最短距離。
-  %\begin{center}
-  %  \includegraphics[scale=1]{fig/hyperbolaMaxMin.pdf}
-  %\end{center}
+  求 $\ds\int_0^{\frac{\pi}{2}}\cos x\,\mathrm{d}x$。
 \end{ex}
 
 \begin{sol}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item 最小化距離平方 $\equiv$ 最小化距離。
-    \item 令 $\ell$ 為 $(2, 0)$ 至 $y^2 = x^2 + 1$ 之距離：$\ds\ell^2 = (x - 2)^2 + y^2 = (x - 2)^2 + (x^2 + 1)$。
-    \item 由 $\ds\ell^2(\pm\infty)=\infty$，$\ds\ell^2(0) = 5 < \infty$，$\ell^2$ 在 $(-\infty, \infty)$ 有最小值。
-    \item 
-      \begin{itemize}\setlength\itemsep{0em}
-        \item $\ds\diff{}{x} \ell^2(x) = 2(x - 2) + 2x = 4(x - 1)$，臨界點為 $1$；$\ell^2(1) = (1 - 2)^2 + (1 + 1) = 3\ie \ell(1) = \sqrt{3}$。
-        \item $\ell^2$ 在 $(-\infty,\,\infty)$ 可微，無奇異點。
-        \item $(-\infty,\,\infty)$ 無邊界點。
-      \end{itemize}
-      故最短距離為 $\ell(1) = \sqrt{3}$。
-    \end{itemize}
-\end{sol}
-
-\begin{ex}
-  Fermat 原理：光的行進走需時最短路徑。如下圖，試由 Fermat 原理推導 Snell 法則：$\ds\frac{\sin\theta_i}{\sin\theta_r} = \frac{c_a}{c_w}$，其中 $c_a$，$c_w$ 分別為光在空氣與在水中之速度。
-  \begin{center}
-    \includegraphics[scale=0.95,page=1]{fig/snell.pdf}
-    \includegraphics[scale=0.95,page=1]{fig/snellB.pdf}
-  \end{center}
-\end{ex}
-
-\begin{sol}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item 令光從點 $P$ 至 $Q$ 需時為 $T$，則 $\ds T(x) = \frac{1}{c_a}\,\sqrt{(X_P-x)^2+Y_P^2} + \frac{1}{c_w}\,\sqrt{(X_Q-x)^2+Y_Q^2}\;$ $\ds\Big(\text{時間}\equiv\frac{\text{距離}}{\text{速度}}\Big)$ 
-    \item $\ds T(\pm\infty) = \infty$，$\ds T(0) = \frac{1}{c_a}\,\sqrt{X_P^2+Y_P^2} + \frac{1}{c_w}\,\sqrt{X_Q^2+Y_Q^2} < \infty$，故 $T$ 在 $(-\infty,\,\infty)$ 有最小值。
-    \item $T$ 在 $(-\infty,\,\infty)$ 可微，無奇異點，$(-\infty,\,\infty)$ 無邊界點；$T$ 在 $(-\infty,\,\infty)$ 之最小值出現於臨界點。 
-    \item 解 $\ds T'(x^\star) = 0$；在臨界點 $\ds x^\star$ 時
-      \begin{align*}
-        0 &= \frac{1}{c_a}\,\frac{X_P-x^\star}{\sqrt{(X_P-x^\star)^2+Y_P^2}} + \frac{1}{c_w}\,\frac{X_Q-x^\star}{\sqrt{(X_Q-x^\star)^2+Y_Q^2}} = \frac{-\sin\theta_i}{c_a} + \frac{\sin\theta_r}{c_w}\ie\frac{\sin\theta_i}{\sin\theta_r} = \frac{c_a}{c_w}
-      \end{align*}
-  \end{itemize}
-\end{sol}
-
-\begin{ex}
-  如圖，一支桿子從 $3$m 寬走廊水平移動並無彎折通過 $2$m 寬垂直走廊，求最大桿長。
-  \begin{center}
-    \includegraphics[height=4.2cm]{fig/corridor.pdf}
-  \end{center}
-\end{ex}
-
-\begin{sol}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item 如圖，令桿與 $3$m 寬走廊內沿夾角為 $\theta$，則總桿長為 $\ds \ell(\theta) = \ell_1(\theta) +\ell_2(\theta) = \frac{3}{\sin\theta}+\frac{2}{\cos\theta},\;0 < \theta < \frac{\pi}{2}$。
-    \item $\ds\ell(\theta)$ 最小值 $\equiv$ 最大桿長 
-    \item $\ds\lim_{\theta\to 0+}\ell(\theta) = \infty$，$\ds\lim_{\theta\to\frac{\pi}{2}-}\ell(\theta) = \infty$，$\ds\ell\big(\frac{\pi}{4}\big) = \frac{5}{\sqrt{2}} < \infty$，故 $\ell(\theta)$ 在 $\ds\big(0,\,\frac{\pi}{2}\big)$ 有最小值。
-    \item $\ds\big(0,\,\frac{\pi}{2}\big)$ 無邊界點，$\ds\ell(\theta)$ 在 $\ds\big(0,\,\frac{\pi}{2}\big)$ 可微，無奇異點。
-    \item 求臨界點，亦即 $\ds\ell'(\theta) = 0$ 之根 $\theta^\star$：$\ds\ell'(\theta) = -\frac{3 \cos\theta}{\sin^2\theta} + \frac{2\sin\theta}{\cos^2\theta} = \frac{-3\cos^3\theta +2 \sin^3\theta}{\sin^2\theta\cos^2\theta} = 0\ie\tan\theta^\star = \sqrt[3]{\frac{3}{2}}$。則最大桿長為 $\ds\ell(\theta^\star) = \frac{3}{\sin\theta^\star} + \frac{2}{\cos\theta^\star} =\frac{3}{\frac{\root 3\of 3}{\sqrt{2^{\frac{2}{3}}+3^{\frac{2}{3}}}}} +\frac{2}{\frac{\root 3\of 2}{\sqrt{2^{\frac{2}{3}}+3^{\frac{2}{3}}}}} = {\big(2^{\frac{2}{3}}+3^{\frac{2}{3}}\big)}^{\frac{3}{2}}\;(\approx 7.02 \text{m})$
-  \end{itemize}
+  建立 $\ds \big[0,\,\frac{\pi}{2}\big]$ 分割 $\ds\mathbb{P}: \Big\{0, \frac{\pi}{2n}, \frac{2\pi}{2n}, \ldots, \frac{n\pi}{2n}\Big\}$，則 $\ds\Delta x_k = \frac{\pi}{2n}\;\forall\,k=1,2,\ldots,n$ 且 $\ds\|P\|\to 0$ 當 $n\to\infty$，則積分為 $\ds\lim_{n\to\infty} R(f,\mathbb{P}) = \sum_{k=1}^n f(\xi_k)\,\Delta x_k = \lim_{n\to\infty}\sum_{k=1}^n\cos\frac{k\pi}{2n}\cdot\frac{\pi}{2n}  = \lim_{n\to\infty}\sum_{k=1}^n\cos\Big(k\,\big(\frac{\pi}{2n}\big)\Big)\cdot\frac{\pi}{2n} = \\ \lim_{n\to\infty}\frac{1}{2}\bigg(\frac{\sin\big(\big(n+\frac{1}{2}\big)\cdot\frac{\pi}{2n}\big)}{\sin\big(\frac{1}{2}\cdot\frac{\pi}{2n}\big)}-1\bigg)\cdot\frac{\pi}{2n} = \lim_{n\to\infty}\frac{\sin\big(\big(n+\frac{1}{2}\big)\frac{\pi}{2n}\big)\frac{1}{2}\cdot\frac{\pi}{2n}}{\sin\big(\frac{1}{2}\cdot\frac{\pi}{2n}\big)} = \lim_{n\to\infty}\sin\Big(\frac{1}{2} + \frac{1}{4n}\Big)\pi\cdot\lim_{n\to\infty}\frac{\frac{1}{2}\cdot\frac{\pi}{2n}}{\sin\big(\frac{1}{2}\cdot\frac{\pi}{2n}\big)} = \sin\frac{\pi}{2}\cdot 1 = 1$.
 \end{sol}
 
 \myline
 
-\section*{3.4 作圖}
+\subsection*{微積分基本定理}
 
-\vspace{1em}
+\begin{thm}[微積分基本定理（Fundamental Theorem of Calculus，FTC）]
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 若 $f$ 在 $[a,\,b]$ 連續，令 $\ds F(x) = \int_a^x f(\tau)\,\mathrm{d}\tau$ 且 $a\leqslant x\leqslant b$，則 $\ds F'(x) = f(x)\;\forall\,x\in[a,\,b]$。
+    \item 若 $\ds G'(x) = f(x)\;\forall\,x\in[a,\,b]$，則 $\ds\int_a^b f(x)\,\mathrm{d}x = G(b) - G(a) \equiv G(x)\,\Big|_a^b$。
+  \end{enumerate}
+\end{thm}
+\begin{rmk}
+  由 FTC，$\ds\int_a^b f(x)\,\mathrm{d}x$ 可由 $f$ 的反導函數（不定積分）得出，不需繁複極限計算！
+\end{rmk}
 
-\begin{center}
-  \begin{multicols}{4}
-    \begin{tikzpicture}[scale=0.85]
-      \myaxis{x}{2}{2}{y}{1.2}{3.2}
-      \draw[ultra thick, C1] plot[domain=-2:2,smooth](\x,{(\x*\x-1)});
-      \draw[ultra thick, M4] plot[domain=-2:-1,smooth](\x,{1.25-4.5-3*\x});
-      \draw (-1.5,1.25) node[M4, vertex]{};
-      \draw[ultra thick, M4] plot[domain=-.5:.5,smooth](\x,{-1});
-      \draw (0,-1) node[M4, vertex]{};
-      \draw[ultra thick, M4] plot[domain=1:2,smooth](\x, {1.25-4.5+3*\x});
-      \draw (1.5,1.25) node[M4, vertex]{};
+\begin{prf}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item WLOG 令 $h > 0$。則 $\ds\Bigg|\,\frac{F(x + h) - F(x)}{h} - f(x)\,\Bigg| = \Bigg|\,\frac{1}{h}\int_x^{x + h}(f(\tau) - f(x))\,\mathrm{d}\tau\,\Bigg| \leqslant\frac{1}{h}\int_x^{x + h}\big|\,f(\tau) - f(x)\big|\,\mathrm{d}\tau \leqslant\max_{x\leqslant\tau\leqslant x+h}\big|\,f(\tau) - f(x)\big|\to 0$，當 $h\to 0$ 且 $f$ 為連續。
+    \item $\ds(G(x) - F(x))' = f(x) - f(x) = 0\;\forall\,x\in[a, b]$，故 $\ds G(x) - F(x)$ 在 $[a, b]$ 為常數 $\ds\ie G(a) - F(a) = G(b) - F(b) \ie G(b) - G(a) = F(b) - F(a) = \int_a^b f(x)\,\mathrm{d}x$。
+  \end{enumerate}
+\end{prf}
+
+\begin{ex}[以 FTC 求定積分]
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item $\ds x^2$ 之反導函數為 $\ds\frac{x^3}{3}$，故 $\ds\int_0^1 x^2\,\text{d}x = \frac{1^3}{3} - \frac{0^3}{3} = \frac{1}{3}$。
+    \item $\ds e^x$ 之反導函數為 $\ds e^x$，故 $\ds\int_0^1 e^x\,\text{d}x = e^1 - e^0 = e - 1$。
+    \item $\cos x$ 之反導函數為 $\sin x$，故 $\ds\int_0^{\frac{\pi}{2}}\cos x\,\mathrm{d}x = \sin\frac{\pi}{2} - \sin 0 = 1$。
+  \end{enumerate}
+\end{ex}
+
+\begin{fact}[定積分變數變換]
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 求反導函數後代入：$\ds\int_a^b f'(g(x))\,g'(x)\,\text{d}x = f(g(x))\,\Big|_{x = a}^{x = b} = f(g(b)) - f(g(a))$
+    \item 變數變換並改變積分範圍：$\ds\int_a^b f'(g(x))\,g'(x)\,\text{d}x = \int_a^b f'(g(x))\,\text{d}g(x) =\int_{g(a)}^{g(b)} f'(u)\,\text{d}u = f(u)\,\Big|_{u = g(a)}^{u = g(b)} = f(g(b)) - f(g(a))$
+  \end{itemize}
+\end{fact}
+
+\begin{ex}
+  求 $\ds\int_0^1 x^3(1 + x^4)^3\,\text{d}x$。
+\end{ex}
+
+\begin{sol}
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 求反導函數後代入：令 $\ds u = 1 + x^4$，則 $\ds\text{d}u = 4 x^3\,\text{d}x\ie x^3\,\text{d}x = \frac{\text{d}u}{4}$，故 $\ds\int x^3(1 + x^4)^3\,\text{d}x = \int (1 + x^4)^3\,x^3\,\text{d}x = \int u^3\,\frac{\text{d}u}{4} = \frac{u^4}{16} + c = \frac{(1 + x^4)^4}{16} + c$。故 $\ds\int_0^1 x^3(1 + x^4)^3\,\text{d}x = \frac{(1 + x^4)^4}{16}\,\Big|_{x = 0}^{x = 1} = \frac{(1 + 1^4)^4 - (1 + 0^4)^4}{16} = \frac{15}{16}$。
+    \item 變數變換並改變積分範圍：令 $\ds u = 1 + x^4$，則 $\ds\text{d}u = 4 x^3\,\text{d}x\ie x^3\,\text{d}x = \frac{\text{d}u}{4}$。積分範圍 $x$ 由 $0$ 至 $1$，則變數變換後 $u$ 由 $\ds 1 + 0^4 = 1$ 至 $\ds1 + 1^4 = 2$，故 $\ds\int_0^1 x^3(1 + x^4)^3\,\text{d}x = \int_0^1 (1 + x^4)^3\,x^3\,\text{d}x = \int_1^2 u^3\,\frac{\text{d}u}{4} = \frac{1}{4}\int_1^2 u^3\,\text{d}u = \frac{1}{16} u^4\,\Big|_{u = 1}^{u = 2} = \frac{2^4 - 1^4}{16} = \frac{15}{16}$。
+  \end{itemize}
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int_0^{\sqrt{3}}\frac{4x}{\sqrt{1 + x^2}}\,\text{d}x$。
+\end{ex}
+
+\begin{sol}
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 求反導函數後代入：令 $\ds u = 1 + x^2$，則 $\ds\text{d}u = 2 x\,\text{d}x\ie 4x\,\text{d}x = 2\,\text{d}u$，故 $\ds\int\!\frac{4x}{\sqrt{1 + x^2}}\,\text{d}x = \int\!\frac{2}{\sqrt{u}}\,\text{d}u = 4\sqrt{u} + c = 4\sqrt{1 + x^2} + c$。故 $\ds\int_0^{\sqrt{3}}\frac{4x}{\sqrt{1 + x^2}}\,\text{d}x = 4\sqrt{1 + x^2}\,\Big|_{x = 0}^{x = \sqrt{3}} = 4\sqrt{1 + 3} - 4\sqrt{1} = 4$。
+    \item 變數變換並改變積分範圍：令 $\ds u = 1 + x^2$，則 $\ds\text{d}u = 2 x\,\text{d}x\ie 4x\,\text{d}x = 2\,\text{d}u$。積分範圍 $x$ 由 $0$ 至 $\sqrt{3}$，則變數變換後 $u$ 由 $\ds1 + 0^2 = 1$ 至 $\ds1 + (\sqrt{3})^2 = 4$，故 $\ds\int_0^{\sqrt{3}}\frac{4x}{\sqrt{1 + x^2}}\,\text{d}x = \int_1^4 \frac{2}{\sqrt{u}}\,\text{d}u = 4\sqrt{u}\,\Big|_{u = 1}^{u = 4} = 4\,(\sqrt{4} - \sqrt{1}) = 4$。
+  \end{itemize}
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int_0^{\pi}3\cos^2 x\sin x\,\text{d}x$。
+\end{ex}
+
+\begin{sol}
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 求反導函數後代入：令 $\ds u = \cos x$，則 $\ds\text{d}u = -\sin x\,\text{d}x\ie \sin x\,\text{d}x = -\text{d}u$，故 $\ds\int3\cos^2 x\sin x\,\text{d}x = -3\int u^2\,\text{d}u = -u^3 + c = -\cos^3 x + c$。故 $\ds\int_0^{\pi}3\cos^2 x\sin x\,\text{d}x = -\cos^3 x\,\Big|_{x = 0}^{x = \pi} = -(\cos^3\pi - \cos^3 0) = -((-1)^3 - 1^3) = 2$。
+    \item 變數變換並改變積分範圍：令 $\ds u = \cos x$，則 $\ds\text{d}u = -\sin x\,\text{d}x\ie \sin x\,\text{d}x = -\text{d}u$。積分範圍 $x$ 由 $0$ 至 $\pi$，則變數變換後 $u$ 由 $\ds\cos 0 = 1$ 至 $\ds\cos\pi= -1$，故 $\ds\int_0^{\pi}3\cos^2 x\sin x\,\text{d}x = -\int_{1}^{-1}3u^2\,\text{d}u = -u^3\,\Big|_{u = 1}^{u = -1} = -((-1)^3 - 1^3) = 2$。
+  \end{itemize}
+\end{sol}
+
+\begin{ex}
+  若 $f$ 在 $[a, b]$ 二次可微且 $f(a) = f(b) = 0$，證明 $\ds\int_a^b\!(x-a)(b-x)\,f''(x)\,\mathrm{d}x = -2\int_a^b\!f(x)\,\mathrm{d}x$。
+\end{ex}
+
+\begin{sol}
+  $\ds\int_a^b(x-a)(b-x)\,f''(x)\,\mathrm{d}x = \big((x - a)(b - x)\,f'(x) - (a + b - 2 x)\,f(x)\big)\,\Big|_a^b - 2\int_a^b f(x)\,\mathrm{d}x = \big((b - a)(b - b)\,f'(b) - (a + b - 2 b)\,f(b)\big) - \big((a - a)(b - a)\,f'(a) - (a + b - 2 a)\,f(a)\big) - 2\int_a^b f(x)\,\mathrm{d}x = -2\int_a^b f(x)\,\mathrm{d}x$。
+
+  \begin{minipage}{0.35\textwidth}
+    \begin{tikzpicture}[yscale=0.75]
+      \draw (-1, 1) node[left]{Diff};
+      \draw (1,  1) node[right]{Int};
+      \draw (-1, -0) node[left]{$(x - a)(b - x)$};
+      \draw (1,  -0) node[right]{$f''(x)$};
+      \draw (-1, -1) node[left]{$a + b - 2x$};
+      \draw (-1, -2) node[left]{$-2$};
+      \draw (-1, -3) node[left]{$0$};
+      \draw (1,  -1) node[right]{$f'(x)$};
+      \draw (1,  -2) node[right]{$f(x)$};
+      \draw (0.5,  -3) node[right]{$\ds\int\!f(x)\,\text{d}x$};
+      \draw[thick, M4, -] (-1, -0)--(1, -1); \draw[M4] (0, -0.5) node[above]{$+$};
+      \draw[thick, C4, -] (-1, -1)--(1, -2); \draw[C4] (0, -1.5) node[above]{$-$};
+      \draw[thick, M4, -] (-1, -2)--(0.6, -3); \draw[M4] (0, -2.5) node[above]{$+$};
     \end{tikzpicture}
-    \columnbreak
-    \begin{itemize}%\setlength\itemsep{0em}
-      \item 切線斜率遞增 
-      \item $f''(x)>0$
-      \item 凹向上 
-      \item 切線在圖形下方
-    \end{itemize}
-    \columnbreak
-    \begin{tikzpicture}[scale=0.85]
-      \myaxis{x}{2}{2}{y}{1.2}{3.2}
-      \draw[ultra thick, C1] plot[domain=-2:2,smooth](\x,{(-\x*\x+3)});
-      \draw[ultra thick, M4] plot[domain=-2:-1,smooth](\x,{3/4+3*(\x+1.5)});
-      \draw (-1.5,3/4) node[M4, vertex]{};
-      \draw[ultra thick, M4] plot[domain=-.5:.5,smooth](\x,{3});
-      \draw (0,3) node[M4, vertex]{};
-      \draw[ultra thick, M4] plot[domain=1:2,smooth](\x, {3/4-3*(\x-1.5)});
-      \draw (1.5,3/4) node[M4, vertex]{};
-    \end{tikzpicture}
-    \columnbreak
-    \begin{itemize}%\setlength\itemsep{0em}
-      \item 切線斜率遞減 
-      \item $f''(x)<0$
-      \item 凹向下
-      \item 切線在圖形上方
-    \end{itemize}
-  \end{multicols}
-\end{center}
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}{0.65\textwidth}
+    $\ds\int_a^b(x-a)(b-x)\,f''(x)\,\mathrm{d}x \\= \big((x - a)(b - x)\,f'(x) - (a + b - 2 x)\,f(x)\big) - 2\int\!f(x)\,\mathrm{d}x$
+  \end{minipage}
+\end{sol}
 
-\vspace{1em}
+\begin{prp}
+  令 $\ds F(x) = \int_{v(x)}^{u(x)} f(\tau)\,\mathrm{d}\tau$，則 $\ds F'(x) = f(u(x))\cdot u'(x) - f(v(x))\cdot v'(x)$。
+\end{prp}
 
-\begin{dfn}[反曲點（inflection point）]
-  $x_0$ 為 $y = f(x)$ 的反曲點，若
-  \begin{itemize}\setlength\itemsep{0em}
-    \item $y = f(x)$ 在 $x = x_0$ 有切線。
-    \item $f$ 的凹向在 $x_0$ 的左右兩邊恰相反。
+\begin{prf}
+  令 $a\in\mathbb{R}$，$\ds F(x) = \int_{v(x)}^{u(x)} f(\tau)\,\mathrm{d}\tau = \int_{a}^{u(x)} f(\tau)\,\mathrm{d}\tau - \int_{a}^{v(x)} f(\tau)\,\mathrm{d}\tau$。令 $\ds G(x)\equiv\int_a^x f(\tau)\,\mathrm{d}\tau$，則 $\ds G'(x) = f(x)$，$\ds F(x) = \int_{a}^{u(x)} f(\tau)\,\mathrm{d}\tau - \int_{a}^{v(x)} f(\tau)\,\mathrm{d}\tau = G(u(x)) - G(v(x))$；故 $\ds F'(x) = (G(u(x)) - G(v(x)))' = G'(u(x))\cdot u'(x) - G'(v(x))\cdot v'(x) = f(u(x))\cdot u'(x) - f(v(x))\cdot v'(x)$。  
+\end{prf}
+
+\begin{ex} 
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item $\ds F(x) = \int_1^x\frac{1}{1 + \tau^4}\,\mathrm{d}\tau \ie F'(x) = \frac{1}{1 + x^4}$ 
+    \item $\ds F(x) = \int_2^{\sqrt{x}}\sin\tau\,\mathrm{d}\tau \ie F'(x) = \sin\sqrt{x}\cdot\frac{1}{2\sqrt{x}}$
+    \item $\ds F(x) = \int_{x}^{2x}\tau^3\,\mathrm{d}\tau \ie F'(x) = (2x)^3\cdot 2 - x^3\cdot 1 = 15x^3$
+    \item $\ds F(x) = \int_{\sin x}^{\tan^{-1}x}e^{\tau^2}\,\mathrm{d}\tau \ie F'(x) = e^{(\tan^{-1}x)^2}\cdot\frac{1}{1 + x^2} - e^{\sin^2 x}\cdot\cos x$
+  \end{enumerate}
+\end{ex}
+
+\begin{ex}
+  若 $\ds g(x) = \int_0^{\cos x}(1 + \sin(t^2)),\text{d}t$，$\ds f(x) = \int_0^{g(x)}\frac{1}{\sqrt{1 + t^3}}\,\text{d}t$，求 $\ds f'\big(\frac{\pi}{2}\big)$。
+\end{ex}
+
+\begin{sol}
+  $\ds f'(x) = \frac{1}{\sqrt{1 + g(x)^3}}\cdot g'(x)$，$\ds g'(x) = (1 + \sin(\cos^2 x))\cdot(-\sin x)$。代入 $\ds x=\frac{\pi}{2}$，$\ds g\big(\frac{\pi}{2}\big) = 0$，$\ds g'\big(\frac{\pi}{2}\big) = -1$，故 $\ds f'\big(\frac{\pi}{2}\big) = -1$。 
+\end{sol}
+
+\begin{ex}
+  若 $\ds\int_0^{x^2} f(t)\,\text{d}t = x\sin\pi x$，求 $f'(9)$。
+\end{ex}
+
+\begin{sol}
+  $\ds\int_0^{x^2} f(t)\,\text{d}t = x\sin\pi x$ 兩邊對 $x$ 微分得 $\ds f(x^2)\cdot 2x = \sin\pi x + x\cdot\pi\cos\pi x$。兩邊再對 $x$ 微分得 $\ds (f'(x^2)\cdot 2x)\cdot 2x + f(x^2)\cdot 2 = \pi\cos\pi x + \pi\cos\pi x - x\cdot\pi^2\sin\pi x$。代入 $x = 3$，則 $\ds (f'(9)\cdot 2\cdot 3)\cdot 2\cdot 3 + f(9)\cdot 2 = \pi\cos3\pi + \pi\cos3\pi - 3\cdot\pi^2\sin3\pi \ie f'(9)\cdot 36 + f(9)\cdot 2 = -2\pi$。又 $\ds f(3^2)\cdot(2\cdot 3) = \sin 3\pi + 3\cdot\pi\cos3\pi\ie f(9) = -\frac{\pi}{2}$，故 $\ds f'(9) = -\frac{\pi}{36}$。 
+\end{sol}
+
+\begin{ex}
+  求函數 $f$ 與 $a\in\mathbb{R}$ 使 $\ds 6 + \int_a^x\frac{f(t)}{t^2}\,\text{d}t = 2\sqrt{x}$，$\forall\,x > 0$。 
+\end{ex}
+
+\begin{sol}
+  $\ds 6 + \int_a^x\frac{f(t)}{t^2}\,\text{d}t = 2\sqrt{x}$ 兩邊對 $x$ 微分得 $\ds\frac{f(x)}{x^2} = \frac{1}{\sqrt{x}}\ie f(x) = x^{\frac{3}{2}}$。代入原式得 $\ds 6 + \int_a^x\frac{t^{\frac{3}{2}}}{t^2}\,\text{d}t = 6 + \int_a^x\frac{1}{\sqrt{t}}\,\text{d}t = 6 + 2\sqrt{t}\,\Big|_a^x = 6 + 2\sqrt{x} - 2\sqrt{a} = 2\sqrt{x} \ie a = 9$。
+\end{sol}
+
+\begin{ex}
+  求下列極限。
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item $\ds\lim_{x\to 0}\frac{\int_0^x(\sec t - 1)\,\text{d}t}{x^3}$
+    \item $\ds\lim_{x\to\infty}\frac{\int_{x^2}^0 e^{t - x^2}(2 t^2 + 1)\,\text{d}t}{x^4}$
+    \item $\ds\lim_{x\to 0}\frac{1}{x}\int_0^{\tan x}f(u)(\sin x - \cos u)\,\text{d}u$，$f$ 為連續函數
+  \end{enumerate}
+\end{ex}
+
+\begin{sol}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item $\ds\lim_{x\to 0}\frac{\int_0^x(\sec t - 1)\,\text{d}t}{x^3} = \lim_{x\to 0}\frac{\sec x - 1}{3x^2} = \lim_{x\to 0}\frac{\sec x\tan x}{6x} = \lim_{x\to 0}\frac{\sec x\tan x\cdot\tan x + \sec x\cdot\sec^2 x}{6} = \frac{1}{6}$。
+    \item $\ds\lim_{x\to\infty}\frac{\int_{x^2}^0 e^{t - x^2}(2 t^2 + 1)\,\text{d}t}{x^4} = \lim_{x\to\infty}\frac{\int_{x^2}^0 e^t(2 t^2 + 1)\,\text{d}t}{e^{x^2}x^4} = \lim_{x\to\infty}\frac{-e^{x^2}(2(x^2)^2 + 1)\cdot 2x}{e^{x^2}\,2x\cdot x^4 + e^{x^2}\cdot 4x^3} = \lim_{x\to\infty}\frac{-(4x^5 + 2x)}{2x^5 + 4x^3} = -2$。
+    \item $\ds\lim_{x\to 0}\frac{1}{x}\int_0^{\tan x}f(u)(\sin x - \cos u)\,\text{d}u = \lim_{x\to 0}\frac{\int_0^{\tan x}f(u)(\sin x - \cos u)\,\text{d}u}{x} \\= \lim_{x\to 0}\frac{\sin x\int_0^{\tan x}f(u)\,\text{d}u - \int_0^{\tan x}f(u)\cos u\,\text{d}u}{x} \\ = \lim_{x\to 0}\frac{\cos x\int_0^{\tan x}f(u)\,\text{d}u + \sin x\cdot f(\tan x)\cdot\sec^2 x - f(\tan x)\cos(\tan x)\cdot\sec^2 x}{1} = -f(0)$
+  \end{enumerate}
+\end{sol}
+
+\myline
+
+\section*{4.3 積分技巧}
+
+\subsection*{部份分式}
+
+\begin{ex}[動機]
+  若 $a\ne 0$，求 $\ds\int\!\frac{1}{x^2 - a^2}\,\text{d}x$。
+\end{ex}
+
+\begin{sol}
+  由 $\ds\frac{1}{x^2 - a^2} = \frac{1}{2a}\bigg(\frac{1}{x - a} - \frac{1}{x + a}\bigg)$，$\ds\int\!\frac{1}{x^2 - a^2}\,\text{d}x = \int\frac{1}{2a}\bigg(\frac{1}{x - a} - \frac{1}{x + a}\bigg)\,\text{d}x = \frac{1}{2a}\big(\ln|x - a| - \ln|x + a|\big)$
+\end{sol}
+
+\begin{fact}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 實係數多項式可分解成不可約的一次及二次因式的乘積。
+    \item 有理式可寫成多項式與真分式之和。
+    \item 若 $\ds\frac{p(x)}{q(x)}$ 為一真分式，$\ds q(x) = (x + a_1)^{m_1}(x + a_2)^{m_2}\cdots(x + a_k)^{m_k}\cdot(x^2 + b_1 x + c_1)^{n_1}(x^2 + b_2 x + c_2)^{n_2}\cdots(x^2 + b_l x + c_l)^{n_l}$，其中 $(x + a_i)$、$(x^2 + b_i x + c_i)$ 均相異，$(x^2 + b_i x + c_i)$ 為不可分解之二次式（$b_i^2 - 4 c_i < 0$），則
+      \begin{align*}
+        \frac{p(x)}{q(x)} \;=\; &\frac{\alpha_{11}}{x + a_1} + \frac{\alpha_{12}}{(x + a_1)^2} + \cdots + \frac{\alpha_{1m_1}}{(x + a_1)^{m_1}} + \\
+        & \frac{\alpha_{21}}{x + a_2} + \frac{\alpha_{22}}{(x + a_2)^2} + \cdots + \frac{\alpha_{2{m_2}}}{(x + a_2)^{m_2}} + \cdots + \\
+        & \frac{\alpha_{k1}}{x + a_k} + \frac{\alpha_{k2}}{(x + a_k)^2} + \cdots + \frac{\alpha_{k{m_k}}}{(x + a_k)^{m_k}} + \\
+        & \frac{\beta_{11} x + \gamma_{11}}{x^2 + b_1 x + c_1} + \frac{\beta_{12} x + \gamma_{12}}{(x^2 + b_1 x + c_1)^2} + \cdots + \frac{\beta_{1n_1} x + \gamma_{1n_1}}{(x^2 + b_1 x + c_1)^{n_1}} + \\
+        & \frac{\beta_{21} x + \gamma_{21}}{x^2 + b_2 x + c_2} + \frac{\beta_{22} x + \gamma_{22}}{(x^2 + b_2 x + c_2)^2} + \cdots + \frac{\beta_{2n_2} x + \gamma_{2n_2}}{(x^2 + b_1 x + c_1)^{n_2}} + \cdots + \\
+        & \frac{\beta_{l1} x + \gamma_{l1}}{x^2 + b_l x + c_l} + \frac{\beta_{l2} x + \gamma_{l2}}{(x^2 + b_l x + c_l)^2} + \cdots + \frac{\beta_{ln_l} x + \gamma_{ln_l}}{(x^2 + b_l x + c_l)^{n_l}}
+      \end{align*}
+      其中 $\ds\alpha_{ij}$，$\ds\beta_{ij}$，$\ds\gamma_{ij}\in\mathbb{R}$。
+
+    %\item 若 $\ds\frac{p(x)}{q(x)}$ 為一真分式，$\ds q(x) = (x + a_1)^{m_1}(x + a_2)^{m_2}\cdots(x + a_k)^{m_k}\cdot(x^2 + b_1 x + c_1)^{n_1}(x^2 + b_2 x + c_2)^{n_2}\cdots(x^2 + b_l x + c_l)^{n_l}$，其中 $(x + a_i)$、$(x^2 + b_i x + c_i)$ 均相異，$(x^2 + b_i x + c_i)$ 為不可分解之二次式（$b_i^2 - 4 c_i < 0$），則 $\ds\frac{p(x)}{q(x)}$ 可表示成 $\ds\frac{p(x)}{q(x)} = \frac{f_1(x)}{(x + a_1)^{m_1}} + \frac{f_2(x)}{(x + a_2)^{m_2}} + \cdots + \frac{f_k(x)}{(x + a_k)^{m_k}} + \frac{g_1(x)}{(x^2 + b_1 x + c_1)^{n_1}} + \frac{g_2(x)}{(x^2 + b_2 x + c_2)^{n_2}} + \cdots + \frac{g_l(x)}{(x^2 + b_l x + c_l)^{n_l}}$，其中 $\ds\degr{f_i(x)} < m_i$，$\ds\degr{g_i(x)} < 2 n_i$：
+    %  \begin{itemize}\setlength{\itemsep}{0pt}
+    %    \item $\ds\frac{f(x)}{(x + a)^m}$，$\degr{f(x)} < m$ 可表成 $\ds\frac{f(x)}{(x + a)^m} = \frac{\alpha_1}{x + a} + \frac{\alpha_2}{(x + a)^2} + \cdots + \frac{\alpha_m}{(x + a)^m}$，$\alpha_i\in\mathbb{R}$。
+    %    \item $\ds\frac{g(x)}{(x^2 + b x + c)^n}$，$\degr{g(x)} < 2 n$ 可表成 $\ds\frac{g(x)}{(x^2 + b x + c)^n} = \frac{\beta_1 x + \gamma_1}{x^2 + b x + c} + \frac{\beta_2 x + \gamma_2}{(x^2 + b x + c)^2} + \cdots + \frac{\beta_n x + \gamma_n}{(x^2 + b x + c)^n}$，$\beta_i,\;\gamma_i\in\mathbb{R}$。
+    %  \end{itemize}
+
+  \end{enumerate}
+\end{fact}
+
+\begin{rmk} 任一有理函數之積分可分解為多項式積分與以下型式積分：
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item $\ds\int\!\frac{1}{(x + a)^n}\,\text{d}x$，$n\in\mathbb{N}$
+    \item $\ds\int\!\frac{1}{(x^2 + b x + c)^n}\,\text{d}x$，$b^2 - 4 c < 0$，$n\in\mathbb{N}$
+    \item $\ds\int\!\frac{x}{(x^2 + b x + c)^n}\,\text{d}x$，$b^2 - 4 c < 0$，$n\in\mathbb{N}$
+  \end{enumerate}
+\end{rmk}
+
+\begin{ex}
+  求 $\ds\int\!\frac{x}{x^2 - 5x + 6}\,\text{d}x$。
+\end{ex}
+
+\begin{sol}
+  $\ds\frac{x}{x^2 - 5x + 6} = \frac{x}{(x - 3)(x - 2)} = \frac{A}{x - 3} + \frac{B}{x - 2} \ie x = A\,(x - 2) + B\,(x - 3)$。代入 $x = 3\ie 3 = A$；代入 $x = 2\ie 2 = B(2 - 3) \ie B = -2$，故 $\ds\frac{x}{x^2 - 5x + 6} = \frac{3}{x - 3} - \frac{2}{x - 2}$，$\ds\int\!\frac{x}{x^2 - 5x + 6}\,\text{d}x = \int\bigg(\frac{3}{x - 3} - \frac{2}{x - 2}\bigg)\,\text{d}x = 3\ln|x - 3| - 2\ln|x - 2|$
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\frac{1}{x^3 + 1}\,\text{d}x$。
+\end{ex}
+
+\begin{sol}
+  $\ds\frac{1}{x^3 + 1} = \frac{1}{(x + 1)(x^2 - x + 1)} = \frac{A}{x + 1} + \frac{B x + C}{x^2 - x + 1} \ie 1 = A\,(x^2 - x + 1) + (B x + C)\,(x + 1)$。代入 $\ds x = -1\ie 1 = A((-1)^2 - (-1) + 1) = 3A \ie A = \frac{1}{3}$；代入 $\ds x = 0\ie 1 = A + C \ie C = \frac{2}{3}$； 代入 $\ds x = 1\ie 1 = A + (B + C)\cdot 2 \ie 1 = \frac{1}{3} + \Big(B + \frac{2}{3}\Big)\cdot 2 \ie B = -\frac{1}{3}$；故 $\ds\frac{1}{x^3 + 1} = \frac{1}{3}\,\bigg(\frac{1}{x + 1} - \frac{x - 2}{x^2 - x + 1}\bigg)$，$\ds\int\!\frac{1}{x^3 + 1}\,\text{d}x = \int\!\frac{1}{3}\,\bigg(\frac{1}{x + 1} - \frac{x - 2}{x^2 - x + 1}\bigg)\,\text{d}x = \int\!\frac{1}{3}\,\bigg(\frac{1}{x + 1} - \frac{\frac{1}{2}\,(2x - 1) - \frac{3}{2}}{x^2 - x + 1}\bigg)\,\text{d}x = \frac{1}{3}\int\!\frac{1}{x + 1}\,\text{d}x - \frac{1}{6}\int\!\frac{2x - 1}{x^2 - x + 1}\,\text{d}x - \frac{1}{2}\int\!\frac{1}{x^2 - x + 1}\,\text{d}x = \frac{1}{3}\ln|x + 1| - \frac{1}{6}\ln(x^2 - x + 1) - \frac{1}{\sqrt{3}}\tan^{-1}\frac{2x - 1}{\sqrt{3}}$
+\end{sol}
+
+\begin{ex}
+  求 $\ds\int\!\frac{1}{\cos^3 x}\,\text{d}x$。
+\end{ex}
+
+\begin{sol}
+  $\ds\int\!\frac{1}{\cos^3 x}\,\text{d}x = \int\!\frac{\cos x}{\cos^4 x}\,\text{d}x = \int\!\frac{\cos x}{(1 - \sin^2 x)^2}\,\text{d}x$。令 $\ds u = \sin x$，則 $\ds\text{d}u = \cos x\,\text{d}x$，則 $\ds\int\!\frac{\cos x}{(1 - \sin^2 x)^2}\,\text{d}x = \int\!\frac{1}{(1 - u^2)^2}\,\text{d}u$。$\ds\frac{1}{(1 - u^2)^2} = \frac{1}{(u - 1)^2(u + 1)^2} = \frac{A}{u - 1} + \frac{B}{(u - 1)^2} + \frac{C}{u + 1} + \frac{D}{(u + 1)^2} \ie 1 = A\,(u - 1)(u + 1)^2 + B\,(u + 1)^2 + C\,(u - 1)^2(u + 1) + D\,(u - 1)^2$。代入 $\ds u = 1\ie 1 = 4B \ie B = \frac{1}{4}$；代入 $\ds u = -1\ie 1 = 4D \ie D = \frac{1}{4}$；代入 $\ds u = 0 \ie 1 = -A + B + C + D \ie 1 = -A + \frac{1}{4} + C + \frac{1}{4} \ie \frac{1}{2} = - A + C$；代入 $\ds u = 2\ie 1 = 9A + 9B + 3C + D \ie 1 = 9A + \frac{9}{4} + 3C + \frac{1}{4} \ie A = -\frac{1}{4},\;C = \frac{1}{4}$；則 $\ds\ds\frac{1}{(1 - u^2)^2} = \frac{1}{4}\,\bigg(\frac{-1}{u - 1} + \frac{1}{(u - 1)^2} + \frac{1}{u + 1} + \frac{1}{(u + 1)^2}\bigg)$，$\ds\int\!\frac{1}{(1 - u^2)^2}\,\text{d}u = \int\!\frac{1}{4}\,\bigg(\frac{-1}{u - 1} + \frac{1}{(u - 1)^2} + \frac{1}{u + 1} + \frac{1}{(u + 1)^2}\bigg)\,\text{d}x = \frac{1}{4}\,\bigg(-\ln|u - 1| - \frac{1}{u - 1} + \ln|u + 1| - \frac{1}{u + 1}\bigg) = \frac{1}{4}\,\bigg(-\ln|\sin x - 1| - \frac{1}{\sin x - 1} + \ln|\sin x + 1| - \frac{1}{\sin x + 1}\bigg)$。
+
+\noindent 部份分式另解：$\ds\frac{1}{(1 - u^2)^2} = \bigg(\frac{1}{u^2 - 1}\bigg)^2 = \bigg(\frac{1}{(u - 1)(u + 1)}\bigg)^2 = \frac{1}{4}\,\bigg(\frac{1}{u - 1} - \frac{1}{u + 1}\bigg)^2 = \frac{1}{4}\,\bigg(\frac{1}{(u - 1)^2} - \frac{2}{(u - 1)(u + 1)} + \frac{1}{(u + 1)^2}\bigg) = \frac{1}{4}\,\bigg(\frac{1}{(u - 1)^2} - \bigg(\frac{1}{u - 1} - \frac{1}{u + 1}\bigg) + \frac{1}{(u + 1)^2}\bigg) = \frac{1}{4}\,\bigg(\frac{-1}{u - 1} + \frac{1}{(u - 1)^2} + \frac{1}{u + 1} + \frac{1}{(u + 1)^2}\bigg)$。 
+\end{sol}
+
+\myline
+
+\subsection*{三角函數代換}
+
+\begin{fact}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 遇 $\ds\sqrt{a^2 - x^2}$，考慮 $\ds x = a\sin\theta \ie \theta = \sin^{-1}\frac{x}{a}$，$\ds\text{d}x = a\cos\theta\,\text{d}\theta$ 
+    \item 遇 $\ds\sqrt{a^2 + x^2}$，考慮 $\ds x = a\tan\theta \ie \theta = \tan^{-1}\frac{x}{a}$，$\ds\text{d}x = a\sec^2\theta\,\text{d}\theta$
+    \item 遇 $\ds\sqrt{x^2 - a^2}$，考慮 $\ds x = a\sec\theta \ie \theta = \sec^{-1}\frac{x}{a}$，$\ds\text{d}x = a\sec\theta\,\tan\theta\,\text{d}\theta$
+    \item 遇 $\ds\sin x$、$\ds\cos x$ 之有理式，考慮 $\ds u = \tan\frac{x}{2}$，由以下化為 $u$ 之有理式：
+      \begin{itemize}\setlength{\itemsep}{0pt}
+        \item $\ds\sin x = 2\sin\frac{x}{2}\cos\frac{x}{2} = 2\frac{u}{\sqrt{1 + u^2}}\frac{1}{\sqrt{1 + u^2}} = \frac{2 u}{1 + u^2}$
+        \item $\ds\cos x = 2\cos^2\frac{x}{2} - 1 = 2\cdot\frac{1}{1 + u^2} - 1 = \frac{1 - u^2}{1 + u^2}$
+        \item $\ds\text{d}u = \frac{1}{2}\,\sec^2\frac{x}{2}\,\text{d}x \ie \text{d}x = \frac{2}{1 + u^2}\,\text{d}u$
+      \end{itemize}
+  \end{enumerate}
+\end{fact}
+
+\begin{ex} 若 $a\ne 0$，求下列不定積分。
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item $\ds\int\!\sqrt{a^2 - x^2}\,\text{d}x$
+    \item $\ds\int\!\frac{1}{x^2\sqrt{x^2 + a^2}}\,\text{d}x$
+    \item $\ds\int\!\frac{1}{\sqrt{x^2 - a^2}}\,\text{d}x$
+    \item $\ds\int\!\frac{1}{a + \sin x}\,\text{d}x$，$a > 1$
+  \end{enumerate}
+\end{ex}
+
+\begin{sol}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 令 $\ds x = a\sin\theta$，則 $\ds\int\!\sqrt{a^2 - x^2}\,\text{d}x = \int\!\sqrt{a^2 - a^2\sin^2\theta}\,a\cos\theta\,\text{d}\theta = a^2\int\!\cos^2\theta\,\text{d}\theta = a^2\int\!\frac{1 + \cos2\theta}{2}\,\text{d}\theta \\ = \frac{a^2}{2}\theta + \frac{a^2}{4}\sin2\theta = \frac{a^2}{2}\sin^{-1}\frac{x}{a} + \frac{a^2}{2}\frac{x}{a}\cdot\frac{\sqrt{a^2 - x^2}}{a} = \frac{a^2}{2}\sin^{-1}\frac{x}{a} + \frac{x}{2}\sqrt{a^2 - x^2}$。
+      %另解：令 $\ds u = \sqrt{a^2- x^2}$，則 $\ds\mathrm{d}u = -\frac{x}{\sqrt{a^2 - x^2}}\,\mathrm{d}x$；令 $\ds\mathrm{d}v = \mathrm{d}x$，則 $v = x$。故 \\ $\ds\int\!\sqrt{a^2 - x^2}\,\mathrm{d}x = x\sqrt{a^2 - x^2} + \int x\cdot\frac{x}{\sqrt{a^2 - x^2}}\,\mathrm{d}x = x\sqrt{a^2 - x^2} + \int\!\frac{(x^2 - a^2) + a^2}{\sqrt{a^2 - x^2}}\,\mathrm{d}x \\= x\sqrt{a^2 - x^2} - \int\!\sqrt{a^2 - x^2}\,\mathrm{d}x + \int\!\frac{a^2}{\sqrt{a^2 - x^2}}\,\mathrm{d}x = x\sqrt{a^2 - x^2} - \int\!\sqrt{a^2 - x^2}\,\mathrm{d}x + a^2\sin^{-1}\frac{x}{a}$；移項得 $\ds\int\!\sqrt{a^2 - x^2}\,\mathrm{d}x = \frac{x}{2}\sqrt{a^2 - x^2} + \frac{a^2}{2}\sin^{-1}\frac{x}{a} + c$。
+    \item 令 $\ds x = a\tan\theta$，則 $\ds\int\!\frac{1}{x^2\sqrt{x^2 + a^2}}\,\text{d}x = \int\!\frac{a\sec^2\theta}{a^2\tan^2 x\cdot a\sec\theta}\,\text{d}\theta = \int\!\frac{\sec\theta}{a^2\tan^2\theta}\,\text{d}\theta = \int\!\frac{\cos\theta}{a^2\sin^2\theta}\,\text{d}\theta \\= -\frac{1}{a^2\sin\theta} = -\frac{\sqrt{x^2 + a^2}}{a^2 x}$。
+    \item 令 $\ds x = a\sec\theta$，則 $\ds\int\!\frac{1}{\sqrt{x^2 - a^2}}\,\text{d}x = \int\!\frac{a\sec\theta\tan\theta}{a\tan\theta}\,\text{d}\theta = \int\!\sec\theta\,\text{d}\theta = \ln|\sec\theta + \tan\theta| \\ = \ln\bigg|\frac{x}{a} + \frac{\sqrt{x^2 - a^2}}{a}\bigg|$。
+    \item 令 $\ds u = \tan\frac{x}{2}$，則 $\ds\int\!\frac{1}{a + \sin x}\,\text{d}x = \int\!\frac{1}{a + \frac{2 u}{1 + u^2}}\,\frac{2}{1 + u^2}\,\text{d}u = 2\int\!\frac{1}{a u^2 + 2 u + a}\,\text{d}u = \frac{2}{a\sqrt{\frac{a^2 - 1}{a^2}}}\tan^{-1}\frac{{u + \frac{1}{a}}}{\sqrt{\frac{a^2 - 1}{a^2}}} \\ = \frac{2}{\sqrt{a^2 - 1}}\tan^{-1}\frac{a u + 1}{\sqrt{a^2 - 1}} = \frac{2}{\sqrt{a^2 - 1}}\tan^{-1}\frac{a\tan\frac{x}{2} + 1}{\sqrt{a^2 - 1}}$。
+  \end{enumerate}
+\end{sol}
+
+\myline
+
+\section*{4.4 瑕積分}
+
+\begin{dfn}[瑕積分（improper integral）]
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item[]
+    \item 無限區間（第一型）瑕積分
+      \begin{itemize}\setlength{\itemsep}{-1pt}
+        \item 若 $f(x)$ 在 $\ds[a,\,\infty)$ 連續，則 $\ds\int_a^\infty f(x)\,\text{d}x = \lim_{b\to\infty}\int_a^b f(x)\,\text{d}x$。
+        \item 若 $f(x)$ 在 $\ds(-\infty,\,b]$ 連續，則 $\ds\int_{-\infty}^b f(x)\,\text{d}x = \lim_{a\to-\infty}\int_a^b f(x)\,\text{d}x$。
+        \item 若 $f(x)$ 在 $\ds(-\infty,\,\infty)$ 連續，則任取 $c\in\mathbb{R}$，$\ds\int_{-\infty}^\infty f(x)\,\text{d}x = \int_{-\infty}^c f(x)\,\text{d}x + \int_c^{\infty} f(x)\,\text{d}x$。
+        %\item $\ds\int_{-\infty}^{\infty} f(x)\,\mathrm{d}x = \lim_{\substack{a\to-\infty \\ b\to\infty}}\int_a^b f(x)\,\mathrm{d}x$。
+      \end{itemize}
+    \item 不連續點（第二型）瑕積分
+      \begin{itemize}\setlength{\itemsep}{-1pt}
+        \item 若 $f(x)$ 在 $\ds(a,\,b]$ 連續，則 $\ds\int_a^\infty f(x)\,\text{d}x = \lim_{c\to a+}\int_c^b f(x)\,\text{d}x$。
+        \item 若 $f(x)$ 在 $\ds[a,\,b)$ 連續，則 $\ds\int_a^b f(x)\,\text{d}x = \lim_{c\to b-}\int_a^c f(x)\,\text{d}x$。
+        \item 令 $\ds c\in(a,\,b)$。若 $f(x)$ 在 $\ds[a,\,c)\cup(c, b]$ 連續且在 $x = c$ 不連續，則 $\ds\int_a^b f(x)\,\text{d}x = \int_{a}^c f(x)\,\text{d}x + \int_c^{b} f(x)\,\text{d}x$。
+      \end{itemize}
   \end{itemize}
 \end{dfn}
 
-\begin{prp}
-  令 $f:I\to\mathbb{R}$ 為可微。
-  \begin{itemize}\setlength\itemsep{0em}
-    \item 若 $f'$ 在 $I$ 嚴格遞增（$f'' > 0$ 在 $I$），$f$ 在 $I$ 凹向上（上凹）。
-    \item 若 $f'$ 在 $I$ 嚴格遞減（$f'' < 0$ 在 $I$），$f$ 在 $I$ 凹向下（下凹）。
-    \item 若 $f''(x_0) = 0$，則 $x_0\in I$ 為 $f$ 的反曲點。 
-  \end{itemize}
-\end{prp}
-
-\vspace{1em}
-
-\begin{center}
-  \begin{tikzpicture}[yscale=0.8]
-    \draw[ultra thick, C1] plot[domain=-2.12:.5,smooth](\x,{\x*\x});
-    \draw[ultra thick, C1] plot[domain=.5:6.28,smooth](\x-.02,{sin(\x r)-.25});
-    \draw[ultra thick, C1] plot[domain=6.28:8,smooth](\x,{(\x-5.75)*(\x-5.78)-.5});
-    \draw[thick, M4, <->] (-2.12,-2.5)--(0.5,-2.5); \draw[M4] (-.75,-3) node{凹向上};
-    \draw[dashed, M4, pattern=north east lines, pattern color=M4] (-2.12,-2.5)--(-2.12,4.5)--(.5,4.5)--(.5,-2.5);
-    \draw[thick, M3, <->] (.5,-2.5)--(3.16,-2.5); \draw[M3] (1.75,-3) node{凹向下};
-    \draw[dashed, M3, pattern=north west lines, pattern color=M3] (3.16,-2.5)--(3.16,4.5)--(.5,4.5)--(.5,-2.5);
-    \draw[thick, M4, <->] (3.16,-2.5)--(8,-2.5); \draw[M4] (5,-3) node{凹向上};
-    \draw[dashed, M4, pattern=north east lines, pattern color=M4] (3.16,-2.5)--(3.16,4.5)--(8,4.5)--(8,-2.5);
-    \draw (.5,.25) node[vertex](a){}; \draw (3.16,-.25) node[vertex](b){};
-    \draw[<-] (a)--(.5,-.75) node[below]{反曲點};
-    \draw[<-] (b)--(3.17,.75) node[above]{反曲點};
-    \draw (.5,-1.4) node[below]{$f''(x)$ 變號};
-  \end{tikzpicture}
-\end{center}
-
-\begin{center}
-  \begin{tikzpicture}[scale=0.4]
-    \draw[M4, ultra thick] (-1.2, 0.7) -- (-0.2, 0.7);
-    \draw[M4, ultra thick] (-0.7, 0.2) -- (-0.7, 1.2);
-    \draw[M4, ultra thick] (1.2, 0.7) -- (0.2, 0.7);
-    \draw[M4, ultra thick] (0.7, 0.2) -- (0.7, 1.2);
-    \draw[M4, ultra thick] (-1, 0) arc [start angle = -180, end angle = 0, radius = 1] (1, 0);
-  \end{tikzpicture}
-  \hspace{1cm}
-  \begin{tikzpicture}[scale=0.4]
-    \draw[M4, ultra thick] (-1.2, 0.7) -- (-0.2, 0.7);
-    \draw[M4, ultra thick] (1.2, 0.7) -- (0.2, 0.7);
-    \draw[M4, ultra thick] (1, -1) arc [start angle = 0, end angle = 180, radius = 1] (-1, -1);
-  \end{tikzpicture}
-\end{center}
-
-\begin{center}
-  \begin{tabular}{ccc}
-    \toprule
-    & 嚴格遞減（$-$）& 嚴格遞增（$+$） \\
-    \midrule
-    凹向上（$+$）& 
-    \parbox{3cm}{
-        \begin{tikzpicture}[scale=1]
-        \myaxis{x}{1.2}{1.2}{y}{1.2}{1.2}
-        \draw[thick, C4] plot[domain=-0.98:0.98,smooth] (\x, {1 + 0.18 - sqrt(4 - (\x - 1)^2)});
-      \end{tikzpicture}} & 
-      \parbox{3cm}{\begin{tikzpicture}[scale=1]
-        \myaxis{x}{1.2}{1.2}{y}{1.2}{1.2}
-        \draw[thick, C4] plot[domain=-0.98:0.98,smooth] (\x, {1 + 0.18 - sqrt(4 - (\x + 1)^2)});
-      \end{tikzpicture}} \\
-    \midrule
-    凹向下（$-$）& 
-    \parbox{3cm}{
-        \begin{tikzpicture}[scale=1]
-        \myaxis{x}{1.2}{1.2}{y}{1.2}{1.2}
-        \draw[thick, C4] plot[domain=-0.98:0.98,smooth] (\x, {-1 - 0.18 + sqrt(4 - (\x + 1)^2)});
-      \end{tikzpicture}} & 
-      \parbox{3cm}{
-        \begin{tikzpicture}[scale=1]
-        \myaxis{x}{1.2}{1.2}{y}{1.2}{1.2}
-        \draw[thick, C4] plot[domain=-0.98:0.98,smooth] (\x, {-1 - 0.18 + sqrt(4 - (\x - 1)^2)});
-      \end{tikzpicture}} \\
-    \bottomrule
-  \end{tabular}
-\end{center}
-
-\begin{prp}[漸近線（asymptote）]
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item 若 $\ds\lim_{x\to a-}f(x) = \pm\infty$ 或 $\ds\lim_{x\to a+}f(x) = \pm\infty$，$f$ 在 $a$ 有垂直漸近線。 
-    \item 若 $\ds\lim_{x\to-\infty}f(x) = L$ 或 $\ds\lim_{x\to\infty}f(x) = L$，$f$ 有水平漸近線 $\ds y = L$。 
-    \item 若 $\ds\lim_{x\to-\infty}(f(x) - (m x + n)) = 0$ 或 $\ds\lim_{x\to\infty}(f(x) - (m x + n)) = 0$，$m\ne 0$，則 $f$ 有斜漸近線 $\ds y = m x + n$：斜漸近線 $\ds y = mx + n$ 由極限 $\ds m = \lim_{x\to\pm\infty}\frac{f(x)}{x}$ 與 $\ds n = \lim_{x\to\pm\infty}(f(x) - mx)$ 之存在性決定。
-  \end{itemize}
-\end{prp}
-
-\begin{fact}[作圖步驟]
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item 觀察定義域、對稱性、週期性。
-    \item 決定漸近線。
-    \item 解 $f'(x) = 0$、$f''(x) = 0$ 並決定 $f'$、$f''$ 之正負區間；製表。
-    \item 依表判斷 $f$ 之升降、凹向、臨界點、奇異點、反曲點；作圖。
-  \end{itemize}
-\end{fact}
-
 \begin{ex}
-  決定 $\ds f(x) = x^4 - 2 x^3 + 1$ 的升降、凹向、臨界點、奇異點、反曲點並作圖。
+  求 $\ds\int_{-\infty}^{\infty}\!\frac{1}{1 + x^2}\,\mathrm{d}x$。
 \end{ex}
 
 \begin{sol}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item $\ds f'(x) = 4 x^3 - 6 x^2 = 4 x^2\big(x - \frac{3}{2}\big)$；$\ds f''(x) = 12 x^2 - 12 x = 12x(x - 1)$。
-    \item 製表：
-      \begin{center}
-        \begin{tikzpicture}[scale=2]
-        \draw (0, 0)--(4, 0);
-        \foreach \x/\y in {0/1, 1/2, \frac{3}{2}/3}{
-        \node at (\y, -0.25) {$\x$};
-        \draw[xshift=\y cm] (0, 0) -- (0, 0.45);}
-        \foreach \x/\y in {0/$-$, 1/$-$, 2/$-$, 3/$+$}
-        \node at (\x + 0.5, 0.25) {\y};
-        \foreach \x/\y in {0/$+$, 1/$-$, 2/$+$, 3/$+$}
-        \node at (\x + 0.5, -0.25) {\y};
-        \node at (4, -0.25) {$f''$};
-        \node at (4, 0.25) {$f'$};
-        \end{tikzpicture}
-      \end{center}
-    \item 臨界點（$f' = 0$）：$x = 0$ 與 $\ds x = \frac{3}{2}$
-    \item 嚴格遞增區間（$f' > 0$）：$\ds \big(\frac{3}{2}, \infty\big)$
-    \item 嚴格遞減區間（$f' < 0$）：$\ds \big(-\infty, \frac{3}{2}\big)$
-    \item 反曲點（$f'' = 0$ 且前後 $f''$ 異號處）：$x = 0$ 與 $x = 1$
-    \item 作圖：\vspace{-8mm}
-      \begin{center}
-        \begin{tikzpicture}[scale=1.2]
-          \begin{axis}%
-            [grid=both,
-             unit vector ratio={3 1},
-             minor tick num=3,
-             ymin=-1, ymax=6,
-             grid style={line width=.1pt, draw=gray!10},
-             major grid style={line width=.2pt,draw=gray!50},
-             axis lines=middle
-            ]
-            \addplot[domain=-3:3,samples=5000,smooth,cyan] {x^4 - 2* x^3 + 1};
-          \end{axis}
-        \end{tikzpicture}
-      \end{center}
-  \end{itemize}
+  $\ds\int_{-\infty}^{\infty}\!\frac{1}{1 + x^2}\,\mathrm{d}x = 2\int_0^\infty\!\frac{1}{1 + x^2}\,\mathrm{d}x = 2\lim_{b\to\infty}\int_0^b\!\frac{1}{1 + x^2}\,\mathrm{d}x = 2\lim_{b\to\infty}\tan^{-1} b = 2\cdot\frac{\pi}{2} = \pi$。
 \end{sol}
 
 \begin{ex}
-  決定 $\ds f(x) = \frac{x}{x^2 + 3}$ 之升降、凹向、臨界點、奇異點、反曲點並作圖。
+  求 $\ds\int_{1}^{\infty}\!\frac{1}{x^2}\,\mathrm{d}x$。
 \end{ex}
 
 \begin{sol}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item $\ds f'(x) = \frac{3-x^2}{(x^2 + 3)^2} = \frac{(\sqrt{3}-x)(\sqrt{3} + x)}{(x^2 + 3)^2}$；$\ds f''(x) = \frac{2x(x+3)(x-3)}{(x^2 + 3)^3}$。
-    \item 製表：
-      \begin{center}
-        \begin{tikzpicture}[scale=2]
-          \draw (0, 0)--(6, 0);
-          \foreach \x/\y in {-3/1, -\sqrt{3}/2, 0/3, \sqrt{3}/4, 3/5}{
-          \node at (\y, -0.25) {$\x$};
-          \draw[xshift=\y cm] (0, 0) -- (0, 0.45);}
-          \foreach \x/\y in {0/$-$, 1/$-$, 2/$+$, 3/$+$, 4/$-$, 5/$-$}
-          \node at (\x + 0.5, 0.25) {\y};
-          \foreach \x/\y in {0/$-$, 1/$+$, 2/$+$, 3/$-$, 4/$-$, 5/$+$}
-          \node at (\x + 0.5, -0.25) {\y};
-          \node at (6, -0.25) {$f''$};
-          \node at (6, 0.25) {$f'$};
-        \end{tikzpicture}
-      \end{center}
-    \item 水平漸近線： $y = 0$，因 $\ds\lim_{x\to\pm\infty}\frac{x}{x^2 + 3} = 0$
-    \item 嚴格遞增區間（$f' > 0$）：$\ds (-\sqrt{3}, \sqrt{3})$
-    \item 嚴格遞減區間（$f' < 0$）：$\ds (-\infty, -\sqrt{3})$ 與 $\ds (\sqrt{3}, \infty)$
-    \item 臨界點（$f' = 0$）：$\ds x = \pm\sqrt{3}$
-    \item 反曲點（$f'' = 0$ 且前後 $f''$ 異號處）：$x = -3$ 與 $x = 0$ 與 $x = 3$
-    \item 作圖：\vspace{-8mm}
-      \begin{center}
-        \begin{tikzpicture}[scale=1.5]
-          \begin{axis}%
-            [grid=both,
-             unit vector ratio={1 10},
-             minor tick num=3,
-             ymin = -0.4, ymax = 0.4,
-             grid style={line width=.1pt, draw=gray!10},
-             major grid style={line width=.2pt,draw=gray!50},
-             axis lines=middle
-            ]
-            \addplot[domain=-10:10,samples=3000,smooth,cyan] {x / (x^2 + 3)};
-          \end{axis}
-        \end{tikzpicture}
-      \end{center}
-  \end{itemize}
+  $\ds\int_{1}^{\infty}\!\frac{1}{x^2}\,\mathrm{d}x = \lim_{b\to\infty}\int_1^b\!\frac{1}{x^2}\,\mathrm{d}x = \lim_{b\to\infty}\big(-\frac{1}{b} + 1\big) = 1$
 \end{sol}
 
 \begin{ex}
-  決定 $\ds f(x) = \frac{x^3}{x^2 - 1}$ 的升降、凹向、臨界點、奇異點、反曲點並作圖。
+  求 $\ds\int_0^1\!\frac{1}{\sqrt{x}}\,\mathrm{d}x$。
 \end{ex}
 
 \begin{sol}
-  \begin{itemize}\setlength\itemsep{0em}
-    \item[]
-    \item $\ds f'(x) = \frac{x^2(x^2 - 3)}{(x^2 -1)^2} = \frac{x^2(x - \sqrt{3})(x + \sqrt{3})}{(x^2 -1)^2}$；$\ds f''(x) = \frac{2x(x^2 + 3)}{(x^2 - 1)^3}$
-    \item 製表： 
-      \begin{center}
-        \begin{tikzpicture}[scale=2]
-          \draw (0, 0)--(6, 0);
-          \foreach \x/\y in {-\sqrt{3}/1, -1/2, 0/3, 1/4, \sqrt{3}/5}{
-          \node at (\y, -0.25) {$\x$};
-          \draw[xshift=\y cm] (0, 0) -- (0, 0.45);}
-          \foreach \x/\y in {0/$+$, 1/$-$, 2/$-$, 3/$-$, 4/$-$, 5/$+$}
-          \node at (\x + 0.5, 0.25) {\y};
-          \foreach \x/\y in {0/$-$, 1/$-$, 2/$+$, 3/$-$, 4/$+$, 5/$+$}
-          \node at (\x + 0.5, -0.25) {\y};
-          \node at (6, -0.25) {$f''$};
-          \node at (6, 0.25) {$f'$};
-        \end{tikzpicture}
-      \end{center}
-    \item 奇異點： $\ds x^2 - 1 = 0\ie x = \pm 1$，故垂直漸近線：$\ds x = \pm1$
-    \item 斜漸近線： $y = x$，因 $\ds\lim_{x\to\pm\infty}\big(\frac{x^3}{x^2 - 1} - x\big) = 0$
-    \item 嚴格遞增區間（$f' > 0$）：$\ds (-\infty, -\sqrt{3})$ 與 $\ds (\sqrt{3}, \infty)$
-    \item 嚴格遞減區間（$f' < 0$）：$\ds(-\sqrt{3}, \sqrt{3})$
-    \item 臨界點（$f' = 0$）：$\ds x = 0$ 與 $\ds x = \pm\sqrt{3}$
-    \item 反曲點（$f'' = 0$ 且前後 $f''$ 異號處）：$x = 0$
-    \item 作圖：\vspace{-8mm}
-      \begin{center}
-        \begin{tikzpicture}[scale=1.5]
-          \begin{axis}%
-            [grid=both,
-             unit vector ratio={2 1},
-             minor tick num=3,
-             ymax=6, ymin=-6,
-             grid style={line width=.1pt, draw=gray!10},
-             major grid style={line width=.2pt,draw=gray!50},
-             axis lines=middle
-            ]
-            \addplot[domain=-5:5,samples=5000,smooth,cyan] {x^3 / (x^2 - 1)};
-            \addplot[domain=-5:5,samples=5000,smooth,purple] {x};
-          \end{axis}
-        \end{tikzpicture}
-      \end{center}
-  \end{itemize}
+  $\ds\int_0^1\!\frac{1}{\sqrt{x}}\,\mathrm{d}x = \lim_{c\to0+}\int_c^1\!\frac{1}{\sqrt{x}}\,\mathrm{d}x = \lim_{c\to0+}2\sqrt{x}\,\Big|^1_c = \lim_{c\to0+}(2-2\sqrt{c}) = 2$
 \end{sol}
 
-\myline
+\begin{thm} 給定 $\ds 0 < a < \infty$。
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item $\ds\int_a^\infty\!\frac{1}{x^p}\,\mathrm{d}x$ 當 $p > 1$ 收斂至 $\ds\frac{a^{1-p}}{p - 1}$，當 $\ds p\leqslant 1$ 發散至 $\infty$。
+    \item $\ds\int_0^{a}\!\frac{1}{x^p}\,\mathrm{d}x$ 當 $p < 1$ 收斂至 $\ds\frac{a^{1-p}}{1 - p}$，當 $p\geqslant 1$ 發散至 $\infty$。
+  \end{itemize}
+\end{thm}
+
+\begin{thm}
+  令 $\ds -\infty\leqslant a < b \leqslant\infty$，$f$、$g$ 在 $(a, b)$ 連續，且 $0\leqslant f(x)\leqslant g(x)\;\forall\,x$。
+  \begin{itemize}\setlength{\itemsep}{0pt}
+    \item 若 $\ds\int_a^b g(x)\,\mathrm{d}x$ 收斂，$\ds\int_a^b f(x)\,\mathrm{d}x$ 收斂。
+    \item 若 $\ds\int_a^b f(x)\,\mathrm{d}x$ 發散，$\ds\int_a^b g(x)\,\mathrm{d}x$ 發散。
+  \end{itemize}
+\end{thm}
+
+\begin{thm}
+  令 $f$、$g$ 在 $[a,\,\infty)$，$a\in\mathbb{R}$ 連續，均為正值，且 $\ds\lim_{x\to\infty}\frac{f(x)}{g(x)}$ 存在，則 $\ds\int_a^\infty\!f(x)\,\text{d}x$ 與 $\ds\int_a^\infty\!f(x)\,\text{d}x$ 同為收斂或發散。
+\end{thm}
+
+\begin{ex}
+  證明 $\ds\int_0^\infty\!e^{-x^2}\,\mathrm{d}x$ 收斂。
+\end{ex}
+
+\begin{sol}
+  由 $\ds e^{-x^2}\leqslant 1\;\forall\,0 \leqslant x < 1$ 及 $\ds e^{-x^2}\leqslant e^{-x}\;\forall\,x\geqslant 1$，$\ds\int_0^\infty\!e^{-x^2}\,\mathrm{d}x = \int_0^1\!e^{-x^2}\,\mathrm{d}x + \int_1^\infty\!e^{-x^2}\,\mathrm{d}x\leqslant\int_0^1\!1\,\mathrm{d}x + \int_1^\infty\!e^{-x}\,\mathrm{d}x = 1 + \frac{1}{e}$，故 $\ds\int_0^\infty\!e^{-x^2}\,\mathrm{d}x$ 收斂。
+\end{sol}
+
+\begin{ex}[$\Gamma$ 函數]
+  已知 $\ds\int_0^\infty\!e^{-t^2}\,\mathrm{d}t = \frac{\sqrt{\pi}}{2}$。
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item 證明 $\ds\Gamma(x)\equiv\int_0^\infty\!t^{x - 1}e^{-t}\,\mathrm{d}t$ 收斂，$\ds\forall\,x > 0$。
+    \item 證明 $\ds\Gamma(x + 1) = x\,\Gamma(x)$，$\ds\forall\,x > 0$。
+    \item 證明 $\ds\Gamma(n + 1) = n!$，$\ds\forall\,n\in\mathbb{N}$。
+    \item 求 $\ds\Gamma\Big(\frac{1}{2}\Big)$ 與 $\ds\Gamma\Big(\frac{3}{2}\Big)$。
+    \item 求 $\ds\int_0^\infty\!t\,e^{-\alpha\,t^2}\,\mathrm{d}t$ 與 $\ds\int_0^\infty\!t^2\,e^{-\alpha\,t^2}\,\mathrm{d}t$，$\alpha > 0$。
+  \end{enumerate}
+\end{ex}
+
+\begin{sol}
+  \begin{enumerate}\setlength{\itemsep}{0pt}
+    \item[]
+    \item（證一） 由 $\ds\lim_{t\to\infty}t^{x-1}e^{-\frac{t}{2}} = 0$，$\ds\exists\,T > 0$ 使 $\ds t^{x-1}e^{-\frac{t}{2}}\leqslant 1\;\forall\,t\geqslant T$。$\ds\int_0^\infty\!t^{x-1}e^{-t}\,\mathrm{d}t = \int_0^T\!t^{x-1}e^{-t}\,\mathrm{d}t + \int_T^\infty\!t^{x-1}e^{-t}\,\mathrm{d}t\leqslant\int_0^T\!t^{x - 1}\,\mathrm{d}t + \int_T^\infty 1\cdot e^{-\frac{t}{2}}\,\mathrm{d}t = \frac{T^x}{x} + 2\,e^{-\frac{T}{2}}$。故 $\forall\,x > 0$，$\ds\int_0^\infty\!t^{x-1}e^{-t}\,\mathrm{d}t$ 收斂。
+
+     （證二）$\ds\int_0^\infty\!t^{x-1}e^{-t}\,\mathrm{d}t = \int_0^1\!t^{x - 1}e^{-t}\,\mathrm{d}t + \int_1^\infty\!t^{x - 1}e^{-t}\,\mathrm{d}t$。
+      \begin{itemize}\setlength{\itemsep}{0pt}
+        \item $\ds\int_0^1\!t^{x - 1}e^{-t}\,\mathrm{d}t\leqslant\int_0^1\!t^{x - 1}\,\text{d}t = \frac{t^x}{x}\,\Big|_0^1 = \frac{1}{x}$，$\ds\int_0^1\!t^{x - 1}e^{-t}\,\text{d}t$ 收斂。
+        \item $\ds\int_1^\infty\!\frac{1}{t^2}\,\text{d}t$ 收斂，$\ds\lim_{t\to\infty}\frac{t^{x - 1}e^{-t}}{\frac{1}{t^2}} = \lim_{t\to\infty}\frac{t^{x + 1}}{e^t} = 0$，$\ds\int_1^\infty\!t^{x - 1}e^{-t}\,\text{d}t$ 收斂。
+      \end{itemize}
+      故$\ds\int_1^\infty\!t^{x - 1}e^{-t}\,\text{d}t$ 收斂。 
+    \item $\ds\Gamma(x + 1) = \int_0^\infty\!t^x e^{-t}\,\mathrm{d}t = \lim_{\substack{a\to0+ \\ b\to\infty}}\int_a^b\!t^{x}e^{-t}\,\mathrm{d}t$。令 $\ds u = t^x$，則 $\ds\mathrm{d}u = xt^{x-1}\,\mathrm{d}t$。令 $\ds\mathrm{d}v = e^{-t}\,\mathrm{d}t$，則 $\ds v = -e^{-t}$。故 $\ds\lim_{\substack{a\to0+\\b\to\infty}}\int_a^b\!t^{x}e^{-t}\,\mathrm{d}t = \lim_{\substack{a\to0+\\b\to\infty}}\Big(-t^x e^{-t}\,\Big|_a^b + \int_a^b\!e^{-t}\cdot xt^{x-1}\,\mathrm{d}t\Big) = 0 + x\int_0^\infty\!t^{x-1}e^{-t}\,\mathrm{d}t =x\,\Gamma(x)$。
+    \item 由上 $\ds\Gamma(n + 1) = n\,\Gamma(n) = n(n - 1)\,\Gamma(n - 2) = \cdots = n(n - 1)\cdots 2\,\Gamma(1)$，又 $\ds\Gamma(1) = \lim_{b\to\infty}\int_0^b e^{-t}\,\text{d}t = \lim_{b\to\infty}-e^{-t}\,\Big|_0^b = \lim_{b\to\infty} 1 - e^{-b} = 1$，得證。
+    \item 
+      \begin{enumerate}\setlength{\itemsep}{0pt}
+        \item $\ds\Gamma\Big(\frac{1}{2}\Big)=\int_{0}^{\infty} t^{-\frac{1}{2}} e^{-t}\,\mathrm{d}t = \int_{0}^{\infty}\frac{e^{-t}}{\sqrt{t}}\,\mathrm{d}t$。令 $\ds u = \sqrt{t}$，則 $\ds t = u^2$，$\ds\mathrm{d}u = \frac{1}{2\sqrt{t}}\,\mathrm{d}t \ie \frac{1}{\sqrt{t}}\,\mathrm{d}t = 2\,\mathrm{d}u$。積分範圍 $t$ 由 $0$ 至 $\infty$，則變數變換後 $u$ 由 $\ds\sqrt{0} = 0$ 至 $\ds\sqrt{\infty} = \infty$，故 $\ds\Gamma\Big(\frac{1}{2}\Big) = \int_{0}^{\infty}\frac{e^{-t}}{\sqrt{t}}\,\mathrm{d}t = 2\int_0^\infty e^{-u^2}\,\mathrm{d}u = 2\cdot\frac{\sqrt{\pi}}{2} = \sqrt{\pi}$。
+        \item 由 $\ds\Gamma(x + 1) = x\,\Gamma(x)$，$\ds\Gamma\Big(\frac{3}{2}\Big) = \Gamma\Big(\frac{1}{2} + 1\Big) = \frac{1}{2}\,\Gamma\Big(\frac{1}{2}\Big) = \frac{1}{2}\,\sqrt{\pi}$。
+      \end{enumerate}
+    \item
+      \begin{enumerate}\setlength{\itemsep}{0pt}
+        \item 令 $\ds u = \alpha\,t^2$，則 $\ds\mathrm{d}u = 2\,\alpha\,t\,\mathrm{d}t \ie t\,\mathrm{d}t = \frac{\mathrm{d}u}{2\alpha}$。積分範圍 $t$ 由 $0$ 至 $\infty$，則變數變換後 $u$ 由 $\ds\alpha\cdot0^2 = 0$ 至 $\ds\alpha\cdot\infty^2 = \infty$，故 $\ds\int_0^\infty t\,e^{-\alpha\,t^2}\,\mathrm{d}t = \int_0^\infty\!e^{-u}\,\frac{\mathrm{d}u}{2\,\alpha} = \frac{1}{2\,\alpha}\int_0^\infty\!e^{-u}\,\mathrm{d}u = \frac{1}{2\,\alpha}\,\Big(-e^{-u}\,\Big|_0^\infty\Big) = \frac{1}{2\,\alpha}$。
+        \item 令 $\ds u = \alpha\,t^2$，則 $\ds t = \frac{\sqrt{u}}{\sqrt{\alpha}}$，$\ds\mathrm{d}u = 2\,\alpha\,t\,\mathrm{d}t \ie t\,\mathrm{d}t = \frac{\mathrm{d}u}{2\,\alpha}$。積分範圍 $t$ 由 $0$ 至 $\infty$，則變數變換後 $u$ 由 $\ds\alpha\cdot0^2 = 0$ 至 $\ds\alpha\cdot\infty^2 = \infty$，故 $\ds\int_0^\infty\!t^2\,e^{-\alpha\,t^2}\,\mathrm{d}t = \int_0^\infty\!t\,e^{-\alpha\,t^2}\,t\,\mathrm{d}t = \int_0^\infty\!\frac{\sqrt{u}}{\sqrt{\alpha}}\,e^{-u}\,\frac{\mathrm{d}u}{2\,\alpha} = \frac{1}{2\,\alpha^{\frac{3}{2}}}\int_0^\infty\!u^{\frac{1}{2}}\,e^{-u}\,\mathrm{d}u = \frac{1}{2\,\alpha^{\frac{3}{2}}}\cdot\Gamma\Big(\frac{3}{2}\Big) = \frac{1}{2\,\alpha^{\frac{3}{2}}}\cdot\frac{1}{2}\sqrt{\pi} = \frac{\sqrt{\pi}}{4\,\alpha^{\frac{3}{2}}}$。
+      \end{enumerate}
+  \end{enumerate}
+\end{sol}
+
+%\subsection*{積分順序交換}
+%
+%\begin{ex}
+%  求 $\ds\int_0^\infty\frac{e^{-ax} - e^{-bx}}{x}\,\text{d}x$，$b > a > 0$。
+%\end{ex}
+%
+%\begin{sol}
+%  由 $\ds\int_a^b e^{-xy}\,\text{d}y = \frac{1}{-x}e^{-xy}\,\Big|_{y=a}^{y=b} = \frac{1}{-x}(e^{-xb} - e^{-xa}) = \frac{e^{-ax} - e^{-bx}}{x}$。\\故 $\ds\int_0^\infty\frac{e^{-ax} - e^{-bx}}{x}\,\text{d}x = \int_0^\infty\bigg(\int_a^b e^{-xy}\,\text{d}y\bigg)\,\text{d}x = \int_a^b\bigg(\int_0^\infty e^{-xy}\,\text{d}x\bigg)\,\text{d}y = \int_a^b\frac{1}{y}\,\text{d}y = \ln\frac{b}{a}$。
+%\end{sol}
+%
+%\begin{ex}
+%  求 $\ds\int_0^\infty\frac{\sin x}{x}\,\text{d}x$。
+%\end{ex}
+%
+%\begin{sol}
+%  由 $\ds\int_0^\infty e^{-xy}\,\text{d}y = \frac{1}{x}$，$x > 0$；又 $\ds\int e^{ax}\sin bx\,\text{d}x = \frac{e^{ax}(a\cdot\sin bx - b\cdot\cos bx)}{a^2 + b^2}$。\\故 $\ds\int_0^\infty\frac{\sin x}{x}\,\text{d}x = \int_0^\infty\bigg(\sin x\int_0^\infty e^{-xy}\,\text{d}y\bigg)\,\text{d}x = \int_0^\infty\bigg(\int_0^\infty e^{-xy}\sin x\,\text{d}y\bigg)\,\text{d}x = \int_0^\infty\bigg(\int_0^\infty e^{-xy}\sin x\,\text{d}x\bigg)\,\text{d}y = \int_0^\infty\frac{e^{-xy}((-y)\cdot\sin x - 1\cdot\cos x)}{(-y)^2 + 1^2}\,\Big|_{x = 0}^{x = \infty}\,\text{d}y = \int_0^\infty\frac{0 - (-1)}{1 + y^2}\,\text{d}y = \int_0^\infty\frac{1}{1 + y^2}\,\text{d}y = \tan^{-1}y\,\Big|_{y = 0}^{y = \infty} = \frac{\pi}{2}$。
+%\end{sol}
 
 \end{document}
