@@ -14,7 +14,6 @@ Mastering the analysis of single complex variable is essential for understanding
 
 - [Howie, J. M., 2003. Complex Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4471-0027-0) 
 - [Howie, J. M., 2001. Real Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4471-0341-7)
-- [Bak, J., Newman, D. J., 2010. Complex Analysis. 3rd ed., Springer, NY.](https://link.springer.com/book/10.1007/978-1-4419-7288-0)
 - [Lang, S., 1998. Complex Analysis. 4th ed., Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4757-3083-8)
 - [Shakarchi, R. 1998. Problems and Solutions for Complex Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-1534-9)
 
@@ -22,9 +21,9 @@ Mastering the analysis of single complex variable is essential for understanding
 
 - [Complex Analysis: A Visual and Interactive Introduction](https://complex-analysis.com/) &nbsp; 幾何視覺觀點的複變函數論介紹。
 
-
 <!--
-- [Burckel, R. B., 2021. Classical Analysis in the Complex Plane. Springer, Cham.](https://link.springer.com/book/10.1007/978-1-0716-1965-0)
+- [Bak, J., Newman, D. J., 2010. Complex Analysis. 3rd ed., Springer, NY.](https://link.springer.com/book/10.1007/978-1-4419-7288-0)
+- [Burckel, R. B., 2021. Classical Analysis in the Complex Plane. Springer, Cham.]( https://link.springer.com/book/10.1007/978-1-0716-1965-0 )
 - [Pólya, G., Szegö, G., 1998. Problems and Theorems in Analysis I: Series. Integral Calculus. Theory of Functions. Springer-Verlag, Berlin.](https://link.springer.com/book/10.1007/978-3-642-61983-0)
 - [Pólya, G., Szegö, G., 1998. Problems and Theorems in Analysis II: Theory of Functions. Zeros. Polynomials. Determinants. Number Theory. Geometry. Springer-Verlag, Berlin.](https://link.springer.com/book/10.1007/978-3-642-61905-2)
 - [Pap, E., 1999. Complex Analysis through Examples and Exercises. Kluwer, Amsterdam.](https://link.springer.com/book/10.1007/978-94-017-1106-7)
@@ -69,6 +68,8 @@ Mastering the analysis of single complex variable is essential for understanding
 
 杜昌燁 cwtu320313 @ googlemail.com
 
+<!--
 ## TA
 
 張誌麟 hsa00000 @ gmail.com
+-->
