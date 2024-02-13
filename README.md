@@ -8,7 +8,7 @@ Mastering the analysis of single complex variable is essential for understanding
 
 ## 講義 
 
-<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note01.pdf">第一章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note02.pdf">第二章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note03.pdf">第三章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note04.pdf">第四章</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note05.pdf">第五章</a>
+<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note01.pdf">01</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note02.pdf">02</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note03.pdf">03</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note04.pdf">04</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note05.pdf">05</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note06.pdf">06</a>
 
 ## 參考書
 
@@ -22,15 +22,14 @@ Mastering the analysis of single complex variable is essential for understanding
 - [Complex Analysis: A Visual and Interactive Introduction](https://complex-analysis.com/) &nbsp; 幾何視覺觀點的複變函數論介紹。
 
 <!--
-- [Bak, J., Newman, D. J., 2010. Complex Analysis. 3rd ed., Springer, NY.](https://link.springer.com/book/10.1007/978-1-4419-7288-0)
-- [Burckel, R. B., 2021. Classical Analysis in the Complex Plane. Springer, Cham.]( https://link.springer.com/book/10.1007/978-1-0716-1965-0 )
+- [Apostol, T. M., 1974. Mathematical Analysis. 2nd ed., Addison-Wesley, Reading, MA.]
+- [Burckel, R. B., 2021. Classical Analysis in the Complex Plane. Springer, Cham.](https://link.springer.com/book/10.1007/978-1-0716-1965-0)
 - [Pólya, G., Szegö, G., 1998. Problems and Theorems in Analysis I: Series. Integral Calculus. Theory of Functions. Springer-Verlag, Berlin.](https://link.springer.com/book/10.1007/978-3-642-61983-0)
 - [Pólya, G., Szegö, G., 1998. Problems and Theorems in Analysis II: Theory of Functions. Zeros. Polynomials. Determinants. Number Theory. Geometry. Springer-Verlag, Berlin.](https://link.springer.com/book/10.1007/978-3-642-61905-2)
 - [Pap, E., 1999. Complex Analysis through Examples and Exercises. Kluwer, Amsterdam.](https://link.springer.com/book/10.1007/978-94-017-1106-7)
+- [Bak, J., Newman, D. J., 2010. Complex Analysis. 3rd ed., Springer, NY.](https://link.springer.com/book/10.1007/978-1-4419-7288-0)
 - [Asmar, N. H., Grafakos, L., 2018. Complex Analysis with Applications. Springer Nature, Cham.](https://link.springer.com/book/10.1007/978-3-319-94063-2)
 - [Ash, R. B., Novinger, P. W., 2007. Complex Variables. 2nd ed., Dover Publications.](https://people.math.sc.edu/girardi/m7034/book/AshComplexVariablesWithHyperlinks.pdf) 
-- [Lang, S., 1997. Undergraduate Analysis. 2nd ed, Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4757-2698-5)
-- [Shakarchi, R., 1998. Problems and Solutions for Undergraduate Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-1738-1)
 - [Lang, S., 1987. Linear Algebra. 3rd ed, Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4757-1949-9)
 - [Shakarchi, R., 1996. Solutions Manual for Lang's Linear Algebra. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-0755-9)
 - [Lang, S., 1987. Introduction to Linear Algebra. 2nd ed, Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-1070-2)
