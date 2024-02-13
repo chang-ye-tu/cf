@@ -61,8 +61,6 @@ Mastering the analysis of single complex variable is essential for understanding
 | 06/04, 06/06        |                    |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;06/13 學期考    |                    |
 
-- 上課時間之 o 表該週隨堂考。
-
 ## 授課教師
 
 杜昌燁 cwtu320313 @ googlemail.com
