@@ -6,9 +6,15 @@
 Mastering the analysis of single complex variable is essential for understanding physics, engineering, and various mathematical fields. This course will familiarize students with its concepts and operations, laying the foundation for future applications.
 -->
 
+<!--
 ## 講義 
-
 <a href="https://github.com/chang-ye-tu/cf/blob/master/note/note01.pdf">01</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note02.pdf">02</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note03.pdf">03</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note04.pdf">04</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note05.pdf">05</a>&nbsp; | &nbsp;<a href="https://github.com/chang-ye-tu/cf/blob/master/note/note06.pdf">06</a>
+-->
+
+## 教科書
+
+- [Asmar, N. H., Grafakos, L., 2018. Complex Analysis with Applications. Springer Nature, Cham.](https://link.springer.com/book/10.1007/978-3-319-94063-2)
+- [Asmar N., Grafakos L. Solutions to Selected Exercises in Complex Analysis with Applications](https://github.com/chang-ye-tu/cf/blob/master/grafakos_selected_sol.pdf)
 
 ## 參考書
 
@@ -16,20 +22,18 @@ Mastering the analysis of single complex variable is essential for understanding
 - [Howie, J. M., 2001. Real Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4471-0341-7)
 - [Lang, S., 1998. Complex Analysis. 4th ed., Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4757-3083-8)
 - [Shakarchi, R. 1998. Problems and Solutions for Complex Analysis. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-1534-9)
+- [Burckel, R. B., 2021. Classical Analysis in the Complex Plane. Springer, Cham.](https://link.springer.com/book/10.1007/978-1-0716-1965-0)
+- [Pólya, G., Szegö, G., 1998. Problems and Theorems in Analysis I: Series. Integral Calculus. Theory of Functions. Springer-Verlag, Berlin.](https://link.springer.com/book/10.1007/978-3-642-61983-0)
+- [Pólya, G., Szegö, G., 1998. Problems and Theorems in Analysis II: Theory of Functions. Zeros. Polynomials. Determinants. Number Theory. Geometry. Springer-Verlag, Berlin.](https://link.springer.com/book/10.1007/978-3-642-61905-2)
+- [Pap, E., 1999. Complex Analysis through Examples and Exercises. Kluwer, Amsterdam.](https://link.springer.com/book/10.1007/978-94-017-1106-7)
+- [Bak, J., Newman, D. J., 2010. Complex Analysis. 3rd ed., Springer, NY.](https://link.springer.com/book/10.1007/978-1-4419-7288-0)
+- [Ash, R. B., Novinger, P. W., 2007. Complex Variables. 2nd ed., Dover Publications.](https://people.math.sc.edu/girardi/m7034/book/AshComplexVariablesWithHyperlinks.pdf) 
 
 ## 其他資源
 
 - [Complex Analysis: A Visual and Interactive Introduction](https://complex-analysis.com/) &nbsp; 幾何視覺觀點的複變函數論介紹。
 
 <!--
-- [Apostol, T. M., 1974. Mathematical Analysis. 2nd ed., Addison-Wesley, Reading, MA.]
-- [Burckel, R. B., 2021. Classical Analysis in the Complex Plane. Springer, Cham.](https://link.springer.com/book/10.1007/978-1-0716-1965-0)
-- [Pólya, G., Szegö, G., 1998. Problems and Theorems in Analysis I: Series. Integral Calculus. Theory of Functions. Springer-Verlag, Berlin.](https://link.springer.com/book/10.1007/978-3-642-61983-0)
-- [Pólya, G., Szegö, G., 1998. Problems and Theorems in Analysis II: Theory of Functions. Zeros. Polynomials. Determinants. Number Theory. Geometry. Springer-Verlag, Berlin.](https://link.springer.com/book/10.1007/978-3-642-61905-2)
-- [Pap, E., 1999. Complex Analysis through Examples and Exercises. Kluwer, Amsterdam.](https://link.springer.com/book/10.1007/978-94-017-1106-7)
-- [Bak, J., Newman, D. J., 2010. Complex Analysis. 3rd ed., Springer, NY.](https://link.springer.com/book/10.1007/978-1-4419-7288-0)
-- [Asmar, N. H., Grafakos, L., 2018. Complex Analysis with Applications. Springer Nature, Cham.](https://link.springer.com/book/10.1007/978-3-319-94063-2)
-- [Ash, R. B., Novinger, P. W., 2007. Complex Variables. 2nd ed., Dover Publications.](https://people.math.sc.edu/girardi/m7034/book/AshComplexVariablesWithHyperlinks.pdf) 
 - [Lang, S., 1987. Linear Algebra. 3rd ed, Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4757-1949-9)
 - [Shakarchi, R., 1996. Solutions Manual for Lang's Linear Algebra. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-0755-9)
 - [Lang, S., 1987. Introduction to Linear Algebra. 2nd ed, Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-1070-2)
@@ -37,12 +41,13 @@ Mastering the analysis of single complex variable is essential for understanding
 
 ## 評分標準
 
-- 期中考（30%）04/18 1310 ～ 1510。考試範圍： 02/20 ～ 04/09 講義例題、指定習題。 
-- 學期考（30%）06/13 1310 ～ 1510。考試範圍： 04/18 ～ 06/06 講義例題、指定習題。
+- 期中考（30%）04/18 1310 ～ 1510。考試範圍： 02/20 ～ 04/11 講授章節。 
+- 學期考（30%）06/13 1310 ～ 1510。考試範圍： 04/18 ～ 06/06 講授章節。
+- 考試題目出自「課堂講授例題」與「講授章節內附有詳解之習題」。
 
 ## 授課時程
 
-| 上課時間            | 進度               |
+| 上課時間            | 講授章節           |
 |---------------------|--------------------|
 | 02/20, 02/22        |                    |
 | 02/27, 02/29        |                    |
