@@ -14,7 +14,7 @@ Mastering the analysis of single complex variable is essential for understanding
 ## 教科書
 
 - [Asmar, N. H., Grafakos, L., 2018. Complex Analysis with Applications. Springer Nature, Cham.](https://link.springer.com/book/10.1007/978-3-319-94063-2)
-- [Asmar N., Grafakos L. Solutions to Selected Exercises in Complex Analysis with Applications](https://github.com/chang-ye-tu/cf/blob/master/grafakos_selected_sol.pdf)
+- [Asmar N., Grafakos L. Solutions to Selected Exercises in Complex Analysis with Applications.](https://github.com/chang-ye-tu/cf/blob/master/grafakos_selected_sol.pdf)
 
 ## 參考書
 
@@ -41,8 +41,8 @@ Mastering the analysis of single complex variable is essential for understanding
 
 ## 評分標準
 
-- 期中考（30%）04/18 1310 ～ 1510。考試範圍： 02/20 ～ 04/11 講授章節。 
-- 學期考（30%）06/13 1310 ～ 1510。考試範圍： 04/18 ～ 06/06 講授章節。
+- 期中考（50%）04/18 1310 ～ 1510。考試範圍： 02/20 ～ 04/11 講授章節。 
+- 學期考（50%）06/13 1310 ～ 1510。考試範圍： 04/18 ～ 06/06 講授章節。
 - 考試題目出自「課堂講授例題」與「講授章節內附有詳解之習題」。
 
 ## 授課時程
