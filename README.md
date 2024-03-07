@@ -37,6 +37,41 @@ Mastering the analysis of single complex variable is essential for understanding
 - [Lang, S., 1987. Linear Algebra. 3rd ed, Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4757-1949-9)
 - [Shakarchi, R., 1996. Solutions Manual for Lang's Linear Algebra. Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-0755-9)
 - [Lang, S., 1987. Introduction to Linear Algebra. 2nd ed, Springer-Verlag, NY.](https://link.springer.com/book/10.1007/978-1-4612-1070-2)
+
+# 
+02/20 1.1, 1.2 (end 1.2.6)
+02/22 placement test, 1.2 (from 1.2.7), 1.3 (end 1.3.8) 
+02/27 1.3 (from 1.3.9), 1.4 (end 1.4.5)
+02/29 1.4 (from 1.4.6), 1.5 (end 1.5.18)
+03/05 1.5 (from 1.5.19), 1.6 (skip 1.6.5, 1.6.6, 1.6.8, 1.6.9), 1.7 (end 1.7.5; skip 1.7.2)
+03/07 1.7 (from 1.7.6), 1.8
+03/12
+03/14
+03/19
+03/21
+03/26
+03/28
+04/09
+04/11
+04/16 期中考
+04/18 
+04/23
+04/25
+04/30
+05/02
+05/07
+05/09
+05/14
+05/16
+05/21
+05/23
+05/28
+05/30
+06/04
+06/06 
+
+教務處通知，因3/21(四)辦理【校務評鑑】，當天複變教室會改到B711。只有當天異動。之後就會回原教室。
+
 -->
 
 ## 評分標準
