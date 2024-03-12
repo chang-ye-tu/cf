@@ -15,6 +15,7 @@ Mastering the analysis of single complex variable is essential for understanding
 
 - [Asmar, N. H., Grafakos, L., 2018. Complex Analysis with Applications. Springer Nature, Cham.](https://link.springer.com/book/10.1007/978-3-319-94063-2)
 - [Asmar N., Grafakos L. Solutions to Selected Exercises in Complex Analysis with Applications.](https://github.com/chang-ye-tu/cf/blob/master/grafakos_selected_sol.pdf)
+- [Errata: Asmar, N. H., Grafakos, L., 2018. Complex Analysis with Applications.](https://grafakos.missouri.edu/ComplexAnalysis.html)
 
 ## 參考書
 
@@ -45,7 +46,7 @@ Mastering the analysis of single complex variable is essential for understanding
 02/29 1.4 (from 1.4.6), 1.5 (end 1.5.18)
 03/05 1.5 (from 1.5.19), 1.6 (skip 1.6.5, 1.6.6, 1.6.8, 1.6.9), 1.7 (end 1.7.5; skip 1.7.2)
 03/07 1.7 (from 1.7.6), 1.8
-03/12
+03/12 2.1
 03/14
 03/19
 03/21
@@ -86,8 +87,8 @@ Mastering the analysis of single complex variable is essential for understanding
 |---------------------|------------------------|
 | 02/20, 02/22        | 1.1 -- 1.3             |
 | 02/27, 02/29        | 1.3 -- 1.5             |
-| 03/05, 03/07        | 1.5 -- 1.8, 2.1 -- 2.2 | 
-| 03/12, 03/14        | 2.3 -- 2.5             |
+| 03/05, 03/07        | 1.5 -- 1.8             | 
+| 03/12, 03/14        | 2.1 -- 2.5             |
 | 03/19, 03/21        | 3.1 -- 3.3             |
 | 03/26, 03/28        | 3.4 -- 3.7             |
 | 04/09, 04/11        | 3.7 -- 3.9             |
