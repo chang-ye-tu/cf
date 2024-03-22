@@ -48,9 +48,9 @@ Mastering the analysis of single complex variable is essential for understanding
 03/07 1.7 (from 1.7.6), 1.8
 03/12 2.1
 03/14 2.2, 2.3 (end 2.3.9)
-03/19 2.3 (from 2.3.10), 2.5
-03/21 3.1
-03/26
+03/19 2.3 (from 2.3.10), 2.4 (end 2.4.4)
+03/21 2.4 (from 2.4.5), 2.5 (end 2.5.1), 30 min tests: prove limit uniqueness & limit quotient rule
+03/26 2.5 (from 2.5.2)
 03/28
 04/09
 04/11
@@ -71,8 +71,6 @@ Mastering the analysis of single complex variable is essential for understanding
 06/04
 06/06 
 
-教務處通知，因3/21(四)辦理【校務評鑑】，當天複變教室會改到B711。只有當天異動。之後就會回原教室。
-
 -->
 
 ## 評分標準
@@ -89,9 +87,9 @@ Mastering the analysis of single complex variable is essential for understanding
 | 02/27, 02/29        | 1.3 -- 1.5             |
 | 03/05, 03/07        | 1.5 -- 1.8             | 
 | 03/12, 03/14        | 2.1 -- 2.3             |
-| 03/19, 03/21        | 2.3, 2.5, 3.1          |
-| 03/26, 03/28        | 3.2 -- 3.4             |
-| 04/09, 04/11        | 3.4 -- 3.7             |
+| 03/19, 03/21        | 2.3 -- 2.5             |
+| 03/26, 03/28        | 2.5, 3.1 -- 3.4        |
+| 04/09, 04/11        | 3.7 -- 3.9             |
 | 04/16 期中考, 04/18 |                        |
 | 04/23, 04/25        |                        |
 | 04/30, 05/02        |                        |
@@ -99,7 +97,7 @@ Mastering the analysis of single complex variable is essential for understanding
 | 05/14, 05/16        |                        |
 | 05/21, 05/23        |                        |
 | 05/28, 05/30        |                        |
-| 06/04, 06/06        |                        |
+| 06/04, 06/06        | 5.7                    |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;06/13 學期考    |                       |
 
 ## 授課教師
