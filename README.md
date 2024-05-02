@@ -58,8 +58,8 @@ Mastering the analysis of single complex variable is essential for understanding
 04/18 3.7, 3.8 (end 3.8.3)
 04/23 3.8 (from 3.8.4), 3.9.2
 04/25 3.9
-04/30
-05/02
+04/30 4.1, 4.3
+05/02 4.4
 05/07
 05/09
 05/14
@@ -92,7 +92,7 @@ Mastering the analysis of single complex variable is essential for understanding
 | 04/09, 04/11        | 3.3 -- 3.6             |
 | 04/16 期中考, 04/18 | 3.7 -- 3.8             |
 | 04/23, 04/25        | 3.8 -- 3.9             |
-| 04/30, 05/02        | 4.1 -- 4.3             |
+| 04/30, 05/02        | 4.1 -- 4.4             |
 | 05/07, 05/09        |                        |
 | 05/14, 05/16        |                        |
 | 05/21, 05/23        |                        |
